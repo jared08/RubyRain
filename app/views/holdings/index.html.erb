@@ -1,0 +1,14 @@
+<% provide(:title, 'My holdings') %>
+<h1>My holdings</h1>
+
+<ul class="holdings">
+  <% @holdings.each do |holding| %>
+    <li>
+      <%= link_to stock.name, stock %>
+      <%= stock.current_price %>
+      <button><%= link_to "Buy", new_holding_path(stock) %> </button>
+    </li>
+  <% end %>
+</ul>
+
+

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  stock: one
+  type_of_holding: MyString
+  quantity: 1.5
+  price_at_purchase: 1.5
+
+two:
+  user: two
+  stock: two
+  type_of_holding: MyString
+  quantity: 1.5
+  price_at_purchase: 1.5

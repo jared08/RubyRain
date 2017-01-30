@@ -1,0 +1,16 @@
+<% provide(:title, 'Add Holding') %>
+<h1>Add Holding</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@holding) do |f| %>
+      <%= f.label :type_of_holding, "Type" %>
+      <%= f.text_field :type_of_holding %>
+  
+      <%= f.label :quantity, "Quantity" %>
+      <%= f.number_field :quantity %>
+ 
+      <%= f.submit "Add Holding", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
