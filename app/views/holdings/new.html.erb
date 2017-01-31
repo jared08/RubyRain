@@ -1,18 +1,18 @@
-<% provide(:title, 'Add Holding') %>
-<h1>Add Holding</h1>
+<% provide(:title, 'Transaction') %>
+<h1>Transaction</h1>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(@holding) do |f| %>
       <%= f.label :stock, "Stock" %>
-      <%= f.text_field :stock %>
+      <%= f.text_field :stock, :value => params[:stock_name] %>
 
       <%= f.label :type_of_holding, "Type" %>
-      <%= f.text_field :type_of_holding %>
-  
+      <%= f.select :type_of_holding, ['buy', 'sell'], :selected => params[:type]%>
+ 
       <%= f.label :quantity, "Quantity" %>
       <%= f.number_field :quantity %>
  
-      <%= f.submit "Add Holding", class: "btn btn-primary" %>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

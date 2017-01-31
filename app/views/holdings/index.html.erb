@@ -1,16 +1,25 @@
 <% provide(:title, 'My holdings') %>
 <h1>My holdings</h1>
 
-<ul class="holdings">
-  <% @holdings.each do |holding| %>
-    <li>
-      <%= link_to holding.stock.name, holding.stock %>
-      <%= holding.price_at_purchase %>
-      <%= holding.quantity %>
-      <%= holding.stock.current_price %>
-      <button><%= link_to "Buy", new_holding_path(holding.stock) %> </button>
-    </li>
-  <% end %>
-</ul>
-
-
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price at Purchase</th>
+      <th>Quantity</th>
+      <th>Current Price</th>
+      <th>Current Balance</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr <% @holdings.each do |holding| %> >
+      <td><%= link_to holding.stock.name, holding.stock %></td>
+      <td><%= holding.price_at_purchase %></td>
+      <td><%= holding.quantity %></td>
+      <td><%= holding.stock.current_price %></td>
+      <td><%= holding.quantity * holding.stock.current_price %> </td>
+      <td><%= link_to 'Buy', new_holding_path({:stock_name => holding.stock.name, :type => 'buy'}), class: "btn btn-success"%></td>
+      <td><%= link_to 'Sell', new_holding_path({:stock_name => holding.stock.name, :type => 'sell'}), class: "btn btn-danger"%></td>      
+   </tr <% end %> >
+  </tbody>
+</table>
