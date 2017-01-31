@@ -1,21 +1,28 @@
 <% provide(:title, 'All stocks') %>
 <h1>All stocks</h1>
 
-<ul class="stocks">
-  <% @stocks.each do |stock| %>
-    <li>
-      <%= link_to stock.name, stock %>
-      <%= stock.current_price %>
-      <button><%= link_to "Buy", new_holding_path(stock) %> </button>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Current Price</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr <% @stocks.each do |stock| %> >
+      <td><%= link_to stock.name, stock %></td>
+      <td><%= stock.current_price %></td>
+      <td><%= link_to 'Buy', new_holding_path(stock), class: "btn btn-primary"%></td>
       <% if @current_user.admin? %>
-        <button><%= link_to "Edit", edit_stock_path(stock) %></button>
-        <button><%= link_to "Delete", stock, method: :delete,
-                data: { confirm: "You sure?" } %></button>
+        <td><%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-warning"%></td> 
+        <td><%= link_to 'Delete', stock,  method: :delete,
+                data: { confirm: "You sure?" },  class: "btn btn-danger"%></td>
       <% end %>
-    </li>
-  <% end %>
-</ul>
+    </tr <% end %> >
+  </tbody>
+</table>
 
 <% if @current_user.admin? %>
-  <button><%= link_to "Add new stock", new_stock_path %></button>
+  <%= link_to 'Add new stock', new_stock_path, class: "btn btn-primary"%>
 <% end %>
+
