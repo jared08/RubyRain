@@ -4,9 +4,11 @@
 <ul class="holdings">
   <% @holdings.each do |holding| %>
     <li>
-      <%= link_to stock.name, stock %>
-      <%= stock.current_price %>
-      <button><%= link_to "Buy", new_holding_path(stock) %> </button>
+      <%= link_to holding.stock.name, holding.stock %>
+      <%= holding.price_at_purchase %>
+      <%= holding.quantity %>
+      <%= holding.stock.current_price %>
+      <button><%= link_to "Buy", new_holding_path(holding.stock) %> </button>
     </li>
   <% end %>
 </ul>

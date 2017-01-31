@@ -3,6 +3,9 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(@holding) do |f| %>
+      <%= f.label :stock, "Stock" %>
+      <%= f.text_field :stock %>
+
       <%= f.label :type_of_holding, "Type" %>
       <%= f.text_field :type_of_holding %>
   
