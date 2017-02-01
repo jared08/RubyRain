@@ -17,6 +17,11 @@ class HoldingsController < ApplicationController
 
     @holding = Holding.where("user_id = ? AND stock_id = ?", current_user.id, stock.id)
     if (final_params[:type_of_holding] == 'buy')
+      if ((stock_price * new_quantity) > current_user.cash) #checks to see if the user has enough cash
+        flash[:danger] = "Sorry you don't have enough cash.."
+        redirect_to request.path #since we want a new form
+        return
+      end
       if (!@holding.empty?) #buying more
         @holding = @holding[0] #to get array from activation record
         total_quantity = new_quantity + @holding[:quantity]
@@ -55,8 +60,9 @@ class HoldingsController < ApplicationController
         end
 
       else #selling all
+        total = @holding[:quantity] #needed to calculate cash after sale
         Holding.find(@holding[:id]).destroy
-        current_user.update_attribute :cash, (current_user.cash + (stock_price * new_quantity))
+        current_user.update_attribute :cash, (current_user.cash + (stock_price * total))
         redirect_to holdings_url
       end
     end
