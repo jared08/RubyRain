@@ -23,3 +23,6 @@
    </tr <% end %> >
   </tbody>
 </table>
+
+<h2>Cash: <%= current_user.cash %></h2>
+<h2>Account value: <%= (current_user.cash + @holdings_value) %></h2>
