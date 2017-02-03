@@ -45,11 +45,11 @@ class StocksController < ApplicationController
 
   private
     def stock_params
-      params.require(:stock).permit(:name, :current_price)
+      params.require(:stock).permit(:name, :current_price, :league)
     end
 
     def edit_stock_params
-      params.require(:stock).permit(:name)
+      params.require(:stock).permit(:name, :league)
     end
   
     # Confirms a logged-in user.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170126160410) do
+ActiveRecord::Schema.define(version: 20170203180728) do
 
   create_table "holdings", force: :cascade do |t|
     t.integer  "user_id"
@@ -29,15 +29,30 @@ ActiveRecord::Schema.define(version: 20170126160410) do
     t.float    "current_price"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "league"
+  end
+
+  create_table "stocks_tags", force: :cascade do |t|
+    t.integer "stock_id"
+    t.integer "tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "stock_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stock_id"], name: "index_tags_on_stock_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "password_digest"
     t.boolean  "admin",           default: false
+    t.float    "cash",            default: 25000.0
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

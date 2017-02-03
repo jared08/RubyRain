@@ -6,17 +6,20 @@
     <tr>
       <th>Name</th>
       <th>Current Price</th>
+      <th>League</th>
      </tr>
   </thead>
   <tbody>
     <tr <% @stocks.each do |stock| %> >
       <td><%= link_to stock.name, stock %></td>
       <td><%= stock.current_price %></td>
-      <td><%= link_to 'Buy', new_holding_path(stock), class: "btn btn-primary"%></td>
+      <td><%= stock.league %></td>
+      <td><%= link_to 'Buy', new_holding_path({:stock_name => stock.name, :type => 'buy'}), class: "btn btn-success"%></td>
+      <td><%= link_to 'Sell', new_holding_path({:stock_name => stock.name, :type => 'sell'}), class: "btn btn-danger"%></td>
       <% if @current_user.admin? %>
-        <td><%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-warning"%></td> 
+        <td><%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-primary"%></td> 
         <td><%= link_to 'Delete', stock,  method: :delete,
-                data: { confirm: "You sure?" },  class: "btn btn-danger"%></td>
+                data: { confirm: "You sure?" },  class: "btn btn-primary"%></td>
       <% end %>
     </tr <% end %> >
   </tbody>

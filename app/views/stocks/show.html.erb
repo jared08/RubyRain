@@ -8,5 +8,7 @@
       </h1>
     </section>
   </aside>
+  <td><%= link_to 'Buy', new_holding_path({:stock_name => @stock.name, :type => 'buy'}), class: "btn btn-success"%></td>
+  <td><%= link_to 'Sell', new_holding_path({:stock_name => @stock.name, :type => 'sell'}), class: "btn btn-danger"%></td>
 </div>
 
