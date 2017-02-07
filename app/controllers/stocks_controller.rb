@@ -11,6 +11,24 @@ class StocksController < ApplicationController
     final_params = stock_params
     final_params[:open_price] = stock_params[:current_price]
     @stock = Stock.new(final_params)
+
+    require 'net/http'
+
+    url = 'https://api.fantasydata.net/golf/v2/json/Player/' + stock_params[:player_id]
+    uri = URI(url)
+
+    request = Net::HTTP::Get.new(uri.request_uri)
+    # Request headers
+    request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
+    # Request body
+    request.body = "{body}"
+
+    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+      http.request(request)
+    end
+ 
+    @stock[:player_info] = JSON.parse(response.body) 
+
     if @stock.save
       flash[:success] = "You added a stock!"
       redirect_to stocks_url
@@ -24,30 +42,27 @@ class StocksController < ApplicationController
 
     #TODO definitely needs to be changed
     @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
-  end
 
-  def index
+     require 'net/http'
 
-    require 'net/http'
-
-    uri = URI('https://api.fantasydata.net/golf/v2/xml/Players')
+    url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:player_id].to_s
+    uri = URI(url)
 
     request = Net::HTTP::Get.new(uri.request_uri)
-
+    # Request headers
     request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
-
+    # Request body
     request.body = "{body}"
 
     response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
       http.request(request)
     end
+    
+    
+    @stock[:player_news] = JSON.parse(response.body)
+  end
 
-    out_file = File.new("out.txt", "w")
-
-    out_file.puts(response.body.force_encoding('ASCII-8BIT').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?'))
-
-    out_file.close
-
+  def index
     @stocks = Stock.all
   end
 
@@ -71,7 +86,7 @@ class StocksController < ApplicationController
 
   private
     def stock_params
-      params.require(:stock).permit(:name, :symbol, :current_price, :league)
+      params.require(:stock).permit(:name, :symbol, :player_id, :current_price, :league)
     end
 
     def edit_stock_params

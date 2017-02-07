@@ -12,7 +12,7 @@
 
 <div class="row">
   <div class="col-sm-3">
-    <h3>PICTURE</h3>
+    <img src="<%= @stock.player_info[:PhotoUrl] %>" alt="@stock.name" /> <br>
     <div class="panel panel-default">
       <div class="panel-heading"><h4>Earnings</h4></div>
       <div class="panel-body">content</div>
@@ -36,6 +36,15 @@
         <p>game 4</p>
       </div>
     </div>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>News</h4></div>
+      <div class="panel-body">
+        <p><%= link_to @stock.player_news[0]["Title"] , @stock.player_news[0]["Url"]%></p>
+        <p><%= link_to @stock.player_news[1]["Title"] , @stock.player_news[1]["Url"]%></p>
+        <p><%= link_to @stock.player_news[2]["Title"] , @stock.player_news[2]["Url"]%></p>
+        <p><%= link_to @stock.player_news[3]["Title"] , @stock.player_news[3]["Url"]%></p>
+      </div>
+    </div>
      <div class="panel panel-default">
       <div class="panel-heading"><h4>Posts</h4></div>
       <div class="panel-body">
@@ -43,15 +52,6 @@
         <p>post 2</p>
         <p>post 3</p>
         <p>post 4</p>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4>News</h4></div>
-      <div class="panel-body">
-        <p>article 1</p>
-        <p>article 2</p>
-        <p>article 3</p>
-        <p>article 4</p>
       </div>
     </div>
   </div>
