@@ -1,14 +1,59 @@
 <% provide(:title, @stock.name) %>
+<div class="header">
+   <h3> <%= @stock.name %> (<%= @stock.symbol %>) </h3>
+   <h3> <%= @stock.current_price %> </h3>
+   <h4> <%= @stock.current_price - @stock.open_price %> (<%= (@stock.current_price - @stock.open_price) / (@stock.open_price) %> %) </h4>
+   <h4> as of <%= @time.strftime("%I:%M %p") %> </h4> <nobr>
+   <button type="button" class="btn btn-success"><%= link_to 'Buy', new_holding_path({:stock_name => @stock.name, :type => 'buy'}) %></button>
+   <button type="button" class="btn btn-danger"><%= link_to 'Sell', new_holding_path({:stock_name => @stock.name, :type => 'sell'}) %></button>
+</div>
+
+<br>
+
 <div class="row">
-  <aside class="col-md-4">
-    <section class="stock_info">
-      <h1>
-        <%= @stock.name %>
-        <%= @stock.current_price %>
-      </h1>
-    </section>
-  </aside>
-  <td><%= link_to 'Buy', new_holding_path({:stock_name => @stock.name, :type => 'buy'}), class: "btn btn-success"%></td>
-  <td><%= link_to 'Sell', new_holding_path({:stock_name => @stock.name, :type => 'sell'}), class: "btn btn-danger"%></td>
+  <div class="col-sm-3">
+    <h3>PICTURE</h3>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>Earnings</h4></div>
+      <div class="panel-body">content</div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>Summary</h4></div>
+      <div class="panel-body">
+      </div>
+    </div>
+    <h3>GRAPH</h3>
+  </div>
+  <div class="col-sm-3">
+     <div class="panel panel-default">
+      <div class="panel-heading"><h4>Schedule</h4></div>
+      <div class="panel-body">
+        <p>game 1</p>
+        <p>game 2</p>
+        <p>game 3</p>
+        <p>game 4</p>
+      </div>
+    </div>
+     <div class="panel panel-default">
+      <div class="panel-heading"><h4>Posts</h4></div>
+      <div class="panel-body">
+        <p>post 1</p>
+        <p>post 2</p>
+        <p>post 3</p>
+        <p>post 4</p>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>News</h4></div>
+      <div class="panel-body">
+        <p>article 1</p>
+        <p>article 2</p>
+        <p>article 3</p>
+        <p>article 4</p>
+      </div>
+    </div>
+  </div>
 </div>
 

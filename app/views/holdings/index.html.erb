@@ -4,6 +4,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Symbol</th>
       <th>Name</th>
       <th>Price at Purchase</th>
       <th>Quantity</th>
@@ -13,6 +14,7 @@
   </thead>
   <tbody>
     <tr <% @holdings.each do |holding| %> >
+      <td><%= holding.stock.symbol %></td>
       <td><%= link_to holding.stock.name, holding.stock %></td>
       <td><%= holding.price_at_purchase %></td>
       <td><%= holding.quantity %></td>

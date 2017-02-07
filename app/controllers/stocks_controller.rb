@@ -8,7 +8,9 @@ class StocksController < ApplicationController
   end
 
   def create
-    @stock = Stock.new(stock_params)
+    final_params = stock_params
+    final_params[:open_price] = stock_params[:current_price]
+    @stock = Stock.new(final_params)
     if @stock.save
       flash[:success] = "You added a stock!"
       redirect_to stocks_url
@@ -19,9 +21,33 @@ class StocksController < ApplicationController
 
   def show
     @stock = Stock.find(params[:id])
+
+    #TODO definitely needs to be changed
+    @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
   end
 
   def index
+
+    require 'net/http'
+
+    uri = URI('https://api.fantasydata.net/golf/v2/xml/Players')
+
+    request = Net::HTTP::Get.new(uri.request_uri)
+
+    request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
+
+    request.body = "{body}"
+
+    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+      http.request(request)
+    end
+
+    out_file = File.new("out.txt", "w")
+
+    out_file.puts(response.body.force_encoding('ASCII-8BIT').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?'))
+
+    out_file.close
+
     @stocks = Stock.all
   end
 
@@ -45,11 +71,11 @@ class StocksController < ApplicationController
 
   private
     def stock_params
-      params.require(:stock).permit(:name, :current_price, :league)
+      params.require(:stock).permit(:name, :symbol, :current_price, :league)
     end
 
     def edit_stock_params
-      params.require(:stock).permit(:name, :league)
+      params.require(:stock).permit(:name, :symbol, :league)
     end
   
     # Confirms a logged-in user.
