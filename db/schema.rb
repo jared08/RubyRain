@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207181901) do
+ActiveRecord::Schema.define(version: 20170208210229) do
 
   create_table "holdings", force: :cascade do |t|
     t.integer  "user_id"
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 20170207181901) do
     t.datetime "updated_at",        null: false
     t.index ["stock_id"], name: "index_holdings_on_stock_id"
     t.index ["user_id"], name: "index_holdings_on_user_id"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.text     "schedule"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "year"
   end
 
   create_table "stocks", force: :cascade do |t|
@@ -48,6 +55,12 @@ ActiveRecord::Schema.define(version: 20170207181901) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["stock_id"], name: "index_tags_on_stock_id"
+  end
+
+  create_table "tournaments", force: :cascade do |t|
+    t.text     "tournament_info"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "users", force: :cascade do |t|
