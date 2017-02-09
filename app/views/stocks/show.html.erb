@@ -28,12 +28,12 @@
   </div>
   <div class="col-sm-3">
      <div class="panel panel-default">
-      <div class="panel-heading"><h4>Schedule</h4></div>
+      <div class="panel-heading"><h4>Upcoming Events</h4></div>
       <div class="panel-body">
-        <p>game 1</p>
-        <p>game 2</p>
-        <p>game 3</p>
-        <p>game 4</p>
+        <p><%= Tournament.find_by(index: 36)[:tournament_info]["Name"] %> -- <%= Time.parse(Tournament.find_by(index: 36)[:tournament_info]["StartDate"]).strftime("%-m/%-d") %></p>
+        <p><%= Tournament.find_by(index: 35)[:tournament_info]["Name"] %> -- <%= Time.parse(Tournament.find_by(index: 33)[:tournament_info]["StartDate"]).strftime("%-m/%-d") %></p>
+        <p><%= Tournament.find_by(index: 34)[:tournament_info]["Name"] %> -- <%= Time.parse(Tournament.find_by(index: 34)[:tournament_info]["StartDate"]).strftime("%-m/%-d") %></p>
+        <p><%= Tournament.find_by(index: 33)[:tournament_info]["Name"] %> -- <%= Time.parse(Tournament.find_by(index: 33)[:tournament_info]["StartDate"]).strftime("%-m/%-d") %></p>
       </div>
     </div>
     <div class="panel panel-default">

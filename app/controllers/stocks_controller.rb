@@ -18,9 +18,7 @@ class StocksController < ApplicationController
     uri = URI(url)
 
     request = Net::HTTP::Get.new(uri.request_uri)
-    # Request headers
     request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
-    # Request body
     request.body = "{body}"
 
     response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
@@ -43,15 +41,15 @@ class StocksController < ApplicationController
     #TODO definitely needs to be changed
     @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
 
-     require 'net/http'
+
+    #TODO find out a way to not update player's news EVERY time
+    require 'net/http'
 
     url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:player_id].to_s
     uri = URI(url)
 
     request = Net::HTTP::Get.new(uri.request_uri)
-    # Request headers
     request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
-    # Request body
     request.body = "{body}"
 
     response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
@@ -60,6 +58,7 @@ class StocksController < ApplicationController
     
     
     @stock[:player_news] = JSON.parse(response.body)
+    @stock.save
   end
 
   def index

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208210229) do
+ActiveRecord::Schema.define(version: 20170209200432) do
 
   create_table "holdings", force: :cascade do |t|
     t.integer  "user_id"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 20170208210229) do
     t.index ["user_id"], name: "index_holdings_on_user_id"
   end
 
+  create_table "player_tournaments", force: :cascade do |t|
+    t.integer  "stock_id"
+    t.integer  "tournament_id"
+    t.text     "player_tournament_info"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["stock_id"], name: "index_player_tournaments_on_stock_id"
+    t.index ["tournament_id"], name: "index_player_tournaments_on_tournament_id"
+  end
+
   create_table "schedules", force: :cascade do |t|
     t.text     "schedule"
     t.datetime "created_at", null: false
@@ -34,14 +44,20 @@ ActiveRecord::Schema.define(version: 20170208210229) do
   create_table "stocks", force: :cascade do |t|
     t.string   "name"
     t.float    "current_price"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "league"
     t.string   "symbol"
     t.float    "open_price"
     t.integer  "player_id"
     t.text     "player_info"
     t.text     "player_news"
+    t.integer  "first"
+    t.integer  "second"
+    t.integer  "third"
+    t.integer  "top_ten"
+    t.integer  "made_cut"
+    t.integer  "top_twenty_five"
   end
 
   create_table "stocks_tags", force: :cascade do |t|
@@ -61,6 +77,7 @@ ActiveRecord::Schema.define(version: 20170208210229) do
     t.text     "tournament_info"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "index"
   end
 
   create_table "users", force: :cascade do |t|
