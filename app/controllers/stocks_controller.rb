@@ -43,22 +43,22 @@ class StocksController < ApplicationController
 
 
     #TODO find out a way to not update player's news EVERY time
-    require 'net/http'
+    #require 'net/http'
 
-    url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:player_id].to_s
-    uri = URI(url)
+    #url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:player_id].to_s
+    #uri = URI(url)
 
-    request = Net::HTTP::Get.new(uri.request_uri)
-    request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
-    request.body = "{body}"
+    #request = Net::HTTP::Get.new(uri.request_uri)
+    #request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
+    #request.body = "{body}"
 
-    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      http.request(request)
-    end
+    #response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+    #  http.request(request)
+    #end
     
     
-    @stock[:player_news] = JSON.parse(response.body)
-    @stock.save
+    #@stock[:player_news] = JSON.parse(response.body)
+    #@stock.save
   end
 
   def index

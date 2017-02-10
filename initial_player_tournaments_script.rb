@@ -29,14 +29,16 @@ for tournament in tournaments
       http.request(request)
     end
 
-    if (response.body != '')
+    if (response.body != '') #returns blank if the player didn't play in the tournament
       info = JSON.parse(response.body)
  
+      info.delete("Rounds") #maybe want later but don't see the need for storing info on every single hole
+
       params[:tournament] = tournament
       params[:player_tournament_info] = info 
-      debugger
+      
       player_tournament = PlayerTournament.new
-      player_tournament = player.playertournaments.create(params)
+      player_tournament = player.player_tournaments.create(params)
       player_tournament.save
 
       if (info["Rank"] != 'nil') #can switch to MadeCut when data isn't scrambled

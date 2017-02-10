@@ -15,7 +15,14 @@
     <img src="<%= @stock.player_info[:PhotoUrl] %>" alt="@stock.name" /> <br>
     <div class="panel panel-default">
       <div class="panel-heading"><h4>Earnings</h4></div>
-      <div class="panel-body">content</div>
+      <div class="panel-body">
+        <p>1st: <%= @stock.first %></p>
+        <p>2nd: <%= @stock.second %></p>
+        <p>3rd: <%= @stock.third %></p>
+        <p>Top 10: <%= @stock.top_ten %></p>
+        <p>Top 25: <%= @stock.top_twenty_five %></p>
+        <p>Made Cut: <%= @stock.made_cut %></p>
+      </div>
     </div>
   </div>
   <div class="col-sm-6">
