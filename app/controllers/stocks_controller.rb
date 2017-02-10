@@ -42,6 +42,14 @@ class StocksController < ApplicationController
     @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
 
 
+    current_index = 36 #TODO need to somehow set this when pulling data
+    @four_tournaments = Array.new
+
+    @four_tournaments[0] = Tournament.find_by(index: (current_index + 3))
+    @four_tournaments[1] = Tournament.find_by(index: (current_index + 2))
+    @four_tournaments[2] = Tournament.find_by(index: (current_index + 1))
+    @four_tournaments[3] = Tournament.find_by(index: (current_index))
+
     #TODO find out a way to not update player's news EVERY time
     #require 'net/http'
 
@@ -59,6 +67,10 @@ class StocksController < ApplicationController
     
     #@stock[:player_news] = JSON.parse(response.body)
     #@stock.save
+  end
+
+  def events
+
   end
 
   def index

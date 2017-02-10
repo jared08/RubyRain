@@ -35,12 +35,24 @@
   </div>
   <div class="col-sm-3">
      <div class="panel panel-default">
-      <div class="panel-heading"><h4>Upcoming Events</h4></div>
+      <div class="panel-heading"><h4>Events</h4></div>
       <div class="panel-body">
-        <p><%= Tournament.find_by(index: 36)[:tournament_info]["Name"] %> -- <%= Time.parse(Tournament.find_by(index: 36)[:tournament_info]["StartDate"]).strftime("%-m/%-d") %></p>
-        <p><%= Tournament.find_by(index: 35)[:tournament_info]["Name"] %> -- <%= Time.parse(Tournament.find_by(index: 33)[:tournament_info]["StartDate"]).strftime("%-m/%-d") %></p>
-        <p><%= Tournament.find_by(index: 34)[:tournament_info]["Name"] %> -- <%= Time.parse(Tournament.find_by(index: 34)[:tournament_info]["StartDate"]).strftime("%-m/%-d") %></p>
-        <p><%= Tournament.find_by(index: 33)[:tournament_info]["Name"] %> -- <%= Time.parse(Tournament.find_by(index: 33)[:tournament_info]["StartDate"]).strftime("%-m/%-d") %></p>
+
+      <table class="table">
+        <tbody>
+          <tr <% @four_tournaments.each do |tournament| %> >
+            <td><%= tournament[:tournament_info]["Name"] %></td>
+            <% if PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id]) %>
+              <td><%= PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id])[:player_tournament_info]["Rank"] %></td>
+            <% else %>
+              <td>TBD</td>
+            <% end %>
+            <td> <%= Time.parse(tournament[:tournament_info]["StartDate"]).strftime("%-m/%-d") %>
+          </tr <% end %> >
+        </tbody>
+      </table>
+      <p><%= link_to "More Events", stock_tournaments_path(@stock) %></p>
+
       </div>
     </div>
     <div class="panel panel-default">

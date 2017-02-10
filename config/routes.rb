@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   resources :users
-  resources :stocks
+  resources :stocks do
+    resources :tournaments
+  end
   resources :holdings
+  #resources :tournaments
 end
