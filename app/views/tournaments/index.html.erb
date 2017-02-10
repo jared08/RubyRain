@@ -1,1 +1,43 @@
-<h1>HELLO WORLD</h1>
+<h1>Completed Tournaments</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Rank</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr <% @completed_tournaments.reverse.each do |tournament| %> >
+      <td><%= tournament[:tournament_info]["Name"] %></td>      
+      <td><%= tournament[:tournament_info]["StartDate"] %></td>
+      <td><%= tournament[:id] %></td>
+      <td><%=@stock%></td>
+      <% query_params = Hash.new %>
+      <% query_params[:stock_id] = params[:stock] %>
+      <% query_params[:tournament_id] = tournament[:id] %>
+      <% if PlayerTournament.find_by(query_params) %>
+        <td><%= PlayerTournament.find_by(query_params)[:player_tournament_info]["Rank"] %></td>
+      <% else %>
+        <td>DNP</td>
+      <% end %>
+
+    </tr <% end %> >
+  </tbody>
+</table>
+
+<h1>Remaining Tournaments</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr <% @remaining_tournaments.reverse.each do |tournament| %> >
+      <td><%= tournament[:tournament_info]["Name"] %></td>
+      <td><%= tournament[:tournament_info]["StartDate"] %></td>
+    </tr <% end %> >
+  </tbody>
+</table>
