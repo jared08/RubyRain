@@ -11,10 +11,8 @@
     <tr <% @completed_tournaments.reverse.each do |tournament| %> >
       <td><%= tournament[:tournament_info]["Name"] %></td>      
       <td><%= tournament[:tournament_info]["StartDate"] %></td>
-      <td><%= tournament[:id] %></td>
-      <td><%=@stock%></td>
       <% query_params = Hash.new %>
-      <% query_params[:stock_id] = params[:stock] %>
+      <% query_params[:stock_id] = @stock_id %>
       <% query_params[:tournament_id] = tournament[:id] %>
       <% if PlayerTournament.find_by(query_params) %>
         <td><%= PlayerTournament.find_by(query_params)[:player_tournament_info]["Rank"] %></td>
