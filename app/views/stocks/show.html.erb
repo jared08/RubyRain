@@ -46,7 +46,11 @@
               <% if PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id])[:player_tournament_info]["Rank"] != nil %>
 	        <td><%= PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id])[:player_tournament_info]["Rank"] %></td>
               <% else %>
-                <td>TBD</td>
+                <% if tournament[:tournament_info]["IsOver"] == true %>
+                  <td>Missed Cut</td>
+                <% else %>
+                  <td>TBD</td>
+                <% end %>
               <% end %>
             <% else %>
               <td>Not playing</td>

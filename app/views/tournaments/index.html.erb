@@ -15,7 +15,11 @@
       <% query_params[:stock_id] = @stock_id %>
       <% query_params[:tournament_id] = tournament[:id] %>
       <% if PlayerTournament.find_by(query_params) %>
-        <td><%= PlayerTournament.find_by(query_params)[:player_tournament_info]["Rank"] %></td>
+        <% if PlayerTournament.find_by(query_params)[:player_tournament_info]["Rank"] == nil %>
+          <td>Missed Cut</td>
+        <% else %>
+          <td><%= PlayerTournament.find_by(query_params)[:player_tournament_info]["Rank"] %></td>
+        <% end %>
       <% else %>
         <td>DNP</td>
       <% end %>

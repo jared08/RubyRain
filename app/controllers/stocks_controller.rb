@@ -47,7 +47,7 @@ class StocksController < ApplicationController
         id = tournament[:tournament_info]["TournamentID"].to_s
         puts(tournament[:tournament_info]["Name"])
 
-        uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + id + '/' + @stock[:player_info]["PlayerID"])
+        uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + id + '/' + @stock[:player_info]["PlayerID"].to_s)
 
         request = Net::HTTP::Get.new(uri.request_uri)
         request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
@@ -66,26 +66,26 @@ class StocksController < ApplicationController
           params[:player_tournament_info] = info
 
           player_tournament = PlayerTournament.new
-          player_tournament = player.player_tournaments.create(params)
+          player_tournament = @stock.player_tournaments.create(params)
           player_tournament.save
 
-          if (info["Rank"] != 'nil') #can switch to MadeCut when data isn't scrambled
+          if (info["Rank"] != nil) #can switch to MadeCut when data isn't scrambled
             puts(info["Rank"])
 
-            player[:made_cut] = player[:made_cut] + 1
+            @stock[:made_cut] = @stock[:made_cut] + 1
             if (info["Rank"].to_i < 25)
-              @stock[:top_twenty_five] = player[:top_twenty_five] + 1
+              @stock[:top_twenty_five] = @stock[:top_twenty_five] + 1
             end
             if (info["Rank"].to_i < 10)
-              @stock[:top_ten] = player[:top_ten] + 1
+              @stock[:top_ten] = @stock[:top_ten] + 1
             end
 
             if (info["Rank"].to_i == 1)
-              @stock[:first] = player[:first] + 1
+              @stock[:first] = @stock[:first] + 1
             elsif (info["Rank"].to_i == 2)
-              @stock[:second] = player[:second] + 1
+              @stock[:second] = @stock[:second] + 1
             elsif (info["Rank"].to_i == 3)
-              @stock[:third] = player[:third] + 1
+              @stock[:third] = @stock[:third] + 1
             end
             @stock.save
           else
@@ -136,8 +136,7 @@ class StocksController < ApplicationController
     #response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
     #  http.request(request)
     #end
-    
-    
+        
     #@stock[:player_news] = JSON.parse(response.body)
     #@stock.save
   end
