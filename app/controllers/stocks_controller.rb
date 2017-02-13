@@ -26,6 +26,79 @@ class StocksController < ApplicationController
     end
  
     @stock[:player_info] = JSON.parse(response.body) 
+    @stock.save
+
+    require 'net/http'
+
+
+    @stock[:first] = 0
+    @stock[:second] = 0
+    @stock[:third] = 0
+    @stock[:top_ten] = 0
+    @stock[:top_twenty_five] = 0
+    @stock[:made_cut] = 0
+    @stock.save    
+
+    params = Hash.new
+
+    tournaments = Tournament.all
+    for tournament in tournaments
+      if (tournament[:tournament_info]["IsOver"])
+        id = tournament[:tournament_info]["TournamentID"].to_s
+        puts(tournament[:tournament_info]["Name"])
+
+        uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + id + '/' + @stock[:player_info]["PlayerID"])
+
+        request = Net::HTTP::Get.new(uri.request_uri)
+        request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
+        request.body = "{body}"
+
+        response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+          http.request(request)
+        end
+
+        if (response.body != '') #returns blank if the player didn't play in the tournament
+          info = JSON.parse(response.body)
+
+          info.delete("Rounds") #maybe want later but don't see the need for storing info on every single hole
+
+          params[:tournament] = tournament
+          params[:player_tournament_info] = info
+
+          player_tournament = PlayerTournament.new
+          player_tournament = player.player_tournaments.create(params)
+          player_tournament.save
+
+          if (info["Rank"] != 'nil') #can switch to MadeCut when data isn't scrambled
+            puts(info["Rank"])
+
+            player[:made_cut] = player[:made_cut] + 1
+            if (info["Rank"].to_i < 25)
+              @stock[:top_twenty_five] = player[:top_twenty_five] + 1
+            end
+            if (info["Rank"].to_i < 10)
+              @stock[:top_ten] = player[:top_ten] + 1
+            end
+
+            if (info["Rank"].to_i == 1)
+              @stock[:first] = player[:first] + 1
+            elsif (info["Rank"].to_i == 2)
+              @stock[:second] = player[:second] + 1
+            elsif (info["Rank"].to_i == 3)
+              @stock[:third] = player[:third] + 1
+            end
+            @stock.save
+          else
+            puts('MISSED CUT')
+            puts(info)
+          end
+
+        else
+          puts('DID NOT PLAY')
+        end
+
+      end
+    end
 
     if @stock.save
       flash[:success] = "You added a stock!"
