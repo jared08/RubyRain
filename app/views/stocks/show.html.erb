@@ -43,9 +43,13 @@
           <tr <% @four_tournaments.each do |tournament| %> >
             <td><%= tournament[:tournament_info]["Name"] %></td>
             <% if PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id]) %>
-              <td><%= PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id])[:player_tournament_info]["Rank"] %></td>
+              <% if PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id])[:player_tournament_info]["Rank"] != nil %>
+	        <td><%= PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id])[:player_tournament_info]["Rank"] %></td>
+              <% else %>
+                <td>TBD</td>
+              <% end %>
             <% else %>
-              <td>TBD</td>
+              <td>Not playing</td>
             <% end %>
             <td> <%= Time.parse(tournament[:tournament_info]["StartDate"]).strftime("%-m/%-d") %>
           </tr <% end %> >

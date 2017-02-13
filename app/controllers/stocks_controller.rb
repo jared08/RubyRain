@@ -115,7 +115,7 @@ class StocksController < ApplicationController
     @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
 
 
-    current_index = 36 #TODO need to somehow set this when pulling data
+    current_index = Rails.application.config.current_tournament_index
     @four_tournaments = Array.new
 
     @four_tournaments[0] = Tournament.find_by(index: (current_index + 3))

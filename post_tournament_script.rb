@@ -1,7 +1,8 @@
 #should run every monday morning
 
 players = Stock.all
-tournament = Tournament.find_by(index: 36)
+tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
+tournament[:tournament_info]["IsOver"] = true
 puts(tournament[:tournament_info]["Name"])
 
 for player in players

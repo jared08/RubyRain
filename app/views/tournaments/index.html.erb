@@ -30,12 +30,26 @@
     <tr>
       <th>Name</th>
       <th>Date</th>
+      <th>Status</th>
      </tr>
   </thead>
   <tbody>
+    <tr>
+      <td><%= @upcoming_tournament[:tournament_info]["Name"] %></td>
+      <td><%= @upcoming_tournament[:tournament_info]["StartDate"] %></td>
+      <% query_params = Hash.new %>
+      <% query_params[:stock_id] = @stock_id %>
+      <% query_params[:tournament_id] = @upcoming_tournament[:id] %>
+      <% if PlayerTournament.find_by(query_params) %>
+        <td>Playing</td>
+      <% else %>
+        <td>Not Playing</td>
+      <% end %>     
+    </tr>
     <tr <% @remaining_tournaments.reverse.each do |tournament| %> >
       <td><%= tournament[:tournament_info]["Name"] %></td>
       <td><%= tournament[:tournament_info]["StartDate"] %></td>
+      <td>TBD</td>
     </tr <% end %> >
   </tbody>
 </table>

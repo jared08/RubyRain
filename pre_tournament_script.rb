@@ -1,6 +1,7 @@
 #should run every friday (6 days before tournament)
 
-tournament = Tournament.find_by(index: 36)
+
+tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
 puts(tournament[:tournament_info]["Name"])
 
 require 'net/http'
@@ -24,7 +25,7 @@ params = Hash.new
 
 for player in players
   if (info.any? {|h| h["PlayerID"] == player[:player_info]["PlayerID"]})
-    puts(player[:name].to_s + " played!")
+    puts(player[:name].to_s + " is playing!")
 
     params[:tournament] = tournament
 
@@ -33,7 +34,7 @@ for player in players
     player_tournament.save
 
   else
-    puts(player[:name].to_s + " did not play..")
+    puts(player[:name].to_s + " is not playing..")
   end
 end
 
