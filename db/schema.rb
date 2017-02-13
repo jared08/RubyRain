@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209200432) do
+ActiveRecord::Schema.define(version: 20170213205227) do
 
   create_table "holdings", force: :cascade do |t|
     t.integer  "user_id"
@@ -58,6 +58,12 @@ ActiveRecord::Schema.define(version: 20170209200432) do
     t.integer  "top_ten"
     t.integer  "made_cut"
     t.integer  "top_twenty_five"
+    t.float    "high"
+    t.float    "low"
+    t.float    "season_high"
+    t.float    "season_low"
+    t.integer  "volume"
+    t.integer  "earnings"
   end
 
   create_table "stocks_tags", force: :cascade do |t|

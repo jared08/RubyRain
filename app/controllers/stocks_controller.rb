@@ -11,6 +11,16 @@ class StocksController < ApplicationController
     final_params = stock_params
     final_params[:open_price] = stock_params[:current_price]
     @stock = Stock.new(final_params)
+    @stock.save
+
+
+    @stock[:high] = stock_params[:current_price]
+    @stock[:low] = stock_params[:current_price]
+    @stock[:season_high] = stock_params[:current_price]
+    @stock[:season_low] = stock_params[:current_price]
+    @stock[:volume] = 0
+    @stock[:earnings] = 0
+    @stock.save
 
     require 'net/http'
 
@@ -99,6 +109,9 @@ class StocksController < ApplicationController
 
       end
     end
+
+    @stock[:earnings] = (@stock[:made_cut] * 3) + (@stock[:top_twenty_five] * 7) + (@stock[:top_ten] * 5) + (@stock[:third] * 4) + 
+        (@stock[:second] * 8) + (@stock[:first] * 15)
 
     if @stock.save
       flash[:success] = "You added a stock!"

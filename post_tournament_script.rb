@@ -38,19 +38,26 @@ for player in players
         puts(info["Rank"])
 
         player[:made_cut] = player[:made_cut] + 1
+        earnings = 3
         if (info["Rank"].to_i < 25)
           player[:top_twenty_five] = player[:top_twenty_five] + 1
+          earnings = earnings + 7
         end
         if (info["Rank"].to_i < 10)
           player[:top_ten] = player[:top_ten] + 1
+          earnings = earnings + 5
         end
         if (info["Rank"].to_i == 1)
           player[:first] = player[:first] + 1
+          earnings = earnings + 15 
         elsif (info["Rank"].to_i == 2)
           player[:second] = player[:second] + 1
+          earnings = earnings + 8
         elsif (info["Rank"].to_i == 3)
           player[:third] = player[:third] + 1
+          earnings = earnings + 4
         end
+        player[:earnings] = earnings
         player.save
       else
         puts('MISSED CUT')

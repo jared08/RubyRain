@@ -36,6 +36,17 @@ class HoldingsController < ApplicationController
         @holding = current_user.holdings.create(final_params)
       end 
 
+      stock[:volume] = stock[:volume] + new_quantity
+      debugger
+      stock[:current_price] = stock[:current_price] + (new_quantity * (1 / stock[:volume].to_f))#need to figure out how the price of a stock is raised
+      if (stock[:current_price] > stock[:high])
+        stock[:high] = stock[:current_price]
+        if (stock[:current_price] > stock[:season_high])
+          stock[:season_high] = stock[:current_price]
+        end
+      end
+      stock.save
+
       if @holding.save
         current_user.update_attribute :cash, (current_user.cash - (stock_price * new_quantity))
         redirect_to holdings_url
@@ -53,6 +64,22 @@ class HoldingsController < ApplicationController
         final_params[:quantity] = total_quantity
         @holding.update_attributes(final_params)
         if @holding.save
+
+          stock[:volume] = stock[:volume] - new_quantity
+          if (stock[:volume] == 0)
+            stock[:current_price] = stock[:current_price] + (new_quantity * (1 / new_quantity.to_f))
+          else
+            stock[:current_price] = stock[:current_price] + (new_quantity * (1 / stock[:volume].to_f))
+          end
+
+          if (stock[:current_price] < stock[:low])
+            stock[:low] = stock[:current_price]
+            if (stock[:current_price] < stock[:season_low])
+              stock[:season_low] = stock[:current_price]
+            end
+          end
+          stock.save
+
           current_user.update_attribute :cash, (current_user.cash + (stock_price * new_quantity))
           redirect_to holdings_url
         else
@@ -62,6 +89,23 @@ class HoldingsController < ApplicationController
       else #selling all
         total = @holding[:quantity] #needed to calculate cash after sale
         Holding.find(@holding[:id]).destroy
+
+        stock[:volume] = stock[:volume] - new_quantity
+          if (stock[:volume] == 0)
+            stock[:current_price] = stock[:current_price] + (new_quantity * (1 / new_quantity.to_f))
+          else
+            stock[:current_price] = stock[:current_price] + (new_quantity * (1 / stock[:volume].to_f))
+          end
+
+          if (stock[:current_price] < stock[:low])
+            stock[:low] = stock[:current_price]
+            if (stock[:current_price] < stock[:season_low])
+              stock[:season_low] = stock[:current_price]
+            end
+          end
+          stock.save
+
+
         current_user.update_attribute :cash, (current_user.cash + (stock_price * total))
         redirect_to holdings_url
       end

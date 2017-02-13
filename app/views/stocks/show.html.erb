@@ -29,6 +29,16 @@
     <div class="panel panel-default">
       <div class="panel-heading"><h4>Summary</h4></div>
       <div class="panel-body">
+        <div class="col-sm-6">
+          <p>High <%= @stock.high %></p>
+          <p>Low <%= @stock.low %></p>
+          <p>Volume <%= @stock.volume %></p>
+        </div>
+        <div class="col-sm-6">
+          <p>Earnings to Date <%= @stock.earnings %></p>
+          <p>Season High <%= @stock.season_high %></p>
+          <p>Season Low <%= @stock.season_low %></p>
+        </div>
       </div>
     </div>
     <h3>GRAPH</h3>
