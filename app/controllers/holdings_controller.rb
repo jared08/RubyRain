@@ -37,7 +37,6 @@ class HoldingsController < ApplicationController
       end 
 
       stock[:volume] = stock[:volume] + new_quantity
-      debugger
       stock[:current_price] = stock[:current_price] + (new_quantity * (1 / stock[:volume].to_f))#need to figure out how the price of a stock is raised
       if (stock[:current_price] > stock[:high])
         stock[:high] = stock[:current_price]
@@ -67,9 +66,9 @@ class HoldingsController < ApplicationController
 
           stock[:volume] = stock[:volume] - new_quantity
           if (stock[:volume] == 0)
-            stock[:current_price] = stock[:current_price] + (new_quantity * (1 / new_quantity.to_f))
+            stock[:current_price] = stock[:current_price] - (new_quantity * (1 / new_quantity.to_f))
           else
-            stock[:current_price] = stock[:current_price] + (new_quantity * (1 / stock[:volume].to_f))
+            stock[:current_price] = stock[:current_price] - (new_quantity * (1 / stock[:volume].to_f))
           end
 
           if (stock[:current_price] < stock[:low])
@@ -92,9 +91,9 @@ class HoldingsController < ApplicationController
 
         stock[:volume] = stock[:volume] - new_quantity
           if (stock[:volume] == 0)
-            stock[:current_price] = stock[:current_price] + (new_quantity * (1 / new_quantity.to_f))
+            stock[:current_price] = stock[:current_price] - (new_quantity * (1 / new_quantity.to_f))
           else
-            stock[:current_price] = stock[:current_price] + (new_quantity * (1 / stock[:volume].to_f))
+            stock[:current_price] = stock[:current_price] - (new_quantity * (1 / stock[:volume].to_f))
           end
 
           if (stock[:current_price] < stock[:low])

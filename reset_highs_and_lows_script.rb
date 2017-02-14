@@ -1,8 +1,11 @@
 stocks = Stock.all
 
+
 for stock in stocks
-  stock[:high] = stock[:current_price]
-  stock[:low] = stock[:current_price]
+  price = stock[:current_price]
+  stock[:high] = price
+  stock[:low] = price
+  stock[:open_price] = price
 
   stock.save
 end

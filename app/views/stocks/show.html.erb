@@ -16,12 +16,13 @@
     <div class="panel panel-default">
       <div class="panel-heading"><h4>Earnings</h4></div>
       <div class="panel-body">
-        <p>1st: <%= @stock.first %></p>
-        <p>2nd: <%= @stock.second %></p>
-        <p>3rd: <%= @stock.third %></p>
-        <p>Top 10: <%= @stock.top_ten %></p>
-        <p>Top 25: <%= @stock.top_twenty_five %></p>
-        <p>Made Cut: <%= @stock.made_cut %></p>
+        <p>1st -- $15 -- <%= @stock.first %> -- <%= @stock.first * 15%></p>
+        <p>1st -- $8 -- <%= @stock.second %> -- <%= @stock.second * 8%></p>
+	<p>1st -- $4 -- <%= @stock.third %> -- <%= @stock.third * 4%></p>
+	<p>1st -- $5 -- <%= @stock.top_ten %> -- <%= @stock.top_ten * 5%></p>
+	<p>1st -- $7 -- <%= @stock.top_twenty_five %> -- <%= @stock.top_twenty_five * 7%></p>
+        <p>1st -- $3 -- <%= @stock.made_cut %> -- <%= @stock.made_cut * 3%></p>
+	<p>Total Earnings: <%= @stock.earnings %>
       </div>
     </div>
   </div>
