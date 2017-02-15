@@ -14,10 +14,12 @@
     <tr <% @stocks.each do |stock| %> >
       <td><%= stock.symbol %></td>
       <td><%= link_to stock.name, stock %></td>
-      <td><%= stock.current_price %></td>
+      <td><%= '%.2f' % stock.current_price %></td>
       <td><%= stock.league %></td>
       <td><%= link_to 'Buy', new_holding_path({:stock_name => stock.name, :type => 'buy'}), class: "btn btn-success"%></td>
       <td><%= link_to 'Sell', new_holding_path({:stock_name => stock.name, :type => 'sell'}), class: "btn btn-danger"%></td>
+      <td><%= link_to 'Short', new_holding_path({:stock_name => stock.name, :type => 'short'}), class: "btn btn-success"%></td>
+      <td><%= link_to 'Cover', new_holding_path({:stock_name => stock.name, :type => 'cover'}), class: "btn btn-danger"%></td>
       <% if @current_user.admin? %>
         <td><%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-primary"%></td> 
         <td><%= link_to 'Delete', stock,  method: :delete,

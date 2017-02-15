@@ -7,7 +7,7 @@
       <%= f.text_field :stock, :value => params[:stock_name] %>
 
       <%= f.label :type_of_holding, "Type" %>
-      <%= f.select :type_of_holding, ['buy', 'sell'], :selected => params[:type]%>
+      <%= f.select :type_of_holding, ['buy', 'sell', 'short', 'cover'], :selected => params[:type]%>
  
       <%= f.label :quantity, "Quantity" %>
       <%= f.number_field :quantity %>

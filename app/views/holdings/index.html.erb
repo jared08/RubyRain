@@ -6,6 +6,7 @@
     <tr>
       <th>Symbol</th>
       <th>Name</th>
+      <th>Type</th>
       <th>Price at Purchase</th>
       <th>Quantity</th>
       <th>Current Price</th>
@@ -16,15 +17,23 @@
     <tr <% @holdings.each do |holding| %> >
       <td><%= holding.stock.symbol %></td>
       <td><%= link_to holding.stock.name, holding.stock %></td>
-      <td><%= holding.price_at_purchase %></td>
+      <td><%= holding.type_of_holding %></td>
+      <td><%= '%.2f' % holding.price_at_purchase %></td>
       <td><%= holding.quantity %></td>
-      <td><%= holding.stock.current_price %></td>
-      <td><%= holding.quantity * holding.stock.current_price %> </td>
-      <td><%= link_to 'Buy', new_holding_path({:stock_name => holding.stock.name, :type => 'buy'}), class: "btn btn-success"%></td>
-      <td><%= link_to 'Sell', new_holding_path({:stock_name => holding.stock.name, :type => 'sell'}), class: "btn btn-danger"%></td>      
+      <td><%= '%.2f' % holding.stock.current_price %></td>
+ 
+      <% if holding.type_of_holding == 'buy' %>
+        <td><%= '%.2f' % (holding.quantity * holding.stock.current_price) %> </td>
+        <td><%= link_to 'Buy More', new_holding_path({:stock_name => holding.stock.name, :type => 'buy'}), class: "btn btn-success"%></td>
+        <td><%= link_to 'Sell', new_holding_path({:stock_name => holding.stock.name, :type => 'sell'}), class: "btn btn-danger"%></td>
+      <% else %>
+        <td><%= '%.2f' % ((holding.quantity * holding.price_at_purchase) - (holding.quantity * (holding.stock.current_price - holding.price_at_purchase))) %> </td>
+        <td><%= link_to 'Short More', new_holding_path({:stock_name => holding.stock.name, :type => 'short'}), class: "btn btn-success"%></td>
+        <td><%= link_to 'Cover', new_holding_path({:stock_name => holding.stock.name, :type => 'cover'}), class: "btn btn-danger"%></td>
+      <% end %>
    </tr <% end %> >
   </tbody>
 </table>
 
-<h2>Cash: <%= current_user.cash %></h2>
-<h2>Account value: <%= (current_user.cash + @holdings_value) %></h2>
+<h2>Cash: <%= '%.2f' % current_user.cash %></h2>
+<h2>Account value: <%= '%.2f' % (current_user.cash + @holdings_value) %></h2>
