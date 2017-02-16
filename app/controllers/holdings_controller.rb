@@ -89,10 +89,12 @@ class HoldingsController < ApplicationController
         end
       else
         @holding = @holding[0] #to get array from activation record
+        
         if (@holding[:quantity] > new_quantity) # only selling/covering some
           total_quantity = @holding[:quantity] - new_quantity
-          final_params[:quantity] = total_quantity
-          @holding.update_attributes(final_params)
+          #final_params[:quantity] = total_quantity
+          @holding[:quantity] = total_quantity
+          #@holding.update_attributes(final_params)
           if @holding.save
 
             stock[:volume] = stock[:volume] - new_quantity
@@ -128,9 +130,9 @@ class HoldingsController < ApplicationController
             stock.save
 
             if (final_params[:type_of_holding] == 'sell')
-              current_user.update_attribute :cash, (current_user.cash + (stock_price * total))
+              current_user.update_attribute :cash, (current_user.cash + (stock_price * new_quantity))
             else
-              current_user.update_attribute :cash, (current_user.cash + (total * (@holding.price_at_purchase - stock_price)))
+              current_user.update_attribute :cash, (current_user.cash + (new_quantity * (@holding.price_at_purchase - stock_price)))
             end
 
             redirect_to holdings_url
@@ -139,7 +141,8 @@ class HoldingsController < ApplicationController
           end
 
         elsif (@holding[:quantity] = new_quantity) #selling/covering all
-          total = @holding[:quantity] #needed to calculate cash after sale
+          total_quantity = @holding[:quantity] #needed to calculate cash after sale
+          price_at_purchase = @holding[:price_at_purchase] #same
           Holding.find(@holding[:id]).destroy
  
 	  stock[:volume] = stock[:volume] - new_quantity
@@ -175,9 +178,9 @@ class HoldingsController < ApplicationController
             stock.save
 
           if (final_params[:type_of_holding] == 'sell')
-            current_user.update_attribute :cash, (current_user.cash + (stock_price * total))
+            current_user.update_attribute :cash, (current_user.cash + (stock_price * total_quantity))
           else
-	    current_user.update_attribute :cash, (current_user.cash + (total * (@holding.price_at_purchase - stock_price)))
+	    current_user.update_attribute :cash, (current_user.cash + (total_quantity * (price_at_purchase - stock_price)))
           end
           redirect_to holdings_url
         else
