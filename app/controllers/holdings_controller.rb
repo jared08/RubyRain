@@ -1,4 +1,5 @@
 class HoldingsController < ApplicationController
+  before_action :logged_in_user, only: [:new, :index]
 
   def new
     @holding = Holding.new
@@ -27,9 +28,11 @@ class HoldingsController < ApplicationController
         if (@holding.type_of_holding == 'buy' && final_params[:type_of_holding] == 'short')
           flash[:danger] = "Sorry you can't short a stock that you already bought.."
           redirect_to request.path
+          return
         elsif (@holding.type_of_holding == 'short' && final_params[:type_of_holding] == 'buy')
           flash[:danger] = "Sorry you can't buy a stock that you already have shorted.."
           redirect_to request.path
+          return
         else            
           total_quantity = new_quantity + @holding[:quantity]
 
@@ -78,9 +81,11 @@ class HoldingsController < ApplicationController
         if (final_params[:type_of_holding] == 'sell')
           flash[:danger] = "Sorry you can't sell a stock you haven't bought"
           redirect_to request.path
+          return
         else
           flash[:danger] = "Sorry you can't cover a stock you haven't shorted "
           redirect_to request.path
+          return
         end
       else
         @holding = @holding[0] #to get array from activation record
@@ -179,9 +184,11 @@ class HoldingsController < ApplicationController
           if (final_params[:type_of_holding] == 'sell')
             flash[:danger] = "Sorry you can't sell more stock than you own"
             redirect_to request.path
+            return
           else
             flash[:danger] = "Sorry you can't cover more stock that you have shorted "
             redirect_to request.path
+            return
           end    
         end
       end
@@ -205,6 +212,14 @@ class HoldingsController < ApplicationController
   private
     def holding_params
       params.require(:holding).permit(:stock, :type_of_holding, :quantity)
+    end
+
+    # Confirms a logged-in user.
+    def logged_in_user
+      unless logged_in?
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
     end
 
 end
