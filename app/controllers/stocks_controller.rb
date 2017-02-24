@@ -10,6 +10,10 @@ class StocksController < ApplicationController
   def create
     final_params = stock_params
     final_params[:open_price] = stock_params[:current_price]
+
+    initial_price = [stock_params[:current_price]]
+    final_params[:daily_prices] = prices
+
     @stock = Stock.new(final_params)
     @stock.save
 

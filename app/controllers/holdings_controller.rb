@@ -89,7 +89,7 @@ class HoldingsController < ApplicationController
         end
       else
         @holding = @holding[0] #to get array from activation record
-        
+        debugger
         if (@holding[:quantity] > new_quantity) # only selling/covering some
           total_quantity = @holding[:quantity] - new_quantity
           #final_params[:quantity] = total_quantity
@@ -140,7 +140,7 @@ class HoldingsController < ApplicationController
             render 'new'
           end
 
-        elsif (@holding[:quantity] = new_quantity) #selling/covering all
+        elsif (@holding[:quantity] == new_quantity) #selling/covering all
           total_quantity = @holding[:quantity] #needed to calculate cash after sale
           price_at_purchase = @holding[:price_at_purchase] #same
           Holding.find(@holding[:id]).destroy

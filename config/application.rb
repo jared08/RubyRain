@@ -8,6 +8,6 @@ Bundler.require(*Rails.groups)
 
 module RubyRain
   class Application < Rails::Application
-    config.current_tournament_index = 35
+    config.current_tournament_index = 34
   end
 end

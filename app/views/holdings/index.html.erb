@@ -6,7 +6,6 @@
     <tr>
       <th>Symbol</th>
       <th>Name</th>
-      <th>Type</th>
       <th>Quantity</th>
       <th>Price at Purchase</th>
       <th>Current Price</th>
@@ -18,7 +17,6 @@
     <tr <% @holdings.each do |holding| %> >
       <td><%= holding.stock.symbol %></td>
       <td><%= link_to holding.stock.name, holding.stock %></td>
-      <td><%= holding.type_of_holding %></td>
       <td><%= holding.quantity %></td>
       <td><%= '%.2f' % holding.price_at_purchase %></td>
       <td><%= '%.2f' % holding.stock.current_price %></td>

@@ -57,7 +57,7 @@ for player in players
           player[:third] = player[:third] + 1
           earnings = earnings + 4
         end
-        player[:earnings] = earnings
+        player[:earnings] = player[:earnings] + earnings
         player.save
       else
         puts('MISSED CUT')
