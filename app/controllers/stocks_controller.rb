@@ -11,8 +11,7 @@ class StocksController < ApplicationController
     final_params = stock_params
     final_params[:open_price] = stock_params[:current_price]
 
-    initial_price = [stock_params[:current_price]]
-    final_params[:daily_prices] = prices
+    final_params[:daily_prices] = [{time: Time.now, price: stock_params[:current_price]}]
 
     @stock = Stock.new(final_params)
     @stock.save

@@ -5,6 +5,7 @@ class Stock < ApplicationRecord
   store :player_info, accessors: [ ], coder: JSON
   serialize :player_news
 
+  #store :daily_prices, accessors: [ ], coder: JSON
   serialize :daily_prices
 
   has_many :player_tournaments

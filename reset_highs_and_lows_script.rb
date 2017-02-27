@@ -6,7 +6,8 @@ for stock in stocks
   stock[:high] = price
   stock[:low] = price
   stock[:open_price] = price
-  stock[:daily_prices].push(price)
+
+  stock[:daily_prices].push({time: Time.now, price: price})
 
   stock.save
 end
