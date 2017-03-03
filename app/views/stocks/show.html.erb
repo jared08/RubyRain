@@ -19,13 +19,15 @@
     <div class="panel panel-default">
       <div class="panel-heading"><h4>Earnings</h4></div>
       <div class="panel-body">
-        <p>1st -- $15 -- <%= @stock.first %> -- $<%= @stock.first * 15%></p>
-        <p>2nd -- $8 -- <%= @stock.second %> -- $<%= @stock.second * 8%></p>
-	<p>3rd -- $4 -- <%= @stock.third %> -- $<%= @stock.third * 4%></p>
-	<p>Top 10 -- $5 -- <%= @stock.top_ten %> -- $<%= @stock.top_ten * 5%></p>
-	<p>Top 25 -- $7 -- <%= @stock.top_twenty_five %> -- $<%= @stock.top_twenty_five * 7%></p>
-        <p>Made Cut -- $3 -- <%= @stock.made_cut %> -- $<%= @stock.made_cut * 3%></p>
-	<p>Total Earnings: $<%= @stock.earnings %>
+        <% if @golfer %>
+          <p>1st -- $15 -- <%= @golfer.first %> -- $<%= @golfer.first * 15%></p>
+          <p>2nd -- $8 -- <%= @golfer.second %> -- $<%= @golfer.second * 8%></p>
+	  <p>3rd -- $4 -- <%= @golfer.third %> -- $<%= @golfer.third * 4%></p>
+	  <p>Top 10 -- $5 -- <%= @golfer.top_ten %> -- $<%= @golfer.top_ten * 5%></p>
+	  <p>Top 25 -- $7 -- <%= @golfer.top_twenty_five %> -- $<%= @golfer.top_twenty_five * 7%></p>
+          <p>Made Cut -- $3 -- <%= @golfer.made_cut %> -- $<%= @golfer.made_cut * 3%></p>
+	  <p>Total Earnings: $<%= @stock.earnings %>
+        <% end %>
       </div>
     </div>
   </div>
@@ -46,37 +48,47 @@
         </div>
       </div>
     </div>
-    <h3>GRAPH</h3>
-    <% prices = @stock.daily_prices.collect{|i| [i[:time],i[:price]]} %>
-    <%= line_chart prices, library: {curveType: "none"} %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>Graph</h4></div>
+      <div class="panel-body">
+        <% prices = @stock.daily_prices.collect{|i| [i[:time],i[:price]]} %>
+        <%= line_chart prices, library: {curveType: "none"} %>
+      </div>
+    </div>
   </div>
   <div class="col-sm-3">
      <div class="panel panel-default">
       <div class="panel-heading"><h4>Events</h4></div>
       <div class="panel-body">
-
-      <table class="table">
-        <tbody>
-          <tr <% @four_tournaments.each do |tournament| %> >
-            <td><%= tournament[:tournament_info]["Name"] %></td>
-            <% if PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id]) %>
-              <% if PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id])[:player_tournament_info]["Rank"] != nil %>
-	        <td><%= PlayerTournament.find_by(stock_id: @stock.id, tournament_id: tournament[:id])[:player_tournament_info]["Rank"] %></td>
-              <% else %>
-                <% if tournament[:tournament_info]["IsOver"] == true %>
-                  <td>Missed Cut</td>
+      
+        <% if @golfer %>
+          <table class="table">
+            <tbody>
+              <tr <% @four_tournaments.each do |tournament| %> >
+                <td><%= tournament[:tournament_info]["Name"] %></td>
+                <% if GolferTournament.find_by(golfer_id: @golfer.id, tournament_id: tournament[:id]) %>
+                  <% if GolferTournament.find_by(golfer_id: @golfer.id, tournament_id: tournament[:id])[:golfer_tournament_info]["Rank"] != nil %>
+	            <td><%= GolferTournament.find_by(golfer_id: @golfer.id, tournament_id: tournament[:id])[:golfer_tournament_info]["Rank"] %></td>
+                  <% else %>
+                    <% if tournament[:tournament_info]["IsOver"] == true %>
+                      <td>Missed Cut</td>
+                    <% else %>
+                      <td>TBD</td>
+                    <% end %>
+                  <% end %>
                 <% else %>
-                  <td>TBD</td>
+                  <% if tournament[:tournament_info]["IsOver"] == true %>
+                    <td>DNP</td>
+                  <% else %>
+                    <td>Not playing</td>
+                  <% end %>
                 <% end %>
-              <% end %>
-            <% else %>
-              <td>Not playing</td>
-            <% end %>
-            <td> <%= Time.parse(tournament[:tournament_info]["StartDate"]).strftime("%-m/%-d") %>
-          </tr <% end %> >
-        </tbody>
-      </table>
-      <p><%= link_to "More Events", stock_tournaments_path(@stock) %></p>
+                <td> <%= Time.parse(tournament[:tournament_info]["StartDate"]).strftime("%-m/%-d") %>
+              </tr <% end %> >
+            </tbody>
+          </table>
+          <p><%= link_to "More Events", stock_tournaments_path(@stock) %></p>
+        <% end %>
 
       </div>
     </div>
@@ -115,7 +127,7 @@
          <p><%= link_to @stock.player_news[0]["Source"], "http://#{@stock.player_news[0]["Source"]}" %></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

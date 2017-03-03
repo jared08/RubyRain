@@ -1,13 +1,15 @@
 #should run every monday morning
 
-players = Stock.all
+players = Stock.where(sport: "Golf") #need the stock as well as the golfer to get access to name and api specific id
+
 tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
 tournament[:tournament_info]["IsOver"] = true
 puts(tournament[:tournament_info]["Name"])
 
-for player in players
-  pt = PlayerTournament.where("stock_id = ? AND tournament_id = ?", player.id, tournament.id)
-  if (pt.empty?)
+for player in players 
+  golfer = Golfer.find_by(stock_id: player.id)
+  gt = GolferTournament.where("golfer_id = ? AND tournament_id = ?", golfer.id, tournament.id)
+  if (gt.empty?)
     puts(player[:name].to_s + " did not play in " + tournament[:tournament_info]["Name"].to_s)
   else
     puts(player[:name].to_s + " played in " + tournament[:tournament_info]["Name"].to_s)
@@ -30,33 +32,34 @@ for player in players
 
       info.delete("Rounds") #maybe want later but don't see the need for storing info on every single hole
 
-      player_tournament = PlayerTournament.find_by(stock_id: player.id, tournament_id: tournament.id)
-      player_tournament[:player_tournament_info] = info
-      player_tournament.save
+      golfer_tournament = GolferTournament.find_by(golfer_id: golfer.id, tournament_id: tournament.id)
+      golfer_tournament[:golfer_tournament_info] = info
+      golfer_tournament.save
 
       if (info["Rank"] != 'nil') #can switch to MadeCut when data isn't scrambled
         puts(info["Rank"])
 
-        player[:made_cut] = player[:made_cut] + 1
+        golfer[:made_cut] = golfer[:made_cut] + 1
         earnings = 3
         if (info["Rank"].to_i < 25)
-          player[:top_twenty_five] = player[:top_twenty_five] + 1
+          golfer[:top_twenty_five] = golfer[:top_twenty_five] + 1
           earnings = earnings + 7
         end
         if (info["Rank"].to_i < 10)
-          player[:top_ten] = player[:top_ten] + 1
+          golfer[:top_ten] = golfer[:top_ten] + 1
           earnings = earnings + 5
         end
         if (info["Rank"].to_i == 1)
-          player[:first] = player[:first] + 1
+          golfer[:first] = golfer[:first] + 1
           earnings = earnings + 15 
         elsif (info["Rank"].to_i == 2)
-          player[:second] = player[:second] + 1
+          golfer[:second] = golfer[:second] + 1
           earnings = earnings + 8
         elsif (info["Rank"].to_i == 3)
-          player[:third] = player[:third] + 1
+          golfer[:third] = golfer[:third] + 1
           earnings = earnings + 4
         end
+        golfer.save
         player[:earnings] = player[:earnings] + earnings
         player.save
       else

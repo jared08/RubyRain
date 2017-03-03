@@ -7,7 +7,7 @@
       <th>Symbol</th>
       <th>Name</th>
       <th>Current Price</th>
-      <th>League</th>
+      <th>Sport</th>
      </tr>
   </thead>
   <tbody>
@@ -15,7 +15,7 @@
       <td><%= stock.symbol %></td>
       <td><%= link_to stock.name, stock %></td>
       <td><%= '%.2f' % stock.current_price %></td>
-      <td><%= stock.league %></td>
+      <td><%= stock.sport %></td>
       <td><%= link_to 'Buy', new_holding_path({:stock_name => stock.name, :type => 'buy'}), class: "btn btn-success"%></td>
       <td><%= link_to 'Sell', new_holding_path({:stock_name => stock.name, :type => 'sell'}), class: "btn btn-danger"%></td>
       <td><%= link_to 'Short', new_holding_path({:stock_name => stock.name, :type => 'short'}), class: "btn btn-success"%></td>

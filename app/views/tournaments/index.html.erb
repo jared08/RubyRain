@@ -12,13 +12,13 @@
       <td><%= tournament[:tournament_info]["Name"] %></td>      
       <td><%= tournament[:tournament_info]["StartDate"] %></td>
       <% query_params = Hash.new %>
-      <% query_params[:stock_id] = @stock_id %>
+      <% query_params[:golfer_id] = @golfer_id %>
       <% query_params[:tournament_id] = tournament[:id] %>
-      <% if PlayerTournament.find_by(query_params) %>
-        <% if PlayerTournament.find_by(query_params)[:player_tournament_info]["Rank"] == nil %>
+      <% if GolferTournament.find_by(query_params) %>
+        <% if GolferTournament.find_by(query_params)[:golfer_tournament_info]["Rank"] == nil %>
           <td>Missed Cut</td>
         <% else %>
-          <td><%= PlayerTournament.find_by(query_params)[:player_tournament_info]["Rank"] %></td>
+          <td><%= GolferTournament.find_by(query_params)[:golfer_tournament_info]["Rank"] %></td>
         <% end %>
       <% else %>
         <td>DNP</td>
@@ -42,9 +42,9 @@
       <td><%= @upcoming_tournament[:tournament_info]["Name"] %></td>
       <td><%= @upcoming_tournament[:tournament_info]["StartDate"] %></td>
       <% query_params = Hash.new %>
-      <% query_params[:stock_id] = @stock_id %>
+      <% query_params[:golfer_id] = @golfer_id %>
       <% query_params[:tournament_id] = @upcoming_tournament[:id] %>
-      <% if PlayerTournament.find_by(query_params) %>
+      <% if GolferTournament.find_by(query_params) %>
         <td>Playing</td>
       <% else %>
         <td>Not Playing</td>

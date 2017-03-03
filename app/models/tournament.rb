@@ -1,6 +1,6 @@
 class Tournament < ApplicationRecord
-  has_many :player_tournaments
-  has_many :stocks, through: :player_tournaments
+  has_many :golfer_tournaments
+  has_many :golfer, through: :golfer_tournaments
 
   store :tournament_info, accessors: [ ], coder: JSON
 end

@@ -89,7 +89,6 @@ class HoldingsController < ApplicationController
         end
       else
         @holding = @holding[0] #to get array from activation record
-        debugger
         if (@holding[:quantity] > new_quantity) # only selling/covering some
           total_quantity = @holding[:quantity] - new_quantity
           #final_params[:quantity] = total_quantity

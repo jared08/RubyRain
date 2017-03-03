@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first: 1
+  second: 1
+  third: 1
+  top_ten: 1
+  top_twenty_five: 1
+  made_cut: 1
+
+two:
+  first: 1
+  second: 1
+  third: 1
+  top_ten: 1
+  top_twenty_five: 1
+  made_cut: 1

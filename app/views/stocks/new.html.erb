@@ -15,8 +15,8 @@
       <%= f.label :current_price, "Current Price" %>
       <%= f.number_field :current_price %>
 
-      <%= f.label :league, "League" %>
-      <%= f.text_field :league %>
+      <%= f.label :sport, "Sport" %>
+      <%= f.select :sport, ['Golf']%>
 
       <%= f.submit "Add stock", class: "btn btn-primary" %>
     <% end %>

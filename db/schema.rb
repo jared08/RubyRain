@@ -10,7 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224202646) do
+ActiveRecord::Schema.define(version: 20170303195402) do
+
+  create_table "golfer_tournaments", force: :cascade do |t|
+    t.integer  "tournament_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "golfer_id"
+    t.string   "golfer_tournament_info"
+    t.index ["golfer_id"], name: "index_golfer_tournaments_on_golfer_id"
+    t.index ["tournament_id"], name: "index_golfer_tournaments_on_tournament_id"
+  end
+
+  create_table "golfers", force: :cascade do |t|
+    t.integer  "first"
+    t.integer  "second"
+    t.integer  "third"
+    t.integer  "top_ten"
+    t.integer  "top_twenty_five"
+    t.integer  "made_cut"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "stock_id"
+    t.index ["stock_id"], name: "index_golfers_on_stock_id"
+  end
 
   create_table "holdings", force: :cascade do |t|
     t.integer  "user_id"
@@ -24,40 +47,16 @@ ActiveRecord::Schema.define(version: 20170224202646) do
     t.index ["user_id"], name: "index_holdings_on_user_id"
   end
 
-  create_table "player_tournaments", force: :cascade do |t|
-    t.integer  "stock_id"
-    t.integer  "tournament_id"
-    t.text     "player_tournament_info"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.index ["stock_id"], name: "index_player_tournaments_on_stock_id"
-    t.index ["tournament_id"], name: "index_player_tournaments_on_tournament_id"
-  end
-
-  create_table "schedules", force: :cascade do |t|
-    t.text     "schedule"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "year"
-  end
-
   create_table "stocks", force: :cascade do |t|
     t.string   "name"
     t.float    "current_price"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "league"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "symbol"
     t.float    "open_price"
     t.integer  "player_id"
     t.text     "player_info"
     t.text     "player_news"
-    t.integer  "first"
-    t.integer  "second"
-    t.integer  "third"
-    t.integer  "top_ten"
-    t.integer  "made_cut"
-    t.integer  "top_twenty_five"
     t.float    "high"
     t.float    "low"
     t.float    "season_high"
@@ -65,19 +64,7 @@ ActiveRecord::Schema.define(version: 20170224202646) do
     t.integer  "volume"
     t.integer  "earnings"
     t.text     "daily_prices"
-  end
-
-  create_table "stocks_tags", force: :cascade do |t|
-    t.integer "stock_id"
-    t.integer "tag_id"
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "stock_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["stock_id"], name: "index_tags_on_stock_id"
+    t.string   "sport"
   end
 
   create_table "tournaments", force: :cascade do |t|

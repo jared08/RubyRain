@@ -2,8 +2,9 @@ class TournamentsController < ApplicationController
   before_action :logged_in_user, only: [:index]
   def index
 
-    @stock_id = params[:stock_id] 
-    
+    stock_id = params[:stock_id]
+    @golfer_id = Golfer.find_by(stock_id: stock_id).id
+    puts(@golfer_id)   
     tournaments = Tournament.all
 
     @completed_tournaments = tournaments.find_all {|x| x[:tournament_info]["IsOver"] == true}

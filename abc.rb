@@ -1,6 +1,3 @@
-#should run every friday (6 days before tournament)
-
-
 tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
 puts(tournament[:tournament_info]["Name"])
 
@@ -17,26 +14,4 @@ request.body = "{body}"
 response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
   http.request(request)
 end
-
-info = JSON.parse(response.body)
-
-players = Stock.where(sport: "Golf")
-params = Hash.new
-
-for player in players
-  if (info.any? {|h| h["PlayerID"] == player[:player_info]["PlayerID"]})
-    puts(player[:name].to_s + " is playing!")
-
-    golfer = Golfer.find_by(stock_id: player.id)
-
-    params[:tournament] = tournament
-
-    golfer_tournament = GolferTournament.new
-    golfer_tournament = golfer.golfer_tournaments.create(params)
-    golfer_tournament.save
-
-  else
-    puts(player[:name].to_s + " is not playing..")
-  end
-end
-
+puts response.body
