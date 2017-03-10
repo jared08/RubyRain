@@ -18,4 +18,8 @@ Rails.application.routes.draw do
     resources :tournaments
   end
   resources :holdings
+
+  get "/refresh" => 'holdings#refresh', as: 'refresh'
+
+  resources :posts
 end

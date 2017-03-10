@@ -1,19 +1,47 @@
 <% provide(:title, 'Transaction') %>
-<h1>Transaction</h1>
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6">
+    <h1>Trade a stock</h1>
     <%= form_for(@holding) do |f| %>
-      <%= f.label :stock, "Stock" %>
-      <%= f.text_field :stock, :value => params[:stock_name] %>
+      <%= f.label :symbol, "Symbol" %>
+      <%= f.text_field :symbol, :value => params[:stock_symbol] %>
 
       <%= f.label :type_of_holding, "Type" %>
       <%= f.select :type_of_holding, ['buy', 'sell', 'short', 'cover'], :selected => params[:type]%>
- 
+
       <%= f.label :quantity, "Quantity" %>
       <%= f.number_field :quantity %>
- 
-      <%= f.submit "Submit", class: "btn btn-primary" %>
+
+      <%= f.submit "Review", "data-target" => "#reviewModal", class: "btn btn-primary", "data-toggle" => "modal" %>
     <% end %>
+  </div>
+  <div class="col-md-6" id=stock_info>
+    <h1>STOCK INFO</h1>
+    <% stock = Stock.find_by(symbol: params[:stock_symbol]) %>
+<%#    <%= render partial: 'refreshable_info', locals: { stock: stock} %>
+    <div id="refreshable_info">
+      <p><%= stock.name + " (" + stock.symbol + ")" %></p>
+      <p><%= "$" + '%.2f' % stock.current_price.to_s + " $" + '%.2f' % (stock.current_price - stock.open_price).to_s + " " + '%.2f' % (((stock.current_price - stock.open_price) / stock.open_price) * 100) + "%" %></p>
+
+      <%= link_to "Refresh", refresh_path(:symbol => stock.symbol), :remote => true %>
+    </div>
   </div>
 </div>
 
+<div class="modal fade in" id="reviewModal" role="dialog" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        <h4 class="modal-title">REVIEW</h4>
+      </div>
+      <div class="modal-body">
+        <p>REVIEW</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

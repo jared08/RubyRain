@@ -1,16 +1,24 @@
 class HoldingsController < ApplicationController
   before_action :logged_in_user, only: [:new, :index]
+  respond_to :html, :js
 
   def new
     @holding = Holding.new
     @stock_id = params[:format]
   end
 
+  def refresh
+    @stock = Stock.find_by(symbol: params[:symbol])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def create
     final_params = holding_params
-    stock_name = final_params[:stock]
-    stock = Stock.find_by(name: stock_name)
-    final_params.delete("stock") #removes the stock name retrieved by the form
+    stock_symbol = final_params[:symbol]
+    stock = Stock.find_by(symbol: stock_symbol)
+    final_params.delete("symbol") #removes the stock name retrieved by the form
     final_params[:stock] = stock #and replaces it with actual stock
 
     stock_price = stock[:current_price]
@@ -210,10 +218,9 @@ class HoldingsController < ApplicationController
     end
   end
 
-
   private
     def holding_params
-      params.require(:holding).permit(:stock, :type_of_holding, :quantity)
+      params.require(:holding).permit(:symbol, :type_of_holding, :quantity)
     end
 
     # Confirms a logged-in user.

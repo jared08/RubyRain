@@ -4,10 +4,10 @@
    <h3> <%= '%.2f' % @stock.current_price %> </h3>
    <h4> <%= '%.2f' % (@stock.current_price - @stock.open_price) %> (<%= '%.2f' % ((@stock.current_price - @stock.open_price) / (@stock.open_price)) %> %) </h4>
    <h4> as of <%= @time.strftime("%I:%M %p") %> </h4> <nobr>
-   <button type="button" class="btn btn-success"><%= link_to 'Buy', new_holding_path({:stock_name => @stock.name, :type => 'buy'}) %></button>
-   <button type="button" class="btn btn-danger"><%= link_to 'Sell', new_holding_path({:stock_name => @stock.name, :type => 'sell'}) %></button>
-   <button type="button" class="btn btn-success"><%= link_to 'Short', new_holding_path({:stock_name => @stock.name, :type => 'short'}) %></button>
-   <button type="button" class="btn btn-danger"><%= link_to 'Cover', new_holding_path({:stock_name => @stock.name, :type => 'cover'}) %></button>
+   <button type="button" class="btn btn-success"><%= link_to 'Buy', new_holding_path({:stock_symbol => @stock.symbol, :type => 'buy'}) %></button>
+   <button type="button" class="btn btn-danger"><%= link_to 'Sell', new_holding_path({:stock_symbol => @stock.symbol, :type => 'sell'}) %></button>
+   <button type="button" class="btn btn-success"><%= link_to 'Short', new_holding_path({:stock_symbol => @stock.symbol, :type => 'short'}) %></button>
+   <button type="button" class="btn btn-danger"><%= link_to 'Cover', new_holding_path({:stock_symbol => @stock.symbol, :type => 'cover'}) %></button>
 
 </div>
 
