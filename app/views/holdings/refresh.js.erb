@@ -1,1 +1,1 @@
-$("#stock_info").html("<%= escape_javascript(render partial: 'refreshable_info', locals: { stock: @stock } ) %>");
+$("#stock_info").html("<%= escape_javascript(render partial: 'stocks/stock_info', locals: { stock: @stock } ) %>");

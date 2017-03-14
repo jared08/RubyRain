@@ -4,11 +4,12 @@ class HoldingsController < ApplicationController
 
   def new
     @holding = Holding.new
-    @stock_id = params[:format]
+    @stock = Stock.find_by(symbol: params[:stock_symbol])
   end
 
   def refresh
-    @stock = Stock.find_by(symbol: params[:symbol])
+    @stock = Stock.find_by(symbol: params[:stock_symbol])
+    debugger
     respond_to do |format|
       format.js
     end

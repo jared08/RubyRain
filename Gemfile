@@ -13,6 +13,7 @@ gem 'bootstrap-sass', '3.3.6'
 
 gem 'bcrypt', '3.1.11'
 
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -44,7 +45,10 @@ gem 'jbuilder', '~> 2.5'
 gem "chartkick"
 gem 'groupdate'
 
-# for respond to for ajax
+# for tables
+gem 'jquery-datatables-rails', '~> 3.4.0'
+
+# for respond for ajax
 gem 'responders'
 
 group :development, :test do
@@ -58,6 +62,10 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -65,3 +73,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 #gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'kaminari'

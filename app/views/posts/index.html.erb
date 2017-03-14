@@ -1,6 +1,6 @@
 <h1>POSTS</h1>
 <% @posts.each do |post| %>
-  <p><%= post.title %></p>
+  <p><%= link_to post.title, post %></p>
   <p><%= post.content %></p>
 <% end %>
 

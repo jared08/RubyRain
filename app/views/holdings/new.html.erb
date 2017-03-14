@@ -12,21 +12,13 @@
       <%= f.label :quantity, "Quantity" %>
       <%= f.number_field :quantity %>
 
-      <%= f.submit "Review", "data-target" => "#reviewModal", class: "btn btn-primary", "data-toggle" => "modal" %>
+      <%= f.submit "Submit", :onclick => "confirm('Are you sure?')", class: "btn btn-primary" %>
     <% end %>
   </div>
-  <div class="col-md-6" id=stock_info>
-    <h1>STOCK INFO</h1>
-    <% stock = Stock.find_by(symbol: params[:stock_symbol]) %>
-<%#    <%= render partial: 'refreshable_info', locals: { stock: stock} %>
-    <div id="refreshable_info">
-      <p><%= stock.name + " (" + stock.symbol + ")" %></p>
-      <p><%= "$" + '%.2f' % stock.current_price.to_s + " $" + '%.2f' % (stock.current_price - stock.open_price).to_s + " " + '%.2f' % (((stock.current_price - stock.open_price) / stock.open_price) * 100) + "%" %></p>
-
-      <%= link_to "Refresh", refresh_path(:symbol => stock.symbol), :remote => true %>
-    </div>
+  <div id="stock_info">
+    <p>TEST</p>
+    <%= render partial: 'stocks/stock_info', locals: { stock: @stock} %>
   </div>
-</div>
 
 <div class="modal fade in" id="reviewModal" role="dialog" >
   <div class="modal-dialog modal-lg">

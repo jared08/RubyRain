@@ -1,7 +1,7 @@
 <% provide(:title, 'All stocks') %>
 <h1>All stocks</h1>
 
-<table class="table">
+<table id="stock_table" class="table">
   <thead>
     <tr>
       <th>Symbol</th>
@@ -16,15 +16,6 @@
       <td><%= link_to stock.name, stock %></td>
       <td><%= '%.2f' % stock.current_price %></td>
       <td><%= stock.sport %></td>
-      <td><%= link_to 'Buy', new_holding_path({:stock_symbol => stock.symbol, :type => 'buy'}), class: "btn btn-success"%></td>
-      <td><%= link_to 'Sell', new_holding_path({:stock_symbol => stock.symbol, :type => 'sell'}), class: "btn btn-danger"%></td>
-      <td><%= link_to 'Short', new_holding_path({:stock_symbol => stock.symbol, :type => 'short'}), class: "btn btn-success"%></td>
-      <td><%= link_to 'Cover', new_holding_path({:stock_symbol => stock.symbol, :type => 'cover'}), class: "btn btn-danger"%></td>
-      <% if @current_user.admin? %>
-        <td><%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-primary"%></td> 
-        <td><%= link_to 'Delete', stock,  method: :delete,
-                data: { confirm: "You sure?" },  class: "btn btn-primary"%></td>
-      <% end %>
     </tr <% end %> >
   </tbody>
 </table>
@@ -33,3 +24,10 @@
   <%= link_to 'Add new stock', new_stock_path, class: "btn btn-primary"%>
 <% end %>
 
+<script>
+  $(document).ready(function() {
+    $('#stock_table').DataTable( {
+        "order": [[ 3, "desc" ]]
+    } );
+} );
+</script>

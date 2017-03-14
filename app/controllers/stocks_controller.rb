@@ -1,4 +1,9 @@
 class StocksController < ApplicationController
+  def index
+    @grid = StocksGrid.new(params[:stocks_grid]) do |scope|
+      scope.page(params[:page])
+    end
+  end
   before_action :logged_in_user, only: [:new, :show, :index]
   before_action :admin_user, only: [:edit, :update, :destroy]
   before_action :correct_stock, only: [:edit, :update]
@@ -198,8 +203,24 @@ class StocksController < ApplicationController
       end
  
       golfer.save
+
       @stock[:earnings] = (golfer[:made_cut] * 3) + (golfer[:top_twenty_five] * 7) + (golfer[:top_ten] * 5) + (golfer[:third] * 4) +
           (golfer[:second] * 8) + (golfer[:first] * 15)
+
+      url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:player_id].to_s
+      uri = URI(url)
+
+      request = Net::HTTP::Get.new(uri.request_uri)
+      request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
+      request.body = "{body}"
+
+      response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+        http.request(request)
+      end
+
+      @stock[:player_news] = JSON.parse(response.body)
+      @stock.save
+
 
       if @stock.save
         flash[:success] = "You added a stock!"
