@@ -27,7 +27,10 @@
 <script>
   $(document).ready(function() {
     $('#stock_table').DataTable( {
-        "order": [[ 3, "desc" ]]
+        "order": [[ 3, "desc" ]],
+        "buttons": [
+            'copy', 'excel', 'pdf'
+        ]
     } );
 } );
 </script>
