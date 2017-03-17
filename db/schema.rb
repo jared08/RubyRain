@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310151017) do
+ActiveRecord::Schema.define(version: 20170317165451) do
 
-  create_table "golfer_tournaments", force: :cascade do |t|
+  create_table "golfer_tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "tournament_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "golfer_id"
-    t.string   "golfer_tournament_info"
-    t.index ["golfer_id"], name: "index_golfer_tournaments_on_golfer_id"
-    t.index ["tournament_id"], name: "index_golfer_tournaments_on_tournament_id"
+    t.text     "golfer_tournament_info", limit: 65535
+    t.index ["golfer_id"], name: "index_golfer_tournaments_on_golfer_id", using: :btree
+    t.index ["tournament_id"], name: "index_golfer_tournaments_on_tournament_id", using: :btree
   end
 
-  create_table "golfers", force: :cascade do |t|
+  create_table "golfers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "first"
     t.integer  "second"
     t.integer  "third"
@@ -32,67 +32,67 @@ ActiveRecord::Schema.define(version: 20170310151017) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "stock_id"
-    t.index ["stock_id"], name: "index_golfers_on_stock_id"
+    t.index ["stock_id"], name: "index_golfers_on_stock_id", using: :btree
   end
 
-  create_table "holdings", force: :cascade do |t|
+  create_table "holdings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "stock_id"
     t.string   "type_of_holding"
     t.integer  "quantity"
-    t.float    "price_at_purchase"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["stock_id"], name: "index_holdings_on_stock_id"
-    t.index ["user_id"], name: "index_holdings_on_user_id"
+    t.float    "price_at_purchase", limit: 24
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["stock_id"], name: "index_holdings_on_stock_id", using: :btree
+    t.index ["user_id"], name: "index_holdings_on_user_id", using: :btree
   end
 
-  create_table "posts", force: :cascade do |t|
+  create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
-    t.text     "content"
+    t.text     "content",    limit: 65535
     t.integer  "user_id"
     t.string   "tags"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_posts_on_user_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
   end
 
-  create_table "stocks", force: :cascade do |t|
+  create_table "stocks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
-    t.float    "current_price"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.float    "current_price", limit: 24
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "symbol"
-    t.float    "open_price"
+    t.float    "open_price",    limit: 24
     t.integer  "player_id"
-    t.text     "player_info"
-    t.text     "player_news"
-    t.float    "high"
-    t.float    "low"
-    t.float    "season_high"
-    t.float    "season_low"
+    t.text     "player_info",   limit: 65535
+    t.text     "player_news",   limit: 65535
+    t.float    "high",          limit: 24
+    t.float    "low",           limit: 24
+    t.float    "season_high",   limit: 24
+    t.float    "season_low",    limit: 24
     t.integer  "volume"
     t.integer  "earnings"
-    t.text     "daily_prices"
+    t.text     "daily_prices",  limit: 65535
     t.string   "sport"
   end
 
-  create_table "tournaments", force: :cascade do |t|
-    t.text     "tournament_info"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+  create_table "tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text     "tournament_info", limit: 65535
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "index"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.string   "password_digest"
-    t.boolean  "admin",           default: false
-    t.float    "cash",            default: 25000.0
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.boolean  "admin",                      default: false
+    t.float    "cash",            limit: 24, default: 25000.0
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
 end
