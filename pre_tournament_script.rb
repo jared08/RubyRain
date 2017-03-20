@@ -18,13 +18,13 @@ response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https'
   http.request(request)
 end
 
-info = JSON.parse(response.body)
+tournament_info = JSON.parse(response.body)
 
 players = Stock.where(sport: "Golf")
 params = Hash.new
 
 for player in players
-  if (info.any? {|h| h["PlayerID"] == player[:player_info]["PlayerID"]})
+  if (tournament_info.any? {|h| h["PlayerID"] == player[:player_info]["PlayerID"]})
     puts(player[:name].to_s + " is playing!")
 
     golfer = Golfer.find_by(stock_id: player.id)
