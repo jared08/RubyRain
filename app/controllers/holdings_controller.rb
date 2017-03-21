@@ -9,7 +9,6 @@ class HoldingsController < ApplicationController
 
   def refresh
     @stock = Stock.find_by(symbol: params[:stock_symbol])
-    debugger
     respond_to do |format|
       format.js
     end

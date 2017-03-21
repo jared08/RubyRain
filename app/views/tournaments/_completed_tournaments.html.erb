@@ -1,0 +1,29 @@
+<h1>Completed Tournaments</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Rank</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr <% completed_tournaments.reverse.each do |tournament| %> >
+      <td><%= tournament[:tournament_info]["Name"] %></td>
+      <td><%= tournament[:tournament_info]["StartDate"] %></td>
+      <% query_params = Hash.new %>
+      <% query_params[:golfer_id] = golfer_id %>
+      <% query_params[:tournament_id] = tournament[:id] %>
+      <% if GolferTournament.find_by(query_params) %>
+        <% if GolferTournament.find_by(query_params)[:golfer_tournament_info]["Rank"] == nil %>
+          <td>Missed Cut</td>
+        <% else %>
+          <td><%= GolferTournament.find_by(query_params)[:golfer_tournament_info]["Rank"] %></td>
+        <% end %>
+      <% else %>
+        <td>DNP</td>
+      <% end %>
+
+    </tr <% end %> >
+  </tbody>
+</table>

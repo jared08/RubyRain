@@ -1,9 +1,4 @@
 class StocksController < ApplicationController
-  def index
-    @grid = StocksGrid.new(params[:stocks_grid]) do |scope|
-      scope.page(params[:page])
-    end
-  end
   before_action :logged_in_user, only: [:new, :show, :index]
   before_action :admin_user, only: [:edit, :update, :destroy]
   before_action :correct_stock, only: [:edit, :update]

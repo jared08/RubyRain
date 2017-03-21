@@ -1,0 +1,27 @@
+<table id="stock_table" class="table">
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Name</th>
+      <th>Current Price</th>
+      <th>Sport</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr <% stocks.each do |stock| %> >
+      <td><%= stock.symbol %></td>
+      <td><%= link_to stock.name, stock %></td>
+      <td><%= '%.2f' % stock.current_price %></td>
+      <td><%= stock.sport %></td>
+    </tr <% end %> >
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function() {
+    $('#stock_table').DataTable( {
+        "order": [[ 3, "desc" ]]
+    } );
+} );
+</script>
+

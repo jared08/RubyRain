@@ -1,0 +1,14 @@
+<div class="header">
+  <h3> <%= stock.name %> (<%= stock.symbol %>) </h3>
+  <h3> <%= '%.2f' % stock.current_price %> </h3>
+  <h4> <%= '%.2f' % (stock.current_price - stock.open_price) %> (<%= '%.2f' % ((stock.current_price - stock.open_price) / (stock.open_price)) %> %) </h4>
+  <h4> as of <%= time.strftime("%I:%M %p") %> </h4> <nobr>
+  <button type="button" class="btn btn-success"><%= link_to 'Buy', new_holding_path({:stock_symbol => stock.symbol, :type => 'buy'}) %></button>
+  <button type="button" class="btn btn-danger"><%= link_to 'Sell', new_holding_path({:stock_symbol => stock.symbol, :type => 'sell'}) %></button>
+  <button type="button" class="btn btn-success"><%= link_to 'Short', new_holding_path({:stock_symbol => stock.symbol, :type => 'short'}) %></button>
+  <button type="button" class="btn btn-danger"><%= link_to 'Cover', new_holding_path({:stock_symbol => stock.symbol, :type => 'cover'}) %></button>
+  <% if current_user.admin? %>
+    <%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-primary"%>
+    <%= link_to 'Delete', stock,  method: :delete, data: { confirm: "You sure?" },  class: "btn btn-primary"%>
+  <% end %>
+</div>

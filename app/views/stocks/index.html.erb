@@ -1,36 +1,11 @@
 <% provide(:title, 'All stocks') %>
 <h1>All stocks</h1>
 
-<table id="stock_table" class="table">
-  <thead>
-    <tr>
-      <th>Symbol</th>
-      <th>Name</th>
-      <th>Current Price</th>
-      <th>Sport</th>
-     </tr>
-  </thead>
-  <tbody>
-    <tr <% @stocks.each do |stock| %> >
-      <td><%= stock.symbol %></td>
-      <td><%= link_to stock.name, stock %></td>
-      <td><%= '%.2f' % stock.current_price %></td>
-      <td><%= stock.sport %></td>
-    </tr <% end %> >
-  </tbody>
-</table>
+<div id="stocks_table">
+  <%= render partial: 'stocks_table', locals: { stocks: @stocks} %>
+</div>
 
 <% if @current_user.admin? %>
   <%= link_to 'Add new stock', new_stock_path, class: "btn btn-primary"%>
 <% end %>
 
-<script>
-  $(document).ready(function() {
-    $('#stock_table').DataTable( {
-        "order": [[ 3, "desc" ]],
-        "buttons": [
-            'copy', 'excel', 'pdf'
-        ]
-    } );
-} );
-</script>

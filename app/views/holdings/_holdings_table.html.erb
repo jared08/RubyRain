@@ -1,0 +1,35 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price at Purchase</th>
+      <th>Current Price</th>
+      <th>Unrealized Gain/Loss</th>
+      <th>Current Balance</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr <% holdings.each do |holding| %> >
+      <td><%= holding.stock.symbol %></td>
+      <td><%= link_to holding.stock.name, holding.stock %></td>
+      <td><%= holding.quantity %></td>
+      <td><%= '%.2f' % holding.price_at_purchase %></td>
+      <td><%= '%.2f' % holding.stock.current_price %></td>
+      <% if holding.type_of_holding == 'buy' %>
+        <td><%= '%.2f' % ((((holding.quantity * holding.stock.current_price) - (holding.quantity * holding.price_at_purchase)) /
+                (holding.quantity * holding.price_at_purchase)) * 100) %>% </td>
+        <td><%= '%.2f' % (holding.quantity * holding.stock.current_price) %> </td>
+        <td><%= link_to 'Buy More', new_holding_path({:stock_symbol => holding.stock.symbol, :type => 'buy'}), class: "btn btn-success"%></td>
+        <td><%= link_to 'Sell', new_holding_path({:stock_symbol => holding.stock.symbol, :type => 'sell'}), class: "btn btn-danger"%></td>
+      <% else %>
+        <td><%= '%.2f' % ((((holding.quantity * holding.price_at_purchase) - (holding.quantity * holding.stock.current_price)) /
+                (holding.quantity * holding.price_at_purchase)) * 100) %>% </td>
+        <td><%= '%.2f' % ((holding.quantity * holding.price_at_purchase) - (holding.quantity * (holding.stock.current_price - holding.price_at_purchase))) %> </td>
+        <td><%= link_to 'Short More', new_holding_path({:stock_symbol => holding.stock.symbol, :type => 'short'}), class: "btn btn-success"%></td>
+        <td><%= link_to 'Cover', new_holding_path({:stock_symbol => holding.stock.symbol, :type => 'cover'}), class: "btn btn-danger"%></td>
+      <% end %>
+   </tr <% end %> >
+  </tbody>
+</table>

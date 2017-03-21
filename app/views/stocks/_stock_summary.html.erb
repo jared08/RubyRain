@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>Summary</h4></div>
+  <div class="panel-body">
+    <div class="col-sm-6">
+      <p>Open <%= '%.2f' % stock.open_price %></p>
+      <p>High <%= '%.2f' % stock.high %></p>
+      <p>Low <%= '%.2f' % stock.low %></p>
+      <p>Volume <%= stock.volume %></p>
+    </div>
+    <div class="col-sm-6">
+      <p>Earnings to Date <%= stock.earnings %></p>
+      <p>Season High <%= '%.2f' % stock.season_high %></p>
+      <p>Season Low <%= '%.2f' % stock.season_low %></p>
+    </div>
+  </div>
+</div>

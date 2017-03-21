@@ -1,0 +1,90 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>News</h4></div>
+  <div class="panel-body">
+    <p><%= link_to stock.player_news[0]["Title"], "#newsModal0", :class => "btn", "data-toggle" => "modal" %><p>
+    <p><%= link_to stock.player_news[1]["Title"], "#newsModal1", :class => "btn", "data-toggle" => "modal" %><p>
+    <p><%= link_to stock.player_news[2]["Title"], "#newsModal2", :class => "btn", "data-toggle" => "modal" %><p>
+    <p><%= link_to stock.player_news[3]["Title"], "#newsModal3", :class => "btn", "data-toggle" => "modal" %><p>
+  </div>
+</div>
+
+<div class="modal fade in" id="newsModal0" tabindex="-1" role="dialog" aria-labelledby="newsModal0Label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><%= @stock.player_news[0]["Title"] %></h4>
+      </div>
+      <div class="modal-body">
+         <p><%= @stock.player_news[0]["Content"] %></p>
+         <% date = Time.parse(@stock.player_news[0]["Updated"]) %>
+         <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
+         <p><%= link_to @stock.player_news[0]["Source"], "http://#{@stock.player_news[0]["Source"]}" %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade in" id="newsModal1" tabindex="-1" role="dialog" aria-labelledby="newsModal1Label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><%= @stock.player_news[1]["Title"] %></h4>
+      </div>
+      <div class="modal-body">
+         <p><%= @stock.player_news[1]["Content"] %></p>
+         <% date = Time.parse(@stock.player_news[1]["Updated"]) %>
+         <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
+         <p><%= link_to @stock.player_news[1]["Source"], "http://#{@stock.player_news[1]["Source"]}" %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade in" id="newsModal2" tabindex="-1" role="dialog" aria-labelledby="newsModal2Label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><%= @stock.player_news[2]["Title"] %></h4>
+      </div>
+      <div class="modal-body">
+         <p><%= @stock.player_news[2]["Content"] %></p>
+         <% date = Time.parse(@stock.player_news[2]["Updated"]) %>
+         <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
+         <p><%= link_to @stock.player_news[2]["Source"], "http://#{@stock.player_news[2]["Source"]}" %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade in" id="newsModal3" tabindex="-1" role="dialog" aria-labelledby="newsModal3Label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><%= @stock.player_news[3]["Title"] %></h4>
+      </div>
+      <div class="modal-body">
+         <p><%= @stock.player_news[3]["Content"] %></p>
+         <% date = Time.parse(@stock.player_news[3]["Updated"]) %>
+         <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
+         <p><%= link_to @stock.player_news[3]["Source"], "http://#{@stock.player_news[3]["Source"]}" %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,18 +1,6 @@
 <% provide(:title, @stock.name) %>
-<div class="header">
-   <h3> <%= @stock.name %> (<%= @stock.symbol %>) </h3>
-   <h3> <%= '%.2f' % @stock.current_price %> </h3>
-   <h4> <%= '%.2f' % (@stock.current_price - @stock.open_price) %> (<%= '%.2f' % ((@stock.current_price - @stock.open_price) / (@stock.open_price)) %> %) </h4>
-   <h4> as of <%= @time.strftime("%I:%M %p") %> </h4> <nobr>
-   <button type="button" class="btn btn-success"><%= link_to 'Buy', new_holding_path({:stock_symbol => @stock.symbol, :type => 'buy'}) %></button>
-   <button type="button" class="btn btn-danger"><%= link_to 'Sell', new_holding_path({:stock_symbol => @stock.symbol, :type => 'sell'}) %></button>
-   <button type="button" class="btn btn-success"><%= link_to 'Short', new_holding_path({:stock_symbol => @stock.symbol, :type => 'short'}) %></button>
-   <button type="button" class="btn btn-danger"><%= link_to 'Cover', new_holding_path({:stock_symbol => @stock.symbol, :type => 'cover'}) %></button>
-   <% if @current_user.admin? %>
-     <%= link_to 'Edit', edit_stock_path(@stock), class: "btn btn-primary"%>
-     <%= link_to 'Delete', @stock,  method: :delete, data: { confirm: "You sure?" },  class: "btn btn-primary"%>
-   <% end %>
-
+<div id="stock_header">
+  <%= render partial: 'stock_header', locals: { stock: @stock, time: @time, current_user: @current_user } %>
 </div>
 
 <br>
@@ -20,179 +8,28 @@
 <div class="row">
   <div class="col-sm-3">
     <img src="<%= @stock.player_info[:PhotoUrl] %>" alt="@stock.name" /> <br>
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4>Earnings</h4></div>
-      <div class="panel-body">
-        <% if @golfer %>
-          <p>1st -- $15 -- <%= @golfer.first %> -- $<%= @golfer.first * 15%></p>
-          <p>2nd -- $8 -- <%= @golfer.second %> -- $<%= @golfer.second * 8%></p>
-	  <p>3rd -- $4 -- <%= @golfer.third %> -- $<%= @golfer.third * 4%></p>
-	  <p>Top 10 -- $5 -- <%= @golfer.top_ten %> -- $<%= @golfer.top_ten * 5%></p>
-	  <p>Top 25 -- $7 -- <%= @golfer.top_twenty_five %> -- $<%= @golfer.top_twenty_five * 7%></p>
-          <p>Made Cut -- $3 -- <%= @golfer.made_cut %> -- $<%= @golfer.made_cut * 3%></p>
-	  <p>Total Earnings: $<%= @stock.earnings %>
-        <% end %>
-      </div>
+    <div id="stock_earnings">
+      <%= render partial: 'stock_earnings', locals: { golfer: @golfer, stock: @stock } %>
     </div>
   </div>
   <div class="col-sm-6">
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4>Summary</h4></div>
-      <div class="panel-body">
-        <div class="col-sm-6">
-          <p>Open <%= '%.2f' % @stock.open_price %></p>
-          <p>High <%= '%.2f' % @stock.high %></p>
-          <p>Low <%= '%.2f' % @stock.low %></p>
-          <p>Volume <%= @stock.volume %></p>
-        </div>
-        <div class="col-sm-6">
-          <p>Earnings to Date <%= @stock.earnings %></p>
-          <p>Season High <%= '%.2f' % @stock.season_high %></p>
-          <p>Season Low <%= '%.2f' % @stock.season_low %></p>
-        </div>
-      </div>
+    <div id="stock_earnings">
+      <%= render partial: 'stock_summary', locals: { stock: @stock } %>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4>Graph</h4></div>
-      <div class="panel-body">
-        <% prices = @stock.daily_prices.collect{|i| [i[:time],i[:price]]} %>
-        <%= line_chart prices, library: {curveType: "none"} %>
-      </div>
+    <div id="stock_graph">
+      <%= render partial: 'stock_graph', locals: { stock: @stock } %>
     </div>
   </div>
   <div class="col-sm-3">
-     <div class="panel panel-default">
-      <div class="panel-heading"><h4>Events</h4></div>
-      <div class="panel-body">
-      
-        <% if @golfer %>
-          <table class="table">
-            <tbody>
-              <tr <% @four_tournaments.each do |tournament| %> >
-                <td><%= tournament[:tournament_info]["Name"] %></td>
-                <% if GolferTournament.find_by(golfer_id: @golfer.id, tournament_id: tournament[:id]) %>
-                  <% if GolferTournament.find_by(golfer_id: @golfer.id, tournament_id: tournament[:id])[:golfer_tournament_info]["Rank"] != nil %>
-	            <td><%= GolferTournament.find_by(golfer_id: @golfer.id, tournament_id: tournament[:id])[:golfer_tournament_info]["Rank"] %></td>
-                  <% else %>
-                    <% if tournament[:tournament_info]["IsOver"] == true %>
-                      <td>Missed Cut</td>
-                    <% else %>
-                      <td>TBD</td>
-                    <% end %>
-                  <% end %>
-                <% else %>
-                  <% if tournament[:tournament_info]["IsOver"] == true %>
-                    <td>DNP</td>
-                  <% else %>
-                    <td>Not playing</td>
-                  <% end %>
-                <% end %>
-                <td> <%= Time.parse(tournament[:tournament_info]["StartDate"]).strftime("%-m/%-d") %>
-              </tr <% end %> >
-            </tbody>
-          </table>
-          <p><%= link_to "More Events", stock_tournaments_path(@stock) %></p>
-        <% end %>
-
-      </div>
+    <div id="stock_events">
+      <%= render partial: 'stock_events', locals: { stock: @stock, golfer: @golfer, four_tournaments: @four_tournaments } %>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4>News</h4></div>
-      <div class="panel-body">
-        <p><%= link_to @stock.player_news[0]["Title"], "#newsModal0", :class => "btn", "data-toggle" => "modal" %><p>
-        <p><%= link_to @stock.player_news[1]["Title"], "#newsModal1", :class => "btn", "data-toggle" => "modal" %><p>
-        <p><%= link_to @stock.player_news[2]["Title"], "#newsModal2", :class => "btn", "data-toggle" => "modal" %><p>
-        <p><%= link_to @stock.player_news[3]["Title"], "#newsModal3", :class => "btn", "data-toggle" => "modal" %><p>
-      </div>
+    <div id="stock_news">
+      <%= render partial: 'stock_news', locals: { stock: @stock } %>
     </div>
-     <div class="panel panel-default">
-      <div class="panel-heading"><h4>Posts</h4></div>
-      <div class="panel-body">
-        <p>post 1</p>
-        <p>post 2</p>
-        <p>post 3</p>
-        <p>post 4</p>
-      </div>
+    <div id="stock_posts">
+      <%= render partial: 'stock_posts', locals: { stock: @stock } %>
     </div>
   </div>
 </div>
 
-<div class="modal fade in" id="newsModal0" tabindex="-1" role="dialog" aria-labelledby="newsModal0Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><%= @stock.player_news[0]["Title"] %></h4>
-      </div>
-      <div class="modal-body">
-         <p><%= @stock.player_news[0]["Content"] %></p>
-         <% date = Time.parse(@stock.player_news[0]["Updated"]) %>
-         <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
-         <p><%= link_to @stock.player_news[0]["Source"], "http://#{@stock.player_news[0]["Source"]}" %></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade in" id="newsModal1" tabindex="-1" role="dialog" aria-labelledby="newsModal1Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><%= @stock.player_news[1]["Title"] %></h4>
-      </div>
-      <div class="modal-body">
-         <p><%= @stock.player_news[1]["Content"] %></p>
-         <% date = Time.parse(@stock.player_news[1]["Updated"]) %>
-         <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
-         <p><%= link_to @stock.player_news[1]["Source"], "http://#{@stock.player_news[1]["Source"]}" %></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-    </div>
-      </div>
-  </div>
-</div>
-
-<div class="modal fade in" id="newsModal2" tabindex="-1" role="dialog" aria-labelledby="newsModal2Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><%= @stock.player_news[2]["Title"] %></h4>
-      </div>
-      <div class="modal-body">
-         <p><%= @stock.player_news[2]["Content"] %></p>
-         <% date = Time.parse(@stock.player_news[2]["Updated"]) %>
-         <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
-         <p><%= link_to @stock.player_news[2]["Source"], "http://#{@stock.player_news[2]["Source"]}" %></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade in" id="newsModal3" tabindex="-1" role="dialog" aria-labelledby="newsModal3Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><%= @stock.player_news[3]["Title"] %></h4>
-      </div>
-      <div class="modal-body">
-         <p><%= @stock.player_news[3]["Content"] %></p>
-         <% date = Time.parse(@stock.player_news[3]["Updated"]) %>
-         <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
-         <p><%= link_to @stock.player_news[3]["Source"], "http://#{@stock.player_news[3]["Source"]}" %></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>

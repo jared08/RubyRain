@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>Events</h4></div>
+  <div class="panel-body">
+
+    <% if golfer %>
+      <table class="table">
+        <tbody>
+          <tr <% four_tournaments.each do |tournament| %> >
+            <td><%= tournament[:tournament_info]["Name"] %></td>
+            <% if GolferTournament.find_by(golfer_id: golfer.id, tournament_id: tournament[:id]) %>
+              <% if GolferTournament.find_by(golfer_id: golfer.id, tournament_id: tournament[:id])[:golfer_tournament_info]["Rank"] != nil %>
+                <td><%= GolferTournament.find_by(golfer_id: golfer.id, tournament_id: tournament[:id])[:golfer_tournament_info]["Rank"] %></td>
+              <% else %>
+                <% if tournament[:tournament_info]["IsOver"] == true %>
+                  <td>Missed Cut</td>
+                <% else %>
+                  <td>TBD</td>
+                <% end %>
+              <% end %>
+            <% else %>
+              <% if tournament[:tournament_info]["IsOver"] == true %>
+                <td>DNP</td>
+              <% else %>
+                <td>Not playing</td>
+              <% end %>
+            <% end %>
+            <td> <%= Time.parse(tournament[:tournament_info]["StartDate"]).strftime("%-m/%-d") %>
+          </tr <% end %> >
+        </tbody>
+      </table>
+      <p><%= link_to "More Events", stock_tournaments_path(stock) %></p>
+    <% end %>
+
+  </div>
+</div>
