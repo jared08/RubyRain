@@ -2,6 +2,8 @@
 
 
 tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
+tournament[:tournament_info]["IsInProgress"] = true
+tournament.save
 puts(tournament[:tournament_info]["Name"])
 
 require 'net/http'

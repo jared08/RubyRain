@@ -4,13 +4,53 @@ class TournamentsController < ApplicationController
 
     stock_id = params[:stock_id]
     @golfer_id = Golfer.find_by(stock_id: stock_id).id
-    puts(@golfer_id)   
+
     tournaments = Tournament.all
+    completed_tournaments = tournaments.find_all {|x| x[:tournament_info]["IsOver"] == true}
 
-    @completed_tournaments = tournaments.find_all {|x| x[:tournament_info]["IsOver"] == true}
+    @completed = []
 
-    @remaining_tournaments = tournaments.find_all {|x| x[:tournament_info]["IsOver"] == false}
-    @upcoming_tournament = @remaining_tournaments.pop
+    completed_tournaments.reverse.each do |tournament|
+      temp = Hash.new
+      temp[:name] = tournament[:tournament_info]["Name"]
+      temp[:date] = tournament[:tournament_info]["StartDate"]
+
+      gt = GolferTournament.find_by(golfer_id: @golfer_id, tournament_id: tournament[:id])
+      if gt
+        if gt[:golfer_tournament_info]["Rank"] == nil
+          temp[:rank] = 'Missed Cut'
+        else
+          temp[:rank] = gt[:golfer_tournament_info]["Rank"]
+        end
+      else
+        temp[:rank] = 'DNP'
+      end
+      @completed << temp
+    end
+
+    remaining_tournaments = tournaments.find_all {|x| x[:tournament_info]["IsOver"] == false}
+
+    @remaining = []
+    remaining_tournaments.reverse.each do |tournament|
+      temp = Hash.new
+      temp[:name] = tournament[:tournament_info]["Name"]
+      temp[:date] = tournament[:tournament_info]["StartDate"]
+
+      if tournament[:tournament_info]["IsInProgress"] == true
+        gt = GolferTournament.find_by(golfer_id: @golfer_id, tournament_id: tournament[:id])
+        if gt
+          temp[:status] = 'Playing'
+        else
+          temp[:status] = 'Not Playing'
+        end
+      else
+        temp[:status] = 'TBD'
+      end      
+
+      @remaining << temp
+    end
+    
+
     
 
   end

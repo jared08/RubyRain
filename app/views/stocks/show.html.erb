@@ -22,7 +22,7 @@
   </div>
   <div class="col-sm-3">
     <div id="stock_events">
-      <%= render partial: 'stock_events', locals: { stock: @stock, golfer: @golfer, four_tournaments: @four_tournaments } %>
+      <%= render partial: 'stock_events', locals: { events: @events, sport: @stock.sport, stock: @stock } %>
     </div>
     <div id="stock_news">
       <%= render partial: 'stock_news', locals: { stock: @stock } %>

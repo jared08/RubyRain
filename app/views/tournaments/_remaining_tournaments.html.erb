@@ -8,22 +8,10 @@
      </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><%= upcoming_tournament[:tournament_info]["Name"] %></td>
-      <td><%= upcoming_tournament[:tournament_info]["StartDate"] %></td>
-      <% query_params = Hash.new %>
-      <% query_params[:golfer_id] = golfer_id %>
-      <% query_params[:tournament_id] = upcoming_tournament[:id] %>
-      <% if GolferTournament.find_by(query_params) %>
-        <td>Playing</td>
-      <% else %>
-        <td>Not Playing</td>
-      <% end %>
-    </tr>
-    <tr <% remaining_tournaments.reverse.each do |tournament| %> >
-      <td><%= tournament[:tournament_info]["Name"] %></td>
-      <td><%= tournament[:tournament_info]["StartDate"] %></td>
-      <td>TBD</td>
+    <tr <% remaining.each do |tournament| %> >
+      <td><%= tournament[:name] %></td>
+      <td><%= tournament[:date] %></td>
+      <td><%= tournament[:status] %></td>
     </tr <% end %> >
   </tbody>
 </table>

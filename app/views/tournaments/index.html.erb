@@ -1,8 +1,8 @@
 <% provide(:title, 'Tournaments') %>
 <div id="completed_tournaments">
-  <%= render partial: 'completed_tournaments', locals: { completed_tournaments: @completed_tournaments, golfer_id: @golfer_id } %>
+  <%= render partial: 'completed_tournaments', locals: { completed: @completed } %>
 </div>
 <div id="remaining_tournaments">
-  <%= render partial: 'remaining_tournaments', locals: { upcoming_tournament: @upcoming_tournament, remaining_tournaments: @remaining_tournaments, golfer_id: @golfer_id} %>
+  <%= render partial: 'remaining_tournaments', locals: { remaining: @remaining } %>
 </div>
 

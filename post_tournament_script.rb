@@ -4,6 +4,7 @@ players = Stock.where(sport: "Golf") #need the stock as well as the golfer to ge
 
 tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
 tournament[:tournament_info]["IsOver"] = true
+tournament[:tournament_info]["IsInProgress"] = false
 tournament.save
 puts(tournament[:tournament_info]["Name"])
 

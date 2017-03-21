@@ -226,13 +226,38 @@ class StocksController < ApplicationController
     end
 
     def show_golfer
-      current_index = Rails.application.config.current_tournament_index
-      @four_tournaments = Array.new
+      @events = Array.new
 
-      @four_tournaments[0] = Tournament.find_by(index: (current_index + 3))
-      @four_tournaments[1] = Tournament.find_by(index: (current_index + 2))
-      @four_tournaments[2] = Tournament.find_by(index: (current_index + 1))
-      @four_tournaments[3] = Tournament.find_by(index: (current_index))
+      current_index = Rails.application.config.current_tournament_index
+      
+      for i in (0..3).to_a.reverse
+        tournament = Tournament.find_by(index: (current_index + i))
+        temp = Hash.new
+ 
+        temp[:name] = tournament[:tournament_info]["Name"]
+        gt = GolferTournament.find_by(golfer_id: @golfer[:id], tournament_id: tournament[:id])
+        if gt
+          if tournament[:tournament_info]["IsOver"] == true
+            if gt[:golfer_tournament_info]["Rank"] != nil
+              temp[:rank] = gt[:golfer_tournament_info]["Rank"]
+            else
+              temp[:rank] = 'Missed Cut'
+            end
+          else
+            temp[:rank] = 'TBD'
+          end
+        else
+          if tournament[:tournament_info]["IsOver"] == true
+            temp[:rank] = 'DNP'
+          else
+            temp[:rank] = 'Not Playing'
+          end
+        end
+
+        temp[:date] = Time.parse(tournament[:tournament_info]["StartDate"]).strftime("%-m/%-d")
+
+        @events << temp
+      end
 
     end
 
