@@ -42,10 +42,10 @@ for player in players
         puts(info["Rank"])
 
         golfer[:made_cut] = golfer[:made_cut] + 1
-        earnings = 3
+        earnings = 2
         if (info["Rank"].to_i < 25)
           golfer[:top_twenty_five] = golfer[:top_twenty_five] + 1
-          earnings = earnings + 7
+          earnings = earnings + 3
         end
         if (info["Rank"].to_i < 10)
           golfer[:top_ten] = golfer[:top_ten] + 1

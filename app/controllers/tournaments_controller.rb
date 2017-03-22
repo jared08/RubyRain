@@ -1,5 +1,6 @@
 class TournamentsController < ApplicationController
   before_action :logged_in_user, only: [:index]
+
   def index
 
     stock_id = params[:stock_id]

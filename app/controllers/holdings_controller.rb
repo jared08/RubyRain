@@ -65,7 +65,7 @@ class HoldingsController < ApplicationController
           stock[:season_high] = stock[:current_price]
         end
       else #short
-        stock[:current_price] = stock[:current_price] - (new_quantity * (1 / stock[:volume].to_f))#need to figure out how the price of a stock is raised
+        stock[:current_price] = stock[:current_price] - (new_quantity * (1 / stock[:volume].to_f))#need to figure out how the price of a stock is lowered
         if (stock[:current_price] < stock[:low])
           stock[:low] = stock[:current_price]
         end

@@ -199,7 +199,7 @@ class StocksController < ApplicationController
  
       golfer.save
 
-      @stock[:earnings] = (golfer[:made_cut] * 3) + (golfer[:top_twenty_five] * 7) + (golfer[:top_ten] * 5) + (golfer[:third] * 4) +
+      @stock[:earnings] = (golfer[:made_cut] * 2) + (golfer[:top_twenty_five] * 3) + (golfer[:top_ten] * 5) + (golfer[:third] * 4) +
           (golfer[:second] * 8) + (golfer[:first] * 15)
 
       url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:player_id].to_s
