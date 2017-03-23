@@ -56,8 +56,9 @@ class HoldingsController < ApplicationController
       end 
 
       stock[:volume] = stock[:volume] + new_quantity #not sure what to do with this for shorts
+      stock[:current_price] = stock[:current_price] + stock[:price_to_change] #price changes based on prior transaction (so you don't 'earn' money when you buy stock)
       if (final_params[:type_of_holding] == 'buy')      
-        stock[:current_price] = stock[:current_price] + (new_quantity * (1 / stock[:volume].to_f))#need to figure out how the price of a stock is raised
+        stock[:price_to_change] = (new_quantity * (1 / stock[:volume].to_f)) #maybe a better algorithm?
         if (stock[:current_price] > stock[:high])
           stock[:high] = stock[:current_price]
         end
@@ -65,7 +66,7 @@ class HoldingsController < ApplicationController
           stock[:season_high] = stock[:current_price]
         end
       else #short
-        stock[:current_price] = stock[:current_price] - (new_quantity * (1 / stock[:volume].to_f))#need to figure out how the price of a stock is lowered
+        stock[:price_to_change] = (-1) * (new_quantity * (1 / stock[:volume].to_f))#maybe a better algorithm
         if (stock[:current_price] < stock[:low])
           stock[:low] = stock[:current_price]
         end
@@ -105,17 +106,18 @@ class HoldingsController < ApplicationController
           if @holding.save
 
             stock[:volume] = stock[:volume] - new_quantity
+            stock[:current_price] = stock[:current_price] + stock[:price_to_change]
             if (stock[:volume] == 0)
               if (final_params[:type_of_holding] == 'sell')
-                stock[:current_price] = stock[:current_price] - (new_quantity * (1 / new_quantity.to_f))
+                stock[:price_to_change] = (-1) * (new_quantity * (1 / new_quantity.to_f))
               else
-		stock[:current_price] = stock[:current_price] + (new_quantity * (1 / new_quantity.to_f))
+		stock[:price_to_change] = (new_quantity * (1 / new_quantity.to_f))
               end
             else
               if (final_params[:type_of_holding] == 'sell')
-                stock[:current_price] = stock[:current_price] - (new_quantity * (1 / stock[:volume].to_f))
+                stock[:price_to_change] = (-1) * (new_quantity * (1 / stock[:volume].to_f))
               else
-		stock[:current_price] = stock[:current_price] + (new_quantity * (1 / stock[:volume].to_f))
+		stock[:price_to_change] = (new_quantity * (1 / stock[:volume].to_f))
 	      end
             end
 
@@ -153,17 +155,18 @@ class HoldingsController < ApplicationController
           Holding.find(@holding[:id]).destroy
  
 	  stock[:volume] = stock[:volume] - new_quantity
+          stock[:current_price] = stock[:current_price] + stock[:price_to_change]
             if (stock[:volume] == 0)
               if (final_params[:type_of_holding] == 'sell')
-                stock[:current_price] = stock[:current_price] - (new_quantity * (1 / new_quantity.to_f))
+                stock[:price_to_change] = (-1) * (new_quantity * (1 / new_quantity.to_f))
               else
-                stock[:current_price] = stock[:current_price] + (new_quantity * (1 / new_quantity.to_f))
+                stock[:price_to_change] = (new_quantity * (1 / new_quantity.to_f))
               end
             else
               if (final_params[:type_of_holding] == 'sell')
-                stock[:current_price] = stock[:current_price] - (new_quantity * (1 / stock[:volume].to_f))
+                stock[:price_to_change] = (-1) * (new_quantity * (1 / stock[:volume].to_f))
               else
-                stock[:current_price] = stock[:current_price] + (new_quantity * (1 / stock[:volume].to_f))
+                stock[:price_to_change] = (new_quantity * (1 / stock[:volume].to_f))
               end
             end
 

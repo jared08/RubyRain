@@ -22,6 +22,7 @@ class StocksController < ApplicationController
     @stock[:season_low] = stock_params[:current_price]
     @stock[:volume] = 0
     @stock[:earnings] = 0
+    @stock[:price_to_change] = 0
     @stock.save
     if (stock_params[:sport] == "Golf") 
       create_golfer
