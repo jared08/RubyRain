@@ -14,7 +14,7 @@ class StaticPagesController < ApplicationController
   end
 
   def redirect_if_logged_in
-    redirect_to(holdings_url) if current_user # check if user logged in
+    redirect_to(home_path(current_user)) if current_user # check if user logged in
   end
 
 end

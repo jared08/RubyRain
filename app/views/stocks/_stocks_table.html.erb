@@ -3,16 +3,18 @@
     <tr>
       <th>Symbol</th>
       <th>Name</th>
-      <th>Current Price</th>
       <th>Sport</th>
+      <th>Current Price</th>
+      <th>Daily Change</th>
      </tr>
   </thead>
   <tbody>
     <tr <% stocks.each do |stock| %> >
       <td><%= stock.symbol %></td>
       <td><%= link_to stock.name, stock %></td>
-      <td><%= '%.2f' % stock.current_price %></td>
       <td><%= stock.sport %></td>
+      <td><%= '%.2f' % stock.current_price %></td>
+      <td><%= '%.2f' % (((stock.current_price - stock.open_price) / (stock.open_price)) * 100)  %>%</td>
     </tr <% end %> >
   </tbody>
 </table>

@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= link_to "Trending", stocks_path %></h4></div>
+  <div class="panel-body">
+    <% if trendings.empty? %>
+      <%= link_to "click here to get a stock trending!", stocks_path %>
+    <% else %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Current Price</th>
+            <th>Percent Change</th>
+           </tr>
+        </thead>
+        <tbody>
+          <tr <% trendings.each do |stock| %> >
+            <td><%= stock.symbol %></td>
+            <td><%= link_to stock.name, stock %></td>
+            <td><%= '%.2f' % stock.current_price %></td>
+            <td><%= '%.2f' % (stock.daily_change * 100) %>%</td>
+          </tr <% end %> >
+        </tbody>
+      </table>
+      <%= link_to 'View More', stocks_path %>
+    <% end %>
+  </div>
+</div>
+

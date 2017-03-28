@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= link_to "My Portfolio", holdings_path %></h4></div>
+  <div class="panel-body">
+    <% if holdings.empty? %>
+      <%= link_to "click here to trade stock!", stocks_path %>
+    <% else %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Current Price</th>
+            <th>Percent Change</th>
+           </tr>
+        </thead>
+        <tbody>
+          <tr <% holdings.each do |holding| %> >
+            <td><%= holding.stock.symbol %></td>
+            <td><%= link_to holding.stock.name, holding.stock %></td>
+            <td><%= '%.2f' % holding.stock.current_price %></td>
+            <td><%= '%.2f' % (((holding.stock.current_price - holding.stock.open_price) / (holding.stock.open_price)) * 100) %>%</td>
+          </tr <% end %> >
+        </tbody>
+      </table>
+      <%= link_to 'View All', holdings_path %>
+    <% end %>
+  </div>
+</div>

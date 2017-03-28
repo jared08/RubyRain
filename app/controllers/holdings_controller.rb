@@ -74,6 +74,8 @@ class HoldingsController < ApplicationController
           stock[:season_low] = stock[:current_price]
         end
       end
+      stock[:num_trades] = stock[:num_trades] + new_quantity
+      stock[:daily_change] = ((stock[:current_price] - stock[:open_price]) / stock[:open_price])
       stock.save
 
       if @holding.save
@@ -136,6 +138,8 @@ class HoldingsController < ApplicationController
                 end
               end
             end
+            stock[:num_trades] = stock[:num_trades] + new_quantity
+            stock[:daily_change] = ((stock[:current_price] - stock[:open_price]) / stock[:open_price])
             stock.save
 
             if (final_params[:type_of_holding] == 'sell')
@@ -185,6 +189,8 @@ class HoldingsController < ApplicationController
                 end
               end
             end
+            stock[:num_trades] = stock[:num_trades] + new_quantity
+            stock[:daily_change] = ((stock[:current_price] - stock[:open_price]) / stock[:open_price])
             stock.save
 
           if (final_params[:type_of_holding] == 'sell')

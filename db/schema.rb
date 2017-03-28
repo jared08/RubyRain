@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323141036) do
+ActiveRecord::Schema.define(version: 20170328174524) do
 
   create_table "golfer_tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "tournament_id"
@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 20170323141036) do
   create_table "stocks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.float    "current_price",   limit: 24
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.string   "symbol"
     t.float    "open_price",      limit: 24
     t.integer  "player_id"
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 20170323141036) do
     t.text     "daily_prices",    limit: 65535
     t.string   "sport"
     t.float    "price_to_change", limit: 24
+    t.float    "daily_change",    limit: 24,    default: 0.0
+    t.integer  "num_trades",                    default: 0
   end
 
   create_table "tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
