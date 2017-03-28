@@ -31,6 +31,7 @@ class StocksController < ApplicationController
 
   def show
     @stock = Stock.find(params[:id])
+    @news = News.limit(4).where(stock_id: params[:id]).order("Updated DESC")
 
     #TODO definitely needs to be changed
     @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
@@ -49,8 +50,11 @@ class StocksController < ApplicationController
     #  http.request(request)
     #end
 
-    #@stock[:player_news] = JSON.parse(response.body)
-    #@stock.save
+    #TODO Need to not allow for duplicates
+    #for news in JSON.parse(response.body)
+    #  new_news = stock.news.new(news)
+    #  new_news.save
+    #end
 
     if (@stock[:sport] == "Golf") 
       @golfer = Golfer.find_by(stock_id: @stock.id)
@@ -214,9 +218,10 @@ class StocksController < ApplicationController
         http.request(request)
       end
 
-      @stock[:player_news] = JSON.parse(response.body)
-      @stock.save
-
+      for news in JSON.parse(response.body)
+        new_news = stock.news.new(news)
+        new_news.save
+      end
 
       if @stock.save
         flash[:success] = "You added a stock!"

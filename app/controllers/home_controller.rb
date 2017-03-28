@@ -5,6 +5,8 @@ class HomeController < ApplicationController
   end
 
   def show
+    @news = News.limit(5).order('Updated DESC')
+
     @holdings = Holding.limit(5).where(user_id: current_user[:id])
     @watchlist = {}
     @trendings = Stock.limit(5).order('num_trades DESC')

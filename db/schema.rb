@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328174524) do
+ActiveRecord::Schema.define(version: 20170328201217) do
 
   create_table "golfer_tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "tournament_id"
@@ -47,6 +47,21 @@ ActiveRecord::Schema.define(version: 20170328174524) do
     t.index ["user_id"], name: "index_holdings_on_user_id", using: :btree
   end
 
+  create_table "news", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "stock_id"
+    t.integer  "NewsID"
+    t.integer  "PlayerID"
+    t.text     "Title",      limit: 65535
+    t.text     "Content",    limit: 65535
+    t.text     "Url",        limit: 65535
+    t.text     "Source",     limit: 65535
+    t.text     "TermsOfUse", limit: 65535
+    t.date     "Updated"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["stock_id"], name: "index_news_on_stock_id", using: :btree
+  end
+
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.text     "content",    limit: 65535
@@ -66,7 +81,6 @@ ActiveRecord::Schema.define(version: 20170328174524) do
     t.float    "open_price",      limit: 24
     t.integer  "player_id"
     t.text     "player_info",     limit: 65535
-    t.text     "player_news",     limit: 65535
     t.float    "high",            limit: 24
     t.float    "low",             limit: 24
     t.float    "season_high",     limit: 24
