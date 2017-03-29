@@ -1,1 +1,5 @@
 <h1>NEWS</h1>
+<% news.each do |n| %>
+  <li><%= n[:Title] %></li>
+  <ul><%= n[:Content] %></ul>
+<% end %>
