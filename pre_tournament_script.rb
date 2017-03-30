@@ -26,15 +26,14 @@ players = Stock.where(sport: "Golf")
 params = Hash.new
 
 for player in players
-  if (tournament_info.any? {|h| h["PlayerID"] == player[:player_info]["PlayerID"]})
+  if (tournament_info.any? {|h| h["PlayerID"] == player[:PlayerID]})
     puts(player[:name].to_s + " is playing!")
 
     golfer = Golfer.find_by(stock_id: player.id)
 
-    params[:tournament] = tournament
+    golfer_tournament = golfer.golfer_tournaments.create()
 
-    golfer_tournament = GolferTournament.new
-    golfer_tournament = golfer.golfer_tournaments.create(params)
+    golfer_tournament[:tournament_id] = tournament[:id]
     golfer_tournament.save
 
   else

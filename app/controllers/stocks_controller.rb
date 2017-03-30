@@ -39,7 +39,7 @@ class StocksController < ApplicationController
     #TODO find out a way to not update player's news EVERY time
     #require 'net/http'
 
-    #url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:player_id].to_s
+    #url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:PlayerID].to_s
     #uri = URI(url)
 
     #request = Net::HTTP::Get.new(uri.request_uri)
@@ -86,7 +86,7 @@ class StocksController < ApplicationController
 
   private
     def stock_params
-      params.require(:stock).permit(:name, :symbol, :player_id, :current_price, :sport)
+      params.require(:stock).permit(:name, :symbol, :PlayerID, :current_price, :sport)
     end
 
     def edit_stock_params
@@ -117,7 +117,7 @@ class StocksController < ApplicationController
     def create_golfer
       require 'net/http'
 
-      url = 'https://api.fantasydata.net/golf/v2/json/Player/' + stock_params[:player_id]
+      url = 'https://api.fantasydata.net/golf/v2/json/Player/' + stock_params[:PlayerID]
       uri = URI(url)
 
       request = Net::HTTP::Get.new(uri.request_uri)
@@ -149,7 +149,7 @@ class StocksController < ApplicationController
           id = tournament[:TournamentID].to_s
           puts(tournament[:Name])
 
-          uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + id + '/' + @stock[:player_info]["PlayerID"].to_s)
+          uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + id + '/' + @stock[:PlayerID].to_s)
 
           request = Net::HTTP::Get.new(uri.request_uri)
           request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
@@ -207,7 +207,7 @@ class StocksController < ApplicationController
       @stock[:earnings] = (golfer[:made_cut] * 2) + (golfer[:top_twenty_five] * 3) + (golfer[:top_ten] * 5) + (golfer[:third] * 4) +
           (golfer[:second] * 8) + (golfer[:first] * 15)
 
-      url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:player_id].to_s
+      url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:PlayerID].to_s
       uri = URI(url)
 
       request = Net::HTTP::Get.new(uri.request_uri)

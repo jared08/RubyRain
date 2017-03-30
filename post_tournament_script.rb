@@ -16,8 +16,7 @@ for player in players
   else
     puts(player[:name].to_s + " played in " + tournament[:Name])
 
-    uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + tournament[:TournamentID].to_s + '/' + 
-     player[:player_info]["PlayerID"].to_s)
+    uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + tournament[:TournamentID].to_s + '/' + player[:PlayerID].to_s)
 
     puts(uri)
 
