@@ -145,9 +145,9 @@ class StocksController < ApplicationController
 
       tournaments = Tournament.all
       for tournament in tournaments
-        if (tournament[:tournament_info]["IsOver"])
-          id = tournament[:tournament_info]["TournamentID"].to_s
-          puts(tournament[:tournament_info]["Name"])
+        if (tournament[:IsOver])
+          id = tournament[:TournamentID].to_s
+          puts(tournament[:Name])
 
           uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + id + '/' + @stock[:player_info]["PlayerID"].to_s)
 
@@ -240,10 +240,10 @@ class StocksController < ApplicationController
         tournament = Tournament.find_by(index: (current_index + i))
         temp = Hash.new
  
-        temp[:name] = tournament[:tournament_info]["Name"]
+        temp[:name] = tournament[:Name]
         gt = GolferTournament.find_by(golfer_id: @golfer[:id], tournament_id: tournament[:id])
         if gt
-          if tournament[:tournament_info]["IsOver"] == true
+          if tournament[:IsOver] == true
             if gt[:golfer_tournament_info]["Rank"] != nil
               temp[:rank] = gt[:golfer_tournament_info]["Rank"]
             else
@@ -253,14 +253,14 @@ class StocksController < ApplicationController
             temp[:rank] = 'TBD'
           end
         else
-          if tournament[:tournament_info]["IsOver"] == true
+          if tournament[:IsOver] == true
             temp[:rank] = 'DNP'
           else
             temp[:rank] = 'Not Playing'
           end
         end
 
-        temp[:date] = Time.parse(tournament[:tournament_info]["StartDate"]).strftime("%-m/%-d")
+        temp[:date] = tournament[:StartDate].strftime("%-m/%-d")
 
         @events << temp
       end

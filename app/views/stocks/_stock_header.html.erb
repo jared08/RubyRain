@@ -1,14 +1,21 @@
 <div class="header">
-  <h3> <%= stock.name %> (<%= stock.symbol %>) </h3>
-  <h3> <%= '%.2f' % stock.current_price %> </h3>
-  <h4> <%= '%.2f' % (stock.current_price - stock.open_price) %> (<%= '%.2f' % (((stock.current_price - stock.open_price) / (stock.open_price)) * 100) %> %) </h4>
-  <h4> as of <%= time.strftime("%I:%M %p") %> </h4> <nobr>
-  <button type="button" class="btn btn-success"><%= link_to 'Buy', new_holding_path({:stock_symbol => stock.symbol, :type => 'buy'}) %></button>
-  <button type="button" class="btn btn-danger"><%= link_to 'Sell', new_holding_path({:stock_symbol => stock.symbol, :type => 'sell'}) %></button>
-  <button type="button" class="btn btn-success"><%= link_to 'Short', new_holding_path({:stock_symbol => stock.symbol, :type => 'short'}) %></button>
-  <button type="button" class="btn btn-danger"><%= link_to 'Cover', new_holding_path({:stock_symbol => stock.symbol, :type => 'cover'}) %></button>
-  <% if current_user.admin? %>
-    <%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-primary"%>
-    <%= link_to 'Delete', stock,  method: :delete, data: { confirm: "You sure?" },  class: "btn btn-primary"%>
-  <% end %>
+  <div class="col-sm-2">
+    <div id="picture">
+      <img src="<%= @stock.player_info[:PhotoUrl] %>" alt="@stock.name" />
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div id="header_info">
+      <h2> <%= stock.name %> (<%= stock.symbol %>) </h2>
+      <h3> <%= '%.2f' % stock.current_price %> </h3>
+      <h4> <%= '%.2f' % (stock.current_price - stock.open_price) %> (<%= '%.2f' % (stock.daily_change * 100) %>%) </h4>
+      <h4> as of <%= time.strftime("%I:%M %p") %> </h4> <br><br>
+      
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary">Summary</button>
+        <button type="button" class="btn btn-secondary">Earnings and Events</button>
+        <button type="button" class="btn btn-secondary">News</button>
+      </div>
+    </div>
+  </div>
 </div>

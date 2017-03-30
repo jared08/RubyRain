@@ -1,13 +1,14 @@
 <% provide(:title, @stock.name) %>
-<div id="stock_header">
-  <%= render partial: 'stock_header', locals: { stock: @stock, time: @time, current_user: @current_user } %>
+<div class="row">
+  <div id="stock_header">
+    <%= render partial: 'stock_header', locals: { stock: @stock, time: @time, current_user: @current_user } %>
+  </div>
 </div>
 
 <br>
 
 <div class="row">
   <div class="col-sm-3">
-    <img src="<%= @stock.player_info[:PhotoUrl] %>" alt="@stock.name" /> <br>
     <div id="stock_earnings">
       <%= render partial: 'stock_earnings', locals: { golfer: @golfer, stock: @stock } %>
     </div>

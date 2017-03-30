@@ -6,15 +6,14 @@ class TournamentsController < ApplicationController
     stock_id = params[:stock_id]
     @golfer_id = Golfer.find_by(stock_id: stock_id).id
 
-    tournaments = Tournament.all
-    completed_tournaments = tournaments.find_all {|x| x[:tournament_info]["IsOver"] == true}
+    completed_tournaments = Tournament.where(:IsOver => true)
 
     @completed = []
 
     completed_tournaments.reverse.each do |tournament|
       temp = Hash.new
-      temp[:name] = tournament[:tournament_info]["Name"]
-      temp[:date] = tournament[:tournament_info]["StartDate"]
+      temp[:name] = tournament[:Name]
+      temp[:date] = tournament[:StartDate]
 
       gt = GolferTournament.find_by(golfer_id: @golfer_id, tournament_id: tournament[:id])
       if gt
@@ -29,15 +28,15 @@ class TournamentsController < ApplicationController
       @completed << temp
     end
 
-    remaining_tournaments = tournaments.find_all {|x| x[:tournament_info]["IsOver"] == false}
+    remaining_tournaments = Tournament.where(:IsOver => false)
 
     @remaining = []
     remaining_tournaments.reverse.each do |tournament|
       temp = Hash.new
-      temp[:name] = tournament[:tournament_info]["Name"]
-      temp[:date] = tournament[:tournament_info]["StartDate"]
+      temp[:name] = tournament[:Name]
+      temp[:date] = tournament[:StartDate]
 
-      if tournament[:tournament_info]["IsInProgress"] == true
+      if tournament[:IsInProgress] == true
         gt = GolferTournament.find_by(golfer_id: @golfer_id, tournament_id: tournament[:id])
         if gt
           temp[:status] = 'Playing'

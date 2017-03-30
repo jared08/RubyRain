@@ -3,20 +3,20 @@
 players = Stock.where(sport: "Golf") #need the stock as well as the golfer to get access to name and api specific id
 
 tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
-tournament[:tournament_info]["IsOver"] = true
-tournament[:tournament_info]["IsInProgress"] = false
+tournament[:IsOver] = true
+tournament[:IsInProgress] = false
 tournament.save
-puts(tournament[:tournament_info]["Name"])
+puts(tournament[:Name])
 
 for player in players 
   golfer = Golfer.find_by(stock_id: player.id)
   gt = GolferTournament.where("golfer_id = ? AND tournament_id = ?", golfer.id, tournament.id)
   if (gt.empty?)
-    puts(player[:name].to_s + " did not play in " + tournament[:tournament_info]["Name"].to_s)
+    puts(player[:name].to_s + " did not play in " + tournament[:Name])
   else
-    puts(player[:name].to_s + " played in " + tournament[:tournament_info]["Name"].to_s)
+    puts(player[:name].to_s + " played in " + tournament[:Name])
 
-    uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + tournament[:tournament_info]["TournamentID"].to_s + '/' + 
+    uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentStatsByPlayer/' + tournament[:TournamentID].to_s + '/' + 
      player[:player_info]["PlayerID"].to_s)
 
     puts(uri)

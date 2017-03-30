@@ -17,16 +17,11 @@ tournament_list = JSON.parse(response.body)
 index = 0
 for tournament in tournament_list
   if (tournament["StartDate"][0, 4] == "2017")
-    new_tournament = Tournament.new
+    new_tournament = Tournament.new(tournament)
 
     new_tournament[:index] = index
     index = index + 1
 
-    if (:tournament["IsInProgress"] == "True")
-      new_tournament[:current] = true
-    end
-
-    new_tournament[:tournament_info] = tournament
     new_tournament.save
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328201217) do
+ActiveRecord::Schema.define(version: 20170330164521) do
 
   create_table "golfer_tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "tournament_id"
@@ -95,10 +95,20 @@ ActiveRecord::Schema.define(version: 20170328201217) do
   end
 
   create_table "tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.text     "tournament_info", limit: 65535
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "index"
+    t.integer  "TournamentID"
+    t.string   "Name"
+    t.date     "StartDate"
+    t.date     "EndDate"
+    t.boolean  "IsOver"
+    t.boolean  "IsInProgress"
+    t.string   "Venue"
+    t.string   "Location"
+    t.integer  "Par"
+    t.integer  "Yards"
+    t.decimal  "Purse",        precision: 10
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

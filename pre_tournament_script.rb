@@ -2,13 +2,13 @@
 
 
 tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
-tournament[:tournament_info]["IsInProgress"] = true
+tournament[:IsInProgress] = true
 tournament.save
-puts(tournament[:tournament_info]["Name"])
+puts(tournament[:Name])
 
 require 'net/http'
 
-uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentProjectionStats/' + tournament[:tournament_info]["TournamentID"].to_s)
+uri = URI('https://api.fantasydata.net/golf/v2/json/PlayerTournamentProjectionStats/' + tournament[:TournamentID].to_s)
 
 request = Net::HTTP::Get.new(uri.request_uri)
 # Request headers
