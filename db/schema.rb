@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170330164521) do
+ActiveRecord::Schema.define(version: 20170330175942) do
 
   create_table "golfer_tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "tournament_id"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "golfer_id"
-    t.text     "golfer_tournament_info", limit: 65535
+    t.integer  "Rank"
+    t.decimal  "TotalScore",    precision: 10
+    t.decimal  "Earnings",      precision: 10
     t.index ["golfer_id"], name: "index_golfer_tournaments_on_golfer_id", using: :btree
     t.index ["tournament_id"], name: "index_golfer_tournaments_on_tournament_id", using: :btree
   end

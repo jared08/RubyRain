@@ -17,10 +17,10 @@ class TournamentsController < ApplicationController
 
       gt = GolferTournament.find_by(golfer_id: @golfer_id, tournament_id: tournament[:id])
       if gt
-        if gt[:golfer_tournament_info]["Rank"] == nil
+        if gt[:Rank] == nil
           temp[:rank] = 'Missed Cut'
         else
-          temp[:rank] = gt[:golfer_tournament_info]["Rank"]
+          temp[:rank] = gt[:Rank]
         end
       else
         temp[:rank] = 'DNP'

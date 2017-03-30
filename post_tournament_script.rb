@@ -32,12 +32,15 @@ for player in players
     if (response.body != '') #returns blank if the player didn't play in the tournament
       info = JSON.parse(response.body)
 
-      info.delete("Rounds") #maybe want later but don't see the need for storing info on every single hole
+      golfer_tournament = golfer.golfer_tournaments.create()
+      golfer_tournament[:tournament_id] = tournament[:id]
 
-      golfer_tournament = GolferTournament.find_by(golfer_id: golfer.id, tournament_id: tournament.id)
-      golfer_tournament[:golfer_tournament_info] = info
+      golfer_tournament[:Rank] = info["Rank"]
+      golfer_tournament[:TotalScore] = info["TotalScore"]
+      golfer_tournament[:Earnings] = info["Earnings"]
+
       golfer_tournament.save
-
+       
       if (info["Rank"] != 'nil') #can switch to MadeCut when data isn't scrambled
         puts(info["Rank"])
 

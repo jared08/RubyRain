@@ -162,13 +162,13 @@ class StocksController < ApplicationController
           if (response.body != '') #returns blank if the player didn't play in the tournament
             info = JSON.parse(response.body)
 
-            info.delete("Rounds") #maybe want later but don't see the need for storing info on every single hole
+            golfer_tournament = golfer.golfer_tournaments.create()
+            golfer_tournament[:tournament_id] = tournament[:id]
 
-            params[:tournament] = tournament
-            params[:golfer_tournament_info] = info
+            golfer_tournament[:Rank] = info["Rank"]
+            golfer_tournament[:TotalScore] = info["TotalScore"]
+ 	    golfer_tournament[:Earnings] = info["Earnings"]
 
-            golfer_tournament = GolferTournament.new
-            golfer_tournament = golfer.golfer_tournaments.create(params)
             golfer_tournament.save
 
             if (info["Rank"] != nil) #can switch to MadeCut when data isn't scrambled
@@ -244,8 +244,8 @@ class StocksController < ApplicationController
         gt = GolferTournament.find_by(golfer_id: @golfer[:id], tournament_id: tournament[:id])
         if gt
           if tournament[:IsOver] == true
-            if gt[:golfer_tournament_info]["Rank"] != nil
-              temp[:rank] = gt[:golfer_tournament_info]["Rank"]
+            if gt[:Rank] != nil
+              temp[:rank] = gt[:Rank]
             else
               temp[:rank] = 'Missed Cut'
             end
