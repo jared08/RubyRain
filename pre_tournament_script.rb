@@ -23,7 +23,6 @@ end
 tournament_info = JSON.parse(response.body)
 
 players = Stock.where(sport: "Golf")
-params = Hash.new
 
 for player in players
   if (tournament_info.any? {|h| h["PlayerID"] == player[:PlayerID]})
@@ -34,6 +33,7 @@ for player in players
     golfer_tournament = golfer.golfer_tournaments.create()
 
     golfer_tournament[:tournament_id] = tournament[:id]
+    golfer_tournament[:Rank] = h["Rank"]
     golfer_tournament.save
 
   else

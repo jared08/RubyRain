@@ -1,0 +1,22 @@
+<h1>Upcoming Tournament</h1>
+<%= upcoming_tournament[:Name] %>
+<%= upcoming_tournament[:StartDate] %>
+<%= upcoming_tournament[:EndDate] %>
+<%= upcoming_tournament[:Venue] %>
+<%= upcoming_tournament[:Location] %>
+<%= upcoming_tournament[:Par] %>
+<%= upcoming_tournament[:Yards] %>
+<%= upcoming_tournament[:Purse] %>
+
+<% if upcoming_tournament[:golfers].empty? %>
+  <p>no golfer's are playing in this tournament..</p>
+<% end %>
+
+<% upcoming_tournament[:golfers].each do |golfer| %>
+  <li>
+    <%= link_to golfer[:golfer_stock][:name], golfer[:golfer_stock] %>
+    <%= golfer[:golfer_rank] %>
+    <%= golfer[:golfer_stock][:current_price] %>
+    <%= golfer[:golfer_stock][:daily_change] %>%
+  </li>
+<% end %>
