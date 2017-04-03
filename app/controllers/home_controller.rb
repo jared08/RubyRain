@@ -30,38 +30,36 @@ class HomeController < ApplicationController
     
     @upcoming_tournament[:golfers] = golfers_array
 
-
-
-    last_tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index + 1)
     
-    @last_tournament = Hash.new
-    @last_tournament[:Name] = last_tournament[:Name]
-    @last_tournament[:StartDate] = last_tournament[:StartDate]
-    @last_tournament[:EndDate] = last_tournament[:EndDate]
-    @last_tournament[:Venue] = last_tournament[:Venue]
-    @last_tournament[:Location] = last_tournament[:Location]
-    @last_tournament[:Par] = last_tournament[:Par]
-    @last_tournament[:Yards] = last_tournament[:Yards]
-    @last_tournament[:Purse] = last_tournament[:Purse]
 
-    last_golfers_array = Array.new
+    previous_tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index + 1)
+    
+    @previous_tournament = Hash.new
+    @previous_tournament[:Name] = previous_tournament[:Name]
+    @previous_tournament[:StartDate] = previous_tournament[:StartDate]
+    @previous_tournament[:EndDate] = previous_tournament[:EndDate]
+    @previous_tournament[:Venue] = previous_tournament[:Venue]
+    @previous_tournament[:Location] = previous_tournament[:Location]
+    @previous_tournament[:Par] = previous_tournament[:Par]
+    @previous_tournament[:Yards] = previous_tournament[:Yards]
+    @previous_tournament[:Purse] = previous_tournament[:Purse]
 
-    last_golfers = GolferTournament.where(tournament_id: last_tournament[:id])
-    for last_golfer in last_golfers
+    previous_golfers_array = Array.new
+
+    previous_golfers = GolferTournament.where(tournament_id: previous_tournament[:id])
+    for previous_golfer in previous_golfers
       temp = Hash.new
-      temp[:golfer_stock] = Golfer.find_by(id: last_golfer[:golfer_id]).stock
-      temp[:golfer_rank] = last_golfer[:Rank]
+      temp[:golfer_stock] = Golfer.find_by(id: previous_golfer[:golfer_id]).stock
+      temp[:golfer_rank] = previous_golfer[:Rank]
 
-      last_golfers_array << temp
+      previous_golfers_array << temp
     end
 
-    @last_tournament[:golfers] = last_golfers_array
+    @previous_tournament[:golfers] = previous_golfers_array
     
-    @news = News.all.order('Updated DESC').where('Updated > ?', @last_tournament[:EndDate]).limit(10)
 
-    @last_last_tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index + 2)
-    @last_news = News.all.order('Updated DESC').where('Updated > ?', @last_last_tournament[:EndDate]).limit(10)
- 
+    @news = News.all.order('Updated DESC').where('Updated > ?', @previous_tournament[:EndDate]).limit(10)
+
 
     @holdings = Holding.where(user_id: current_user[:id]).limit(5)
     @watchlist = {}

@@ -29,37 +29,36 @@ for player in players
     end
 
     if (response.body != '') #returns blank if the player didn't play in the tournament
-      info = JSON.parse(response.body)
+      t_info = JSON.parse(response.body)
 
-      golfer_tournament = golfer.golfer_tournaments.create()
-      golfer_tournament[:tournament_id] = tournament[:id]
+      golfer_tournament = GolferTournament.find_by(golfer_id: golfer[:id], tournament_id: tournament[:id])
 
-      golfer_tournament[:Rank] = info["Rank"]
-      golfer_tournament[:TotalScore] = info["TotalScore"]
-      golfer_tournament[:Earnings] = info["Earnings"]
-
+      golfer_tournament[:Rank] = t_info["Rank"]
+      golfer_tournament[:TotalScore] = t_info["TotalScore"]
+      golfer_tournament[:Earnings] = t_info["Earnings"]
+      
       golfer_tournament.save
        
-      if (info["Rank"] != 'nil') #can switch to MadeCut when data isn't scrambled
-        puts(info["Rank"])
+      if (t_info["Rank"] != 'nil') #can switch to MadeCut when data isn't scrambled
+        puts(t_info["Rank"])
 
         golfer[:made_cut] = golfer[:made_cut] + 1
         earnings = 2
-        if (info["Rank"].to_i < 25)
+        if (t_info["Rank"].to_i < 25)
           golfer[:top_twenty_five] = golfer[:top_twenty_five] + 1
           earnings = earnings + 3
         end
-        if (info["Rank"].to_i < 10)
+        if (t_info["Rank"].to_i < 10)
           golfer[:top_ten] = golfer[:top_ten] + 1
           earnings = earnings + 5
         end
-        if (info["Rank"].to_i == 1)
+        if (t_info["Rank"].to_i == 1)
           golfer[:first] = golfer[:first] + 1
           earnings = earnings + 15 
-        elsif (info["Rank"].to_i == 2)
+        elsif (t_info["Rank"].to_i == 2)
           golfer[:second] = golfer[:second] + 1
           earnings = earnings + 8
-        elsif (info["Rank"].to_i == 3)
+        elsif (t_info["Rank"].to_i == 3)
           golfer[:third] = golfer[:third] + 1
           earnings = earnings + 4
         end
@@ -68,7 +67,7 @@ for player in players
         player.save
       else
         puts('MISSED CUT')
-        puts(info)
+        puts(t_info)
       end
     else
      puts('DID NOT PLAY')

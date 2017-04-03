@@ -49,14 +49,14 @@ gem 'jbuilder', '~> 2.5'
 gem "chartkick"
 gem 'groupdate'
 
-# for search
-gem 'searchkick'
-
 # for tables
 gem 'jquery-datatables-rails', '~> 3.4.0'
 
 # for respond for ajax
 gem 'responders'
+
+# for pagination
+gem 'will_paginate'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

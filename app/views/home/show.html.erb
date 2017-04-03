@@ -3,14 +3,8 @@
     <div id="home_upcoming_tournament">
       <%= render partial: 'upcoming_tournament', locals: { upcoming_tournament: @upcoming_tournament } %>
     </div>
-    <div id="home_news">
-      <%= render partial: 'news', locals: { news: @news } %>
-    </div>
-    <div id="home_last_tournament">
-      <%= render partial: 'last_tournament', locals: { last_tournament: @last_tournament } %>
-    </div>
-    <div id="home_news_last">
-      <%= render partial: 'news', locals: { news: @last_news } %>
+    <div id="home_news_feed">
+      <%= render partial: 'news_feed', locals: { news: @news, tournament: @previous_tournament} %>
     </div>
   </div>
   <div class="col-sm-4">

@@ -24,19 +24,26 @@ tournament_info = JSON.parse(response.body)
 
 players = Stock.where(sport: "Golf")
 
+
 for player in players
-  if (tournament_info.any? {|h| h["PlayerID"] == player[:PlayerID]})
-    puts(player[:name].to_s + " is playing!")
+  found = false
+  for golfer_info in tournament_info
+    if player[:PlayerID] == golfer_info["PlayerID"]
+      puts(player[:name].to_s + " is playing!")
 
-    golfer = Golfer.find_by(stock_id: player.id)
+      golfer = Golfer.find_by(stock_id: player[:id])
 
-    golfer_tournament = golfer.golfer_tournaments.create()
+      golfer_tournament = golfer.golfer_tournaments.create
 
-    golfer_tournament[:tournament_id] = tournament[:id]
-    golfer_tournament[:Rank] = h["Rank"]
-    golfer_tournament.save
+      golfer_tournament[:tournament_id] = tournament[:id]
+      golfer_tournament[:Rank] = golfer_info["Rank"]
+      golfer_tournament.save
 
-  else
+      found = true 
+      break
+    end
+  end
+  if !found
     puts(player[:name].to_s + " is not playing..")
   end
 end
