@@ -14,7 +14,13 @@
       <td><%= link_to stock.name, stock %></td>
       <td><%= stock.sport %></td>
       <td><%= '%.2f' % stock.current_price %></td>
-      <td><%= '%.2f' % (((stock.current_price - stock.open_price) / (stock.open_price)) * 100)  %>%</td>
+      <% if stock.daily_change > 0 %>
+        <td class="green">+<%= '%.2f' % (stock.daily_change * 100) %>%</td>
+      <% elsif stock.daily_change < 0 %>
+        <td class="red"><%= '%.2f' % (stock.daily_change * 100)  %>%</td>
+      <% else %>
+        <td class="black">0.00%</td>
+      <% end %>
     </tr <% end %> >
   </tbody>
 </table>

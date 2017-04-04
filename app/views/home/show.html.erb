@@ -3,8 +3,11 @@
     <div id="home_upcoming_tournament">
       <%= render partial: 'upcoming_tournament', locals: { upcoming_tournament: @upcoming_tournament } %>
     </div>
-    <div id="home_news_feed">
-      <%= render partial: 'news_feed', locals: { news: @news, tournament: @previous_tournament} %>
+    <div id="news_feed">
+      <%= render @feeds %>
+    </div>
+    <div id="infinite-scrolling">
+      <%= will_paginate @feeds %>
     </div>
   </div>
   <div class="col-sm-4">

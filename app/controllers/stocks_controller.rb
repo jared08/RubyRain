@@ -36,26 +36,6 @@ class StocksController < ApplicationController
     #TODO definitely needs to be changed
     @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
 
-    #TODO find out a way to not update player's news EVERY time
-    #require 'net/http'
-
-    #url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + @stock[:PlayerID].to_s
-    #uri = URI(url)
-
-    #request = Net::HTTP::Get.new(uri.request_uri)
-    #request['Ocp-Apim-Subscription-Key'] = '34380396ef994539b30aa22ac1759ffb'
-    #request.body = "{body}"
- 
-    #response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-    #  http.request(request)
-    #end
-
-    #TODO Need to not allow for duplicates
-    #for news in JSON.parse(response.body)
-    #  new_news = stock.news.new(news)
-    #  new_news.save
-    #end
-
     if (@stock[:sport] == "Golf") 
       @golfer = Golfer.find_by(stock_id: @stock.id)
       show_golfer

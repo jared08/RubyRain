@@ -31,6 +31,7 @@ class HomeController < ApplicationController
     @upcoming_tournament[:golfers] = golfers_array
 
     
+   
 
     previous_tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index + 1)
     
@@ -58,8 +59,17 @@ class HomeController < ApplicationController
     @previous_tournament[:golfers] = previous_golfers_array
     
 
-    @news = News.all.order('Updated DESC').where('Updated > ?', @previous_tournament[:EndDate]).limit(10)
+    @news = News.all.order('Updated DESC').where('Updated > ?', @previous_tournament[:StartDate]).limit(10)
 
+    @feeds = Array.new
+    @feeds << @previous_tournament
+    @feeds << @news
+
+    respond_to do |format|
+      debugger
+      format.html
+      format.js { render 'feed_page' }
+    end
 
     @holdings = Holding.where(user_id: current_user[:id]).limit(5)
     @watchlist = {}
