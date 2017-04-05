@@ -218,15 +218,6 @@ class HoldingsController < ApplicationController
   
   def index
     @holdings = Holding.where(:user => current_user)
-    @holdings_value = 0   
-    @holdings.each do |holding|
-      if (holding[:type_of_holding] == 'buy')
-        @holdings_value = @holdings_value + (holding[:quantity] * holding.stock[:current_price])
-      else #(q * i) - (q(c - i))
-        @holdings_value = @holdings_value + ((holding[:quantity] * holding[:price_at_purchase]) - 
-	    (holding[:quantity] * (holding.stock[:current_price] - holding[:price_at_purchase])))
-      end
-    end
   end
 
   private
@@ -236,7 +227,9 @@ class HoldingsController < ApplicationController
 
     # Confirms a logged-in user.
     def logged_in_user
-      unless logged_in?
+      if logged_in?
+        current_user.UpdateAccountValue(current_user)
+      else
         flash[:danger] = "Please log in."
         redirect_to login_url
       end

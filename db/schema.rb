@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170330194804) do
+ActiveRecord::Schema.define(version: 20170405155725) do
 
   create_table "golfer_tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "tournament_id"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 20170330194804) do
     t.string   "password_digest"
     t.boolean  "admin",                      default: false
     t.float    "cash",            limit: 24, default: 25000.0
+    t.float    "account_value",   limit: 24, default: 20000.0
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 

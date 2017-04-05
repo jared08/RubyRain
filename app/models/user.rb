@@ -21,4 +21,19 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
 
+  def UpdateAccountValue(current_user)
+    holdings = Holding.where(:user => current_user)
+    holdings_value = 0
+    holdings.each do |holding|
+      if (holding[:type_of_holding] == 'buy')
+        holdings_value = holdings_value + (holding[:quantity] * holding.stock[:current_price])
+      else #(q * i) - (q(c - i))
+        holdings_value = holdings_value + ((holding[:quantity] * holding[:price_at_purchase]) -
+            (holding[:quantity] * (holding.stock[:current_price] - holding[:price_at_purchase])))
+      end
+    end
+    current_user.account_value = (holdings_value + current_user.cash)
+    current_user.save
+  end 
+  
 end

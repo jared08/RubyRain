@@ -65,9 +65,11 @@ class TournamentsController < ApplicationController
   end
 
    private
-    # Confirms a logged-in user.
+     # Confirms a logged-in user.
     def logged_in_user
-      unless logged_in?
+      if logged_in?
+        current_user.UpdateAccountValue(current_user)
+      else
         flash[:danger] = "Please log in."
         redirect_to login_url
       end

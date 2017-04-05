@@ -72,10 +72,12 @@ class StocksController < ApplicationController
     def edit_stock_params
       params.require(:stock).permit(:name, :symbol, :sport)
     end
-  
+ 
     # Confirms a logged-in user.
     def logged_in_user
-      unless logged_in?
+      if logged_in?
+        current_user.UpdateAccountValue(current_user)
+      else
         flash[:danger] = "Please log in."
         redirect_to login_url
       end

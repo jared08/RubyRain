@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = "Welcome to Ruby Rain!"
       redirect_to root_path
     else
       render 'new'
@@ -25,9 +25,12 @@ class UsersController < ApplicationController
 
     # Confirms a logged-in user.
     def logged_in_user
-      unless logged_in?
+      if logged_in?
+        current_user.UpdateAccountValue(current_user)
+      else
         flash[:danger] = "Please log in."
         redirect_to login_url
       end
     end
+
 end
