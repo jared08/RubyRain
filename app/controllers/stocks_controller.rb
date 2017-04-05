@@ -220,6 +220,7 @@ class StocksController < ApplicationController
         tournament = Tournament.find_by(index: (current_index + i))
         temp = Hash.new
  
+        temp[:id] = tournament[:id]
         temp[:name] = tournament[:Name]
         gt = GolferTournament.find_by(golfer_id: @golfer[:id], tournament_id: tournament[:id])
         if gt

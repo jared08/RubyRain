@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>Holding Info</h4></div>
+  <div class="panel-body">
+    <% if holding %>
+      <p>you own <%= holding.quantity %> shares of <%= stock.name %></p>
+    <% else %>
+      <p> you don't own any of this stock yet..</p>
+    <% end %>
+  </div>
+</div>

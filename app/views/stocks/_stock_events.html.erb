@@ -6,7 +6,7 @@
       <table class="table">
         <tbody>
           <tr <% events.each do |tournament| %> >
-            <td><%= tournament[:name] %></td>
+            <td><%= link_to tournament[:name], tournament_path(tournament[:id]) %></td>
 	    <td><%= tournament[:rank] %></td>
 	    <td><%= tournament[:date] %></td>
           </tr <% end %> >

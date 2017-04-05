@@ -15,8 +15,15 @@
       <%= f.submit "Submit", :onclick => "confirm('Are you sure?')", class: "btn btn-primary" %>
     <% end %>
   </div>
-  <div id="stock_info">
-    <p>TEST</p>
-    <%= render partial: 'stock_info', locals: { stock: @stock} %>
+  <div class="col-md-6">
+    <div id="stock_info">
+      <%= render partial: 'stock_info', locals: { stock: @stock } %>
+    </div>
+    <div id="account_info">
+      <%= render partial: 'account_info', locals: { user: @user } %>
+    </div>
+    <div id="holding_info">
+      <%= render partial: 'holding_info', locals: { holding: @past_holding, stock: @stock } %>
+    </div>
   </div>
-
+</div>

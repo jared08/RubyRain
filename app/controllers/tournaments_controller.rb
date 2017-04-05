@@ -1,6 +1,13 @@
 class TournamentsController < ApplicationController
   before_action :logged_in_user, only: [:index]
 
+  def show
+    tournament_id = params[:id]
+
+    @tournament = Tournament.find_by(id: tournament_id)
+    @golfers = @tournament.golfer_tournaments.all.order("Rank IS NULL, Rank ASC")
+  end
+
   def index
 
     stock_id = params[:stock_id]
@@ -12,6 +19,7 @@ class TournamentsController < ApplicationController
 
     completed_tournaments.reverse.each do |tournament|
       temp = Hash.new
+      temp[:id] = tournament[:id]
       temp[:name] = tournament[:Name]
       temp[:date] = tournament[:StartDate]
 
@@ -33,6 +41,7 @@ class TournamentsController < ApplicationController
     @remaining = []
     remaining_tournaments.reverse.each do |tournament|
       temp = Hash.new
+      temp[:id] = tournament[:id]
       temp[:name] = tournament[:Name]
       temp[:date] = tournament[:StartDate]
 

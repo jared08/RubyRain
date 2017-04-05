@@ -1,0 +1,28 @@
+<h1><%= @tournament[:Name] %></h1>
+<% if !@golfers.empty? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <% if @tournament[:IsOver] == true %>
+          <th>Rank</th>
+        <% else %>
+          <th>Projected Rank</th>
+        <% end %>
+       </tr>
+    </thead>
+    <tbody>
+      <tr <% @golfers.each do |golfer| %> >
+        <td><%= link_to golfer.golfer.stock.name, golfer.golfer.stock %></td>
+        <% if golfer[:Rank] %>
+          <td><%= golfer[:Rank] %></td>
+        <% else %>
+          <td>Missed Cut</td>
+        <% end %>
+      </tr <% end %> >
+    </tbody>
+  </table>
+<% else %>
+  <p>No one played in this tournament..</p>
+<% end %>
+

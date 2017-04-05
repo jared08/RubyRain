@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     <tr <% completed.each do |tournament| %> >
-      <td><%= tournament[:name] %></td>
+      <td><%= link_to tournament[:name], tournament_path(tournament[:id]) %></td>
       <td><%= tournament[:date] %></td>
       <td><%= tournament[:rank] %></td>
     </tr <% end %> >

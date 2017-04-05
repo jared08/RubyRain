@@ -5,6 +5,8 @@ class HoldingsController < ApplicationController
   def new
     @holding = Holding.new
     @stock = Stock.find_by(symbol: params[:stock_symbol])
+    @user = current_user
+    @past_holding = Holding.find_by(user_id: current_user.id, stock_id: @stock.id)
   end
 
   def refresh

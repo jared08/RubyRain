@@ -17,11 +17,15 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   resources :users
+
+  resources :tournaments
+
   resources :stocks do
     resources :tournaments
   end
+  
   resources :holdings
-
+  
   resources :home
 
   get "/refresh" => 'holdings#refresh', as: 'refresh'

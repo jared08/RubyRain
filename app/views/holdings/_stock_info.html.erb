@@ -1,10 +1,11 @@
-<div class="col-md-6" id=stock_info>
-  <h1>STOCK INFO</h1>
-  <div id="refreshable_info">
-    <p><%= stock.name + " (" + stock.symbol + ")" %></p>
-    <p><%= "$" + '%.2f' % stock.current_price.to_s + " $" + '%.2f' % (stock.current_price - stock.open_price).to_s + " " + '%.2f' % (((stock.current_price - stock.open_price) / stock.open_price) * 100) + "%" %></p>
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>Stock Info</h4></div>
+  <div class="panel-body">
+    <div id="refreshable_info">
+      <p><%= stock.name + " (" + stock.symbol + ")" %></p>
+      <p><%= "$" + '%.2f' % stock.current_price.to_s + " $" + '%.2f' % (stock.current_price - stock.open_price).to_s + " " + '%.2f' % (((stock.current_price - stock.open_price) / stock.open_price) * 100) + "%" %></p>
 
-    <%= link_to "Refresh", refresh_path(:stock_symbol => stock.symbol), :remote => true %>
+      <%= link_to "Refresh", refresh_path(:stock_symbol => stock.symbol), :remote => true %>
     </div>
   </div>
 </div>
