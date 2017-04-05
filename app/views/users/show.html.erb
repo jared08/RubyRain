@@ -1,11 +1,15 @@
 <% provide(:title, @user.name) %>
+<h1><%= @user.name %></h1>
 <div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
-    </section>
-  </aside>
+  <div class="col-sm-6">
+    <div id="portfolio_snippet">
+      <%= render partial: 'portfolio_snippet', locals: {  } %>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div id="recent_activity">
+      <%= render partial: 'recent_activity', locals: {  } %>
+    </div>
+  </div>
 </div>
+

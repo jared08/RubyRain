@@ -61,15 +61,15 @@ class HomeController < ApplicationController
 
     @news = News.all.order('Updated DESC').where('Updated > ?', @previous_tournament[:StartDate]).limit(10)
 
-    @feeds = Array.new
-    @feeds << @previous_tournament
-    @feeds << @news
+    #@feeds = Array.new
+    #@feeds << @previous_tournament
+    #@feeds << @news
 
-    respond_to do |format|
-      debugger
-      format.html
-      format.js { render 'feed_page' }
-    end
+    #respond_to do |format|
+    #  debugger
+    #  format.html
+    #  format.js { render 'feed_page' }
+    #end
 
     @holdings = Holding.where(user_id: current_user[:id]).limit(5)
     @watchlist = {}
