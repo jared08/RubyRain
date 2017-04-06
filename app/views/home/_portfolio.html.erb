@@ -17,7 +17,7 @@
           <tr <% holdings.each do |holding| %> >
             <td><%= holding.stock.symbol %></td>
             <td><%= link_to holding.stock.name, holding.stock %></td>
-            <td><%= '%.2f' % holding.stock.current_price %></td>
+            <td>$<%= '%.2f' % holding.stock.current_price %></td>
             <% if holding.stock.current_price > holding.stock.open_price %>
               <td class="green">+<%= '%.2f' % (((holding.stock.current_price - holding.stock.open_price) / (holding.stock.open_price)) * 100) %>%</td>
             <% elsif holding.stock.current_price < holding.stock.open_price %>

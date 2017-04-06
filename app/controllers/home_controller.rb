@@ -8,6 +8,7 @@ class HomeController < ApplicationController
     tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
 
     @upcoming_tournament = Hash.new
+    @upcoming_tournament[:id] = tournament[:id]
     @upcoming_tournament[:Name] = tournament[:Name]
     @upcoming_tournament[:StartDate] = tournament[:StartDate]
     @upcoming_tournament[:EndDate] = tournament[:EndDate]
@@ -27,6 +28,7 @@ class HomeController < ApplicationController
  
       golfers_array << temp
     end
+      golfers_array.sort! { |x, y| x[:golfer_rank] <=> y[:golfer_rank] }
     
     @upcoming_tournament[:golfers] = golfers_array
 

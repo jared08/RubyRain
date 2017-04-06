@@ -29,8 +29,8 @@
             <td><%= holding.stock.symbol %></td>
             <td><%= link_to holding.stock.name, holding.stock %></td>
             <td><%= holding.quantity %></td>
-            <td><%= '%.2f' % holding.price_at_purchase %></td>
-            <td><%= '%.2f' % holding.stock.current_price %></td>
+            <td>$<%= '%.2f' % holding.price_at_purchase %></td>
+            <td>$<%= '%.2f' % holding.stock.current_price %></td>
             <% if holding.type_of_holding == 'buy' %>
               <% gain = ((((holding.quantity * holding.stock.current_price) - (holding.quantity * holding.price_at_purchase)) /
                 (holding.quantity * holding.price_at_purchase)) * 100) %>
@@ -46,9 +46,9 @@
               <td class="black">0.00%</td>
             <% end %>
             <% if holding.type_of_holding == 'buy' %>
-              <td><%= '%.2f' % (holding.quantity * holding.stock.current_price) %> </td>
+              <td>$<%= '%.2f' % (holding.quantity * holding.stock.current_price) %> </td>
             <% else %>
-              <td><%= '%.2f' % ((holding.quantity * holding.price_at_purchase) - (holding.quantity* (holding.stock.current_price - holding.price_at_purchase))) %> </td>
+              <td>$<%= '%.2f' % ((holding.quantity * holding.price_at_purchase) - (holding.quantity*(holding.stock.current_price - holding.price_at_purchase))) %> </td>
             <% end %>
           </tr <% end %> >
         </tbody>

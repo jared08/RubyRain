@@ -11,7 +11,7 @@
       <tbody>
         <tr <% userlist.each do |user| %> >
           <td><%= link_to user.name, user %></td>
-          <td><%= user.account_value %></td>
+          <td>$<%= user.account_value %></td>
         </tr <% end %> >
       </tbody>
     </table>

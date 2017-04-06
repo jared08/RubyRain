@@ -13,7 +13,7 @@
       <td><%= stock.symbol %></td>
       <td><%= link_to stock.name, stock %></td>
       <td><%= stock.sport %></td>
-      <td><%= '%.2f' % stock.current_price %></td>
+      <td>$<%= '%.2f' % stock.current_price %></td>
       <% if stock.daily_change > 0 %>
         <td class="green">+<%= '%.2f' % (stock.daily_change * 100) %>%</td>
       <% elsif stock.daily_change < 0 %>

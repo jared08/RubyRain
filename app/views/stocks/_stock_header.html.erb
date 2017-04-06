@@ -6,8 +6,8 @@
   </div>
   <div class="col-sm-6">
     <div id="header_info">
-      <h2> <%= stock.name %> (<%= stock.symbol %>) </h2>
-      <h3> <%= '%.2f' % stock.current_price %> </h3>
+      <h2><%= stock.name %> (<%= stock.symbol %>)</h2>
+      <h3>$<%= '%.2f' % stock.current_price %> </h3>
       <% if stock.daily_change > 0 %>
         <h4 class="green">+<%= '%.2f' % (stock.current_price - stock.open_price) %> (+<%= '%.2f' % (stock.daily_change * 100) %>%) </h4>
       <% elsif stock.daily_change < 0 %>

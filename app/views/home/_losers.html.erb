@@ -17,7 +17,7 @@
           <tr <% losers.each do |stock| %> >
             <td><%= stock.symbol %></td>
             <td><%= link_to stock.name, stock %></td>
-            <td><%= '%.2f' % stock.current_price %></td>
+            <td>$<%= '%.2f' % stock.current_price %></td>
             <% if stock.current_price > stock.open_price %>
               <td class="green">+<%= '%.2f' % (((stock.current_price - stock.open_price) / (stock.open_price)) * 100) %>%</td>
             <% elsif stock.current_price < stock.open_price %>
