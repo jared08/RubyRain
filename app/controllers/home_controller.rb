@@ -62,7 +62,7 @@ class HomeController < ApplicationController
     
 
     @news = News.all.order('Updated DESC').where('Updated > ?', @previous_tournament[:StartDate]).limit(10)
-
+    
     #@feeds = Array.new
     #@feeds << @previous_tournament
     #@feeds << @news

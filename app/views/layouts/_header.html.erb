@@ -6,7 +6,6 @@
         <ul class="nav navbar-nav navbar-left">
           <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Portfolio", holdings_path %></li>
-          <li><%= link_to "Stocks", stocks_path %></li>
           <li><%= link_to "Posts", posts_path %></li>
         </ul>
       <% end %>
@@ -22,8 +21,9 @@
               </div>
             </form>
           </li>
-          <li><%= link_to current_user.account_value, holdings_path %></li>
-          <li><%= link_to current_user.name, current_user %>
+          <% value = "$" + current_user.account_value.to_s %>
+          <li><%= link_to value, holdings_path %></li>
+          <li><%= link_to current_user.name, current_user %></li>
           <li><%= link_to "Log out", logout_path, method: "delete" %></li>
 	 <% else %>
           <li><%= link_to "Log in", login_path %></li>
