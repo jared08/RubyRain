@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= link_to "Following", users_path %></h4></div>
+  <div class="panel-body">
+    <% if userlist.empty? %>
+      <%= link_to "click here to follow users!", users_path %>
+    <% else %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Percent Change</th>
+            <th>Account Value</th>
+           </tr>
+        </thead>
+        <tbody>
+        <tr <% userlist.each do |user| %> >
+          <td><%= link_to user.name, user %></td>
+          <% if user.account_value > user.start_value %>
+            <td class="green">+<%= '%.2f' % (((user.account_value - user.start_value) / (user.start_value)) * 100) %>%</td>
+          <% elsif user.account_value < user.start_value %>
+            <td class="red"><%= '%.2f' % (((user.account_value - user.start_value) / (user.start_value)) * 100) %>%</td>
+          <% else %>
+            <td class="black">0.00%</td>
+          <% end %>
+          <td><%= user.account_value %></td>
+        </tr <% end %> >
+      </tbody>
+    </table>
+    <%= link_to 'View All', users_path %>
+   <% end %>
+  </div>
+</div>

@@ -17,6 +17,15 @@
     <div id="home_watchlist">
       <%= render partial: 'watchlist', locals: { watchlist: @watchlist } %>
     </div>
+    <div id="home_top_portflios">
+      <%= render partial: 'top_portfolios', locals: { userlist: @top_users } %>
+    </div>
+    <div id="home_trending_portfolios">
+      <%= render partial: 'trending_portfolios', locals: { userlist: @trending_users } %>
+    </div>
+    <div id="home_following">
+      <%= render partial: 'following', locals: { userlist: @following } %>
+    </div>
     <div id="home_trending">
       <%= render partial: 'trending', locals: { trendings: @trendings} %>
     </div>

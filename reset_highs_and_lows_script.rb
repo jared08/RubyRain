@@ -16,3 +16,9 @@ for stock in stocks
   stock.save
 end
 
+users = User.all
+
+for user in users
+  user[:start_value] = user[:account_value]
+  user.save
+end

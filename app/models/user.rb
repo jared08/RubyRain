@@ -32,8 +32,7 @@ class User < ApplicationRecord
             (holding[:quantity] * (holding.stock[:current_price] - holding[:price_at_purchase])))
       end
     end
-    current_user.account_value = (holdings_value + current_user.cash)
-    current_user.save
+    current_user.update_column :account_value, (holdings_value + current_user.cash)
   end 
   
 end

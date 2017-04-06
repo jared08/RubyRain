@@ -14,11 +14,17 @@
            </tr>
         </thead>
         <tbody>
-          <tr <% watchlist.each do |stock| %> >
-            <td><%= stock.symbol %></td>
-            <td><%= link_to stock.name, stock %></td>
-            <td><%= '%.2f' % stock.current_price %></td>
-            <td><%= '%.2f' % (((stock.current_price - stock.open_price) / (stock.open_price)) * 100) %>%</td>
+          <tr <% watchlist.each do |watch| %> >
+            <td><%= watch.stock.symbol %></td>
+            <td><%= link_to watch.stock.name, watch.stock %></td>
+            <td><%= '%.2f' % watch.stock.current_price %></td>
+            <% if watch.stock.current_price > watch.stock.open_price %>
+              <td class="green">+<%= '%.2f' % (((watch.stock.current_price - watch.stock.open_price) / (watch.stock.open_price)) * 100) %>%</td>
+            <% elsif watch.stock.current_price < watch.stock.open_price %>
+              <td class="red"><%= '%.2f' % (((watch.stock.current_price - watch.stock.open_price) / (watch.stock.open_price)) * 100) %>%</td>
+            <% else %>
+              <td class="black">0.00%</td>
+            <% end %>
           </tr <% end %> >
         </tbody>
       </table>
