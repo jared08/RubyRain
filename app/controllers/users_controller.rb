@@ -15,7 +15,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @accounts_user = User.find(params[:id])
+    @current_user = current_user
+    @holdings = @accounts_user.holdings.all
   end
 
   def index

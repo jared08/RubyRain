@@ -1,9 +1,9 @@
-<% provide(:title, @user.name) %>
-<h1><%= @user.name %></h1>
+<% provide(:title, @accounts_user.name) %>
+<h1><%= @accounts_user.name %></h1>
 <div class="row">
   <div class="col-sm-6">
     <div id="portfolio_snippet">
-      <%= render partial: 'portfolio_snippet', locals: {  } %>
+      <%= render partial: 'portfolio_snippet', locals: { current_user: @current_user, accounts_user: @accounts_user, holdings: @holdings } %>
     </div>
   </div>
   <div class="col-sm-6">
