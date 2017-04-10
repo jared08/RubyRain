@@ -64,6 +64,14 @@ class StocksController < ApplicationController
     redirect_to stocks_url
   end
 
+  def open_stock_modal
+    debugger
+    @stock = Stock.find_by(id: params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
     def stock_params
       params.require(:stock).permit(:name, :symbol, :PlayerID, :current_price, :sport)

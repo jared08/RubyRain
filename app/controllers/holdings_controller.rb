@@ -9,6 +9,7 @@ class HoldingsController < ApplicationController
     @past_holding = Holding.find_by(user_id: current_user.id, stock_id: @stock.id)
   end
 
+
   def refresh
     @stock = Stock.find_by(symbol: params[:stock_symbol])
     respond_to do |format|

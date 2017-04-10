@@ -1,6 +1,6 @@
-$('#news_feed').append('<%= j render @feeds %>');
-<% if @posts.next_page %>
-  $('.pagination').replaceWith('<%= j will_paginate @feeds %>');
+$('#tournaments_feed').append('<%= j render @tournaments %>');
+<% if @tournaments.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate @tournaments %>');
 <% else %>
   $(window).off('scroll');
   $('.pagination').remove();

@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resources :stocks do
     resources :tournaments
   end
-  
+ 
   resources :holdings
   
   resources :home
