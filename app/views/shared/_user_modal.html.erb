@@ -1,10 +1,10 @@
-<% if @stock %>
-<div class="modal fade in" id="stock_modal" role="dialog">
+<% if @user %>
+<div class="modal fade in" id="user_modal" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" >&times;</button>
-        <h4 class="modal-title"><%= link_to @stock.name, @stock %></h4>
+        <h4 class="modal-title"><%= link_to @user.name, @user %></h4>
       </div>
       <div class="modal-body">
       </div>

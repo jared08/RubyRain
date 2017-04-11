@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         <tr <% userlist.each do |user| %> >
-          <td><%= link_to user.name, user %></td>
+          <td><%= link_to user.name, home_show_user_modal_path(user_id: user.id), remote: true %></td>
           <% if user.account_value > user.start_value %>
             <td class="green">+<%= '%.2f' % (((user.account_value - user.start_value) / (user.start_value)) * 100) %>%</td>
           <% elsif user.account_value < user.start_value %>

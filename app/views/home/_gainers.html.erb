@@ -16,7 +16,7 @@
         <tbody>
           <tr <% gainers.each do |stock| %> >
             <td><%= stock.symbol %></td>
-            <td><%= link_to stock.name, stock %></td>
+            <td><%= link_to stock.name, home_show_stock_modal_path(stock_id: stock.id), remote: true %></td>
             <td>$<%= '%.2f' % stock.current_price %></td>
             <% if stock.current_price > stock.open_price %>
               <td class="green">+<%= '%.2f' % (((stock.current_price - stock.open_price) / (stock.open_price)) * 100) %>%</td>

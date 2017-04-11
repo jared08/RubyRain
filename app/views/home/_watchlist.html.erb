@@ -16,7 +16,7 @@
         <tbody>
           <tr <% watchlist.each do |watch| %> >
             <td><%= watch.stock.symbol %></td>
-            <td><%= link_to watch.stock.name, watch.stock %></td>
+            <td><%= link_to watch.stock.name, home_show_stock_modal_path(stock_id: watch.stock.id), remote: true %></td>
             <td>$<%= '%.2f' % watch.stock.current_price %></td>
             <% if watch.stock.current_price > watch.stock.open_price %>
               <td class="green">+<%= '%.2f' % (((watch.stock.current_price - watch.stock.open_price) / (watch.stock.open_price)) * 100) %>%</td>
