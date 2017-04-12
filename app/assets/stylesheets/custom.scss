@@ -25,6 +25,11 @@ textarea {
   resize: vertical;
 }
 
+.modal_pic {
+  display: inline-block;
+  width: 8%;
+}
+
 .center {
   text-align: center;
   h1 {
@@ -33,7 +38,7 @@ textarea {
 }
 
 .inline {
-    display: inline;
+    display: inline-block;
 }
 
 

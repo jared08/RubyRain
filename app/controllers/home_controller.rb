@@ -6,6 +6,8 @@ class HomeController < ApplicationController
 
   def show_stock_modal
     @stock = Stock.find_by(id: params[:stock_id])
+    #TODO definitely needs to be changed
+    @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
     respond_to do |format|
       format.js
     end

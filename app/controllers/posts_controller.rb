@@ -5,6 +5,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    @stocks = Stock.all.order('name')
   end
 
   def create

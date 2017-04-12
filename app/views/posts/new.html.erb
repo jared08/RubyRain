@@ -8,6 +8,9 @@
 
       <%= f.label :content, "Content" %>
       <%= f.text_area :content, :rows => 10 %>
+ 
+      <%= f.label :tags, "Tags" %>
+      <%= f.collection_select :tags, @stocks, :name, :name, :include_blank => true %> 
 
       <%= f.submit "Add post", class: "btn btn-primary" %>
     <% end %>

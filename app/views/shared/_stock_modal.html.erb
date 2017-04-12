@@ -4,7 +4,20 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" >&times;</button>
-        <h4 class="modal-title"><%= link_to @stock.name, @stock %></h4>
+        <div class='inline'>
+          <img class='modal_pic' src="<%= @stock[:PhotoUrl] %>" alt="@stock.name" />
+          <h3 class='inline'><%= link_to @stock.name, @stock %> (<%= @stock.symbol %>)</h3>
+          <h3 class='inline'>$<%= '%.2f' % @stock.current_price %> </h3>
+          <% if @stock.daily_change > 0 %>
+            <h4 class="green">+<%= '%.2f' % (@stock.current_price - @stock.open_price) %> (+<%= '%.2f' % (@stock.daily_change * 100) %>%) </h4>
+          <% elsif @stock.daily_change < 0 %>
+            <h4 class="red"> <%= '%.2f' % (@stock.current_price - @stock.open_price) %> (<%= '%.2f' % (@stock.daily_change * 100) %>%) </h4>
+          <% else %>
+            <h4 class="black">0.00 (0.00%)</h4>
+          <% end %>
+         <h4> as of <%= @time.strftime("%I:%M %p") %> </h4>
+
+        </div>
       </div>
       <div class="modal-body">
       </div>

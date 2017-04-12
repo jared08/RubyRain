@@ -2,6 +2,8 @@
 <% @posts.each do |post| %>
   <p><%= link_to post.title, post %></p>
   <p><%= post.content %></p>
+  <p><%= post.tags %></p>
+  <p><%= post.user.name %></p>
 <% end %>
 
 <%= link_to "New Post", new_post_url %>
