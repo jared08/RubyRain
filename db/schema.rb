@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406140610) do
+ActiveRecord::Schema.define(version: 20170412194959) do
 
   create_table "golfer_tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "tournament_id"
@@ -74,12 +74,19 @@ ActiveRecord::Schema.define(version: 20170406140610) do
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
-    t.text     "content",    limit: 65535
+    t.text     "content",     limit: 65535
     t.integer  "user_id"
-    t.string   "tags"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "custom_tags"
     t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
+  end
+
+  create_table "posts_stocks", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "posts_id"
+    t.integer "stocks_id"
+    t.index ["posts_id"], name: "index_posts_stocks_on_posts_id", using: :btree
+    t.index ["stocks_id"], name: "index_posts_stocks_on_stocks_id", using: :btree
   end
 
   create_table "stocks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

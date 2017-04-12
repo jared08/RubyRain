@@ -5,7 +5,7 @@
       <p>no posts..</p>
     <% else %>
       <% posts.each do |post| %>
-        <%= link_to post[:title], post %>
+        <p><%= link_to post[:title], post %></p>
       <% end %>
     <% end %>
   </div>

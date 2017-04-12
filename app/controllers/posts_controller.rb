@@ -1,7 +1,5 @@
 class PostsController < ApplicationController
   before_action :logged_in_user, only: [:new, :show, :index]
-  before_action :admin_user, only: [:destroy]
-  before_action :correct_user, only: [:edit, :destroy]
 
   def new
     @post = Post.new
@@ -9,7 +7,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.new(post_params)
+    final_params = post_params
+    final_params[:stocks_id] = Stock.find_by(id: post_params[:stock_tags])
+    debugger
+    @post = current_user.posts.new(final_params)
 
     if @post.save
         flash[:success] = "You added a post!"
@@ -21,16 +22,21 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @current_user = current_user
   end
   
   def index
     @posts = Post.all
+    @current_user = current_user
   end
 
   def edit
+    @post = Post.find_by(id: params[:id])
+    @stocks = Stock.all.order('name')
   end
 
   def update
+    @post = Post.find_by(id: params[:id])
     if @post.update_attributes(edit_post_params)
       flash[:success] = "Post updated"
       redirect_to @post
@@ -47,11 +53,11 @@ class PostsController < ApplicationController
 
   private
     def post_params
-      params.require(:post).permit(:title, :content, :tags)
+      params.require(:post).permit(:title, :content, :stock_tags, :custom_tags)
     end
 
     def edit_post_params
-      params.require(:post).permit(:title, :content, :tags)
+      params.require(:post).permit(:title, :content, :stock_tags, :custom_tags)
     end
 
     # Confirms a logged-in user.
@@ -63,23 +69,5 @@ class PostsController < ApplicationController
         redirect_to login_url
       end
     end
-
-
-    # Confirms the correct user.
-    def correct_user
-      unless current_user.id == @post.id
-        flash[:danger] = "You don't have access to this.."
-        redirect_to login_url
-      end
-    end
-
-     # Confirms an admin user.
-    def admin_user
-      unless current_user.admin?
-        flash[:danger] = "You don't have access to this.."
-        redirect_to login_url
-      end
-    end
-
 
 end

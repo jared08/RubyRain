@@ -1,9 +1,23 @@
-<h1>POSTS</h1>
-<% @posts.each do |post| %>
-  <p><%= link_to post.title, post %></p>
-  <p><%= post.content %></p>
-  <p><%= post.tags %></p>
-  <p><%= post.user.name %></p>
-<% end %>
-
-<%= link_to "New Post", new_post_url %>
+<div class='row'>
+  <div class="col-sm-1"></div>
+  <div class="col-sm-8"> 
+    <%= link_to "New Post", new_post_url %>
+    <% @posts.each do |post| %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4 class='inline'><%= link_to post.title, post %> -- <%= link_to post.user.name, user_path(post.user.id) %></h4>
+          <% if @current_user.id == post.user.id %>
+            <div class='pull-right'>
+              <h4 class='inline'><%= link_to 'Edit', edit_post_path(post) %> | </h4>
+              <h4 class='inline'><%= link_to 'Delete', post, :method => :delete, :confirm => "Are you sure?" %></h4>
+            </div>
+          <% end %>
+        </div>
+        <div class="panel-body">
+          <p><%= post.content %></p>
+          <p class='inline'>tags: <%= post.tags %></p>
+          <p class='pull-right'><%= post.created_at %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
