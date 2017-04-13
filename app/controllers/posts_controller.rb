@@ -31,7 +31,13 @@ class PostsController < ApplicationController
   end
   
   def index
-    @posts = Post.all
+    #@posts = Post.all
+    @posts = Post.order('created_at DESC').paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.js { render 'posts/post_page' }
+    end
+
     @current_user = current_user
   end
 
