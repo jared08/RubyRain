@@ -10,7 +10,7 @@
       <%= f.text_area :content, :rows => 10, class: 'form-control' %>
  
       <%= f.label :stock_tags, "Stock Tags" %>
-      <%= f.collection_select :stock_tags, @stocks, :id, :name, :include_blank => true, class: 'form-control' %> 
+      <%= f.collection_select :stocks, @stocks, :id, :name, :include_blank => true, class: 'form-control' %> 
 
       <%= f.submit "Add post", class: "btn btn-primary" %>
     <% end %>

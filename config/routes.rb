@@ -26,9 +26,12 @@ Rails.application.routes.draw do
  
   resources :holdings
  
-  get "home/show_stock_modal"
-  get "home/show_user_modal" 
- 
+  get "application/show_stock_modal"
+  get "application/show_user_modal"
+  get "application/show_news_modal"
+  get "application/show_post_modal"
+
+
   resources :home
 
   get "/refresh" => 'holdings#refresh', as: 'refresh'

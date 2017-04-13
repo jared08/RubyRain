@@ -4,22 +4,6 @@ class HomeController < ApplicationController
   def new
   end
 
-  def show_stock_modal
-    @stock = Stock.find_by(id: params[:stock_id])
-    #TODO definitely needs to be changed
-    @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
-    respond_to do |format|
-      format.js
-    end
-  end
-
-  def show_user_modal
-    @user = User.find_by(id: params[:user_id])
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def show
 
     current_tournament_id = Tournament.find_by(index: Rails.application.config.current_tournament_index)[:id]

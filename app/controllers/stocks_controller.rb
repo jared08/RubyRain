@@ -32,8 +32,8 @@ class StocksController < ApplicationController
   def show
     @stock = Stock.find(params[:id])
     @news = News.limit(4).where(stock_id: params[:id]).order("Updated DESC")
-    @posts = Post.limit(4).where(tags: @stock[:name]).order("created_at DESC")
-
+    @posts = Post.joins(:posts_stocks).where(:posts_stocks => {:stock_id => @stock.id}).limit(4).order("created_at DESC") 
+   
     #TODO definitely needs to be changed
     @time = Time.now.utc.in_time_zone("Eastern Time (US & Canada)")
 

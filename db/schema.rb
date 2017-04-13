@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412194959) do
+ActiveRecord::Schema.define(version: 20170412210321) do
 
   create_table "golfer_tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "tournament_id"
@@ -83,10 +83,10 @@ ActiveRecord::Schema.define(version: 20170412194959) do
   end
 
   create_table "posts_stocks", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "posts_id"
-    t.integer "stocks_id"
-    t.index ["posts_id"], name: "index_posts_stocks_on_posts_id", using: :btree
-    t.index ["stocks_id"], name: "index_posts_stocks_on_stocks_id", using: :btree
+    t.integer "post_id"
+    t.integer "stock_id"
+    t.index ["post_id"], name: "index_posts_stocks_on_post_id", using: :btree
+    t.index ["stock_id"], name: "index_posts_stocks_on_stock_id", using: :btree
   end
 
   create_table "stocks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

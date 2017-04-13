@@ -7,10 +7,15 @@ class PostsController < ApplicationController
   end
 
   def create
+    final_params = Hash.new
     final_params = post_params
-    final_params[:stocks_id] = Stock.find_by(id: post_params[:stock_tags])
-    debugger
+
+    stocks = Hash.new
+    stocks = Stock.where(id: post_params[:stocks])
+    final_params.delete(:stocks)
+    
     @post = current_user.posts.new(final_params)
+    @post.stocks = stocks
 
     if @post.save
         flash[:success] = "You added a post!"
@@ -53,11 +58,11 @@ class PostsController < ApplicationController
 
   private
     def post_params
-      params.require(:post).permit(:title, :content, :stock_tags, :custom_tags)
+      params.require(:post).permit(:title, :content, :stocks, :custom_tags)
     end
 
     def edit_post_params
-      params.require(:post).permit(:title, :content, :stock_tags, :custom_tags)
+      params.require(:post).permit(:title, :content, :stocks, :custom_tags)
     end
 
     # Confirms a logged-in user.

@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4 class='inline'><%= link_to post.title, post %> --
+      <%= link_to post.user.name, application_show_user_modal_path(user_id: post.user.id), remote: true%></h4>
+    <% if current_user.id == post.user.id %>
+      <div class='pull-right'>
+        <h4 class='inline'><%= link_to 'Edit', edit_post_path(post) %> | </h4>
+        <h4 class='inline'><%= link_to 'Delete', post, :method => :delete, :confirm => "Are you sure?" %></h4>
+      </div>
+    <% end %>
+  </div>
+  <div class="panel-body">
+    <p><%= post.content %></p>
+    <p class='inline'>tags: </p>
+    <% if post.stocks %>
+      <% post.stocks.each do |stock| %>
+        <p class='inline'><%= link_to stock.name, application_show_stock_modal_path(stock_id: stock.id), remote: true %></p>
+      <% end %>
+    <% end %>
+    <% if post.custom_tags %>
+      <% post.custom_tags.each do |tag| %>
+       <p class='inline'><%= tag %> </p>
+      <% end %>
+    <% end %>
+    <p class='pull-right'><%= post.created_at %></p>
+  </div>
+</div>
