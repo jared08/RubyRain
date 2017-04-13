@@ -1,8 +1,8 @@
 <div class="panel panel-default">
-  <div class="panel-heading"><h4><%= link_to "Gainers", stocks_path %></h4></div>
+  <div class="panel-heading"><h4><%= link_to title, stocks_path %></h4></div>
   <div class="panel-body">
-    <% if gainers.empty? %>
-      <%= link_to "click here to get some stocks moving!", stocks_path %>
+    <% if stocks.empty? %>
+      <%= link_to "click here to get a stock moving!", stocks_path %>
     <% else %>
       <table class="table">
         <thead>
@@ -14,7 +14,7 @@
            </tr>
         </thead>
         <tbody>
-          <tr <% gainers.each do |stock| %> >
+          <tr <% stocks.each do |stock| %> >
             <td><%= stock.symbol %></td>
             <td><%= link_to stock.name, application_show_stock_modal_path(stock_id: stock.id), remote: true %></td>
             <td>$<%= '%.2f' % stock.current_price %></td>
@@ -32,4 +32,3 @@
     <% end %>
   </div>
 </div>
-
