@@ -17,11 +17,6 @@
       <% end %>
       <h4> as of <%= time.strftime("%I:%M %p") %> </h4> <br><br>
       
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-secondary">Summary</button>
-        <button type="button" class="btn btn-secondary">Earnings and Events</button>
-        <button type="button" class="btn btn-secondary">News</button>
-      </div>
       <button type="button" class="btn btn-success"><%= link_to 'Buy', new_holding_path({:stock_symbol => stock.symbol, :type => 'buy'}) %></button>
       <button type="button" class="btn btn-danger"><%= link_to 'Sell', new_holding_path({:stock_symbol => stock.symbol, :type => 'sell'}) %></button>
       <button type="button" class="btn btn-success"><%= link_to 'Short', new_holding_path({:stock_symbol => stock.symbol, :type => 'short'}) %></button>

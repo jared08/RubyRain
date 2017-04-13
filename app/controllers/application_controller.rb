@@ -17,5 +17,13 @@ class ApplicationController < ActionController::Base
       format.js {render 'shared/show_user_modal.js'}
     end
   end
+ 
+  def show_news_modal
+    @n = News.find_by(id: params[:news_id]) 
+    respond_to do |format|
+      format.js {render 'shared/show_news_modal.js'}
+    end
+  end
+
 
 end

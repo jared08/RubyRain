@@ -1,0 +1,22 @@
+<% if @n %>
+<div class="modal fade in" id="news_modal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        <h4 class="modal-title"><%= @n[:Title] %></h4>
+      </div>
+      <div class="modal-body">
+         <p><%= @n[:Content] %></p>
+         <% date = @n[:Updated] %>
+         <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
+         <p><%= link_to @n[:Source], "http://#{@n[:Source]}" %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
