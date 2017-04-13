@@ -12,7 +12,7 @@ class HomeController < ApplicationController
 
  #   @news = News.all.order('Updated DESC').where('Updated > ?', @previous_tournament[:StartDate]).limit(10)
     
-    @holdings = Holding.where(user_id: current_user[:id]).limit(5)
+    @holdings = Holding.where(user_id: current_user[:id]).order('quantity DESC').limit(5)
     @watchlist = { }
     @top_users = User.order('account_value DESC').limit(5)
     @trending_users = User.order('((account_value - start_value) / (start_value)) DESC').limit(5)

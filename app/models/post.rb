@@ -4,5 +4,5 @@ class Post < ApplicationRecord
 
   serialize :custom_tags
 
-  self.per_page = 5
+  self.per_page = 4
 end

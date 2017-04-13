@@ -25,5 +25,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def show_post_modal
+    @post = Post.find_by(id: params[:post_id])
+    respond_to do |format|
+      format.js {render 'shared/show_post_modal.js'}
+    end
+  end
+
+
 
 end

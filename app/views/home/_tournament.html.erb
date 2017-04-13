@@ -25,7 +25,7 @@
         </thead>
         <tbody>
           <tr <% golfer_tournament.each do |gt| %> >
-            <td><%= link_to gt.golfer.stock[:name], gt.golfer.stock %></td>
+            <td><%= link_to gt.golfer.stock.name, application_show_stock_modal_path(stock_id: gt.golfer.stock.id), remote: true %></td>
             <td><%= gt[:Rank] %></td>
             <td>$<%= gt.golfer.stock[:current_price] %></td>
             <% if gt.golfer.stock[:daily_change] > 0 %>
