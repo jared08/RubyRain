@@ -7,8 +7,14 @@ class HomeController < ApplicationController
   def show
 
     current_tournament_id = Tournament.find_by(index: Rails.application.config.current_tournament_index)[:id]
-    @tournaments = GolferTournament.where('tournament_id >= ?', current_tournament_id).order('tournament_id ASC').paginate(page: params[:page])
-    
+#    @tournaments = Tournament.joins(:golfer_tournaments).where(golfer_tournaments: { tournament_id: tournament_id }).where('tournament_id >= ?', current_tournament_id).order('tournament_id ASC').paginate(page: params[:page])
+#debugger
+
+    @tournaments = Tournament.where('id >= ?', current_tournament_id).order('id ASC').paginate(page: params[:page])
+
+#    current_tournament_id = Tournament.find_by(index: Rails.application.config.current_tournament_index)[:id]
+#    @tournaments = GolferTournament.where('tournament_id >= ?', current_tournament_id).order('tournament_id ASC').paginate(page: params[:page])
+#   debugger 
 
  #   @news = News.all.order('Updated DESC').where('Updated > ?', @previous_tournament[:StartDate]).limit(10)
     

@@ -1,6 +1,5 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <% tournament = golfer_tournament[0].tournament %>
     <h4><%= link_to tournament[:Name], tournament_path(tournament[:id]) %></h4>
     <%= tournament[:StartDate] %>
     <%= tournament[:EndDate] %>
@@ -11,22 +10,34 @@
     $<%= tournament[:Purse] %>
   </div>
   <div class="panel-body">
-    <% if golfer_tournament.empty? %>
-      <p>no golfer's are playing in this tournament..</p>
+    <% if tournament.golfer_tournaments.empty? %>
+      <% if tournament[:IsOver] == true %>
+        <p>no golfers played in this tournament..</p>
+      <% else %>
+        <p>no golfers are playing in this tournament..</p>
+      <% end %>
     <% else %>
       <table class="table" id="tournament_table">
         <thead>
           <tr>
             <th>Name</th>
-            <th>Projected Rank</th>
+            <% if tournament[:IsOver] == true %>
+              <th>Rank</th>
+            <% else %>
+              <th>Projected Rank</th>
+            <% end %>
             <th>Current Price</th>
             <th>Daily Change</th>
            </tr>
         </thead>
         <tbody>
-          <tr <% golfer_tournament.each do |gt| %> >
+          <tr <% tournament.golfer_tournaments.each do |gt| %> >
             <td><%= link_to gt.golfer.stock.name, application_show_stock_modal_path(stock_id: gt.golfer.stock.id), remote: true %></td>
-            <td><%= gt[:Rank] %></td>
+            <% if gt[:Rank] %>
+              <td><%= gt[:Rank] %></td>
+            <% else %>
+              <td>Missed Cut</td>
+            <% end %>
             <td>$<%= gt.golfer.stock[:current_price] %></td>
             <% if gt.golfer.stock[:daily_change] > 0 %>
               <td class="green"><%= '%.2f' % (gt.golfer.stock[:daily_change] * 100) %>%</td>
