@@ -21,3 +21,4 @@
 .byebug_history
 RubyRain/config/secrets.yml
 RubyRain/config/database.yml
+RubyRain/data/data.yml
