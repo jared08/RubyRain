@@ -1,8 +1,7 @@
 <div id="home_feed">
   <%= render tournaments %>
-  <%= render news %>
 </div>
 <div id="infinite-scrolling-home">
-  <%= will_paginate tournaments %>
-  <%= will_paginate news %>
+  <%= will_paginate tournaments, :param_name => 'tournaments_page' %>
 </div>
+

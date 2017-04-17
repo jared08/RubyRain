@@ -12,7 +12,7 @@ class HomeController < ApplicationController
 
     current_tournament_id = current_tournament_id + 5
     @tournaments = Tournament.where('id >= ?', current_tournament_id).order('id ASC').paginate(page: params[:page])
-    @news = News.all.order('Updated DESC').paginate(page: params[:page]) 
+    #@news = News.all.order('Updated DESC').paginate(page: params[:page]) 
   
     respond_to do |format|
       format.html

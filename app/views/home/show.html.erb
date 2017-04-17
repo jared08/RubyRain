@@ -1,12 +1,11 @@
 <div class="row">
   <div class="col-sm-8">
 
-
     <div id="home_feed">
       <% @initial_tournaments.each do |tournament| %>
         <%= render partial: '/tournaments/tournament', locals: { tournament: tournament } %>
       <% end %>
-      <%= render partial: 'feed', locals: { tournaments: @tournaments, news: @news } %>
+      <%= render partial: 'feed', locals: { tournaments: @tournaments } %>
     </div>
 
   </div>
@@ -45,3 +44,10 @@
 <div id="userModal">
  <%= render 'shared/user_modal' %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('table.display').dataTable( {
+    });
+} );
+</script>
