@@ -19,6 +19,6 @@
 
 # Ignore Byebug command history file.
 .byebug_history
-RubyRain/config/secrets.yml
-RubyRain/config/database.yml
-RubyRain/data/data.yml
+config/secrets.yml
+config/database.yml
+data/data.yml

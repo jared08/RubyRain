@@ -12,14 +12,13 @@ class HomeController < ApplicationController
 
     current_tournament_id = current_tournament_id + 5
     @tournaments = Tournament.where('id >= ?', current_tournament_id).order('id ASC').paginate(page: params[:page])
-   
+    @news = News.all.order('Updated DESC').paginate(page: params[:page]) 
+  
     respond_to do |format|
       format.html
       format.js { render 'home/home_page' }
     end  
 
- #   @news = News.all.order('Updated DESC').where('Updated > ?', @previous_tournament[:StartDate]).limit(10)
-    
     @holdings = Holding.where(user_id: current_user[:id]).order('quantity DESC').limit(5)
     @watchlist = { }
     @top_users = User.order('account_value DESC').limit(5)

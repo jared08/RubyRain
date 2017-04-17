@@ -6,7 +6,7 @@
       <% @initial_tournaments.each do |tournament| %>
         <%= render partial: '/tournaments/tournament', locals: { tournament: tournament } %>
       <% end %>
-      <%= render partial: 'feed', objects: @tournaments %>
+      <%= render partial: 'feed', locals: { tournaments: @tournaments, news: @news } %>
     </div>
 
   </div>
