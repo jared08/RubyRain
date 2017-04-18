@@ -1,4 +1,5 @@
 $('#home_feed').append('<%= j render @tournaments %>');
+console.log('inside home_page.js.erb');
 <% if @tournaments.next_page %>
   $('.pagination').replaceWith('<%= j will_paginate @tournaments %>');
 <% else %>

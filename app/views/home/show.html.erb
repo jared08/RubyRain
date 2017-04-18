@@ -2,14 +2,14 @@
   <div class="col-sm-8">
 
     <div id="home_feed">
-      <% @initial_tournaments.each do |tournament| %>
-        <%= render partial: '/tournaments/tournament', locals: { tournament: tournament } %>
-      <% end %>
-      <%= render partial: 'feed', locals: { tournaments: @tournaments } %>
+      <%= render @tournaments %>
+    </div>
+    <div id="infinite-scrolling-home">
+      <%= will_paginate @tournaments, :param_name => 'tournaments_page' %>
     </div>
 
   </div>
-  <div class="col-sm-4">
+  <div class="col-sm-4" id="home_sidebar">
     <div id="home_portfolio">
       <%= render partial: 'portfolio', locals: { holdings: @holdings } %>
     </div>
