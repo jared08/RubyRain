@@ -1,0 +1,7 @@
+<% news.each do |n| %>
+  <h3><%= n[:Title] %></h3>
+  <p><%= n[:Content] %></p>
+  <% date = n[:Updated] %>
+  <p><%= date.strftime("%B #{date.day.ordinalize} at %I:%M%p") %></p>
+  <p><%= link_to n[:Source], "http://#{n[:Source]}" %></p>
+<% end %>

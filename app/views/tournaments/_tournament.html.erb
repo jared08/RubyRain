@@ -17,7 +17,7 @@
         <p>no golfers are playing in this tournament..</p>
       <% end %>
     <% else %>
-      <table class="table display" id='test'>
+      <table id="<%= tournament[:Name] %>" class="table display">
         <thead>
           <tr>
             <th>Name</th>
@@ -53,4 +53,10 @@
   </div>
 </div>
 
-
+<script>
+  $(document).ready(function() {
+    //$('table.display').DataTable( {
+    $("#<%= tournament[:Name] %>").DataTable( {
+    });
+} );
+</script>

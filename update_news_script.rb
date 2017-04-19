@@ -1,7 +1,7 @@
 require 'net/http'
 
 golfers = Stock.where(:sport => 'Golf')
-debugger
+
 for golfer in golfers
 
   url = 'https://api.fantasydata.net/golf/v2/json/NewsByPlayerID/' + golfer[:PlayerID].to_s

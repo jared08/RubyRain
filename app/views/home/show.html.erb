@@ -3,9 +3,11 @@
 
     <div id="home_feed">
       <%= render @tournaments %>
+      <%= render partial: 'news', locals: { news: @news } %>
     </div>
-    <div id="infinite-scrolling-home">
-      <%= will_paginate @tournaments, :param_name => 'tournaments_page' %>
+    <div id="infinite-scrolling-home"> <!--code for this in app/assets/javascripts/inifite_scrooling_home-->
+      <%= will_paginate @tournaments %>
+      <%= will_paginate @news %>
     </div>
 
   </div>
@@ -45,9 +47,3 @@
  <%= render 'shared/user_modal' %>
 </div>
 
-<script>
-  $(document).ready(function() {
-    $('table.display').dataTable( {
-    });
-} );
-</script>

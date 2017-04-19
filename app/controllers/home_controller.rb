@@ -8,15 +8,14 @@ class HomeController < ApplicationController
 
     current_tournament_id = Tournament.find_by(index: Rails.application.config.current_tournament_index)[:id]
 
-    #@initial_tournaments = Tournament.where('id >= ?', current_tournament_id).order('id ASC').limit(5)
-
     @tournaments = Tournament.where('id >= ?', current_tournament_id).order('id ASC').paginate(page: params[:page])
-    #@news = News.all.order('Updated DESC').paginate(page: params[:page]) 
-
+    @news = News.order('Updated DESC').paginate(page: params[:page]) 
+    
     respond_to do |format|
       format.html
       format.js { render 'home/home_page' }
     end  
+
 
     @holdings = Holding.where(user_id: current_user[:id]).order('quantity DESC').limit(5)
     @watchlist = { }
