@@ -1,5 +1,5 @@
-$('#home_feed').append('<%= j render @tournaments %>');
 $('#home_feed').append('<%= j render partial: 'news', locals: { news: @news } %>');
+$('#home_feed').append('<%= j render @tournaments %>');
 <% if @tournaments.next_page %>
   $('.pagination').replaceWith('<%= j will_paginate @tournaments %>');
 <% else %>

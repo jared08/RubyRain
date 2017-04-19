@@ -6,11 +6,16 @@ class HomeController < ApplicationController
 
   def show
 
-    current_tournament_id = Tournament.find_by(index: Rails.application.config.current_tournament_index)[:id]
-
-    @tournaments = Tournament.where('id >= ?', current_tournament_id).order('id ASC').paginate(page: params[:page])
-    @news = News.order('Updated DESC').paginate(page: params[:page]) 
+    #current_tournament_id = Tournament.find_by(index: Rails.application.config.current_tournament_index)[:id]
+   
+    @first_tournament = Tournament.find_by(index: Rails.application.config.current_tournament_index)
+    current_tournament_id = @first_tournament[:id]
     
+    @tournaments = Tournament.where('id >= ?', (current_tournament_id + 1)).order('id ASC').paginate(page: params[:page])
+
+    prior_tournament = Tournament.find_by(index: (@tournaments[0][:index] - 1))
+    @news = News.where('Updated <= ? AND Updated > ?', prior_tournament[:EndDate], @tournaments[0][:EndDate]).order('Updated DESC')
+
     respond_to do |format|
       format.html
       format.js { render 'home/home_page' }
