@@ -1,11 +1,12 @@
 <% if holdings.empty? %>
   <p>start trading stocks!</p>
 <% else %>
-  <table class="table">
+  <table class="table" id="holdings_table">
     <thead>
       <tr>
         <th>Symbol</th>
         <th>Name</th>
+        <th>Type</th>
         <th>Quantity</th>
         <th>Price at Purchase</th>
         <th>Current Price</th>
@@ -14,9 +15,11 @@
        </tr>
     </thead>
     <tbody>
+      <% total_value = 0 %>
       <tr <% holdings.each do |holding| %> >
         <td><%= holding.stock.symbol %></td>
         <td><%= link_to holding.stock.name, holding.stock %></td>
+        <td><%= holding.type_of_holding %></td>
         <td><%= holding.quantity %></td>
         <td>$<%= '%.2f' % holding.price_at_purchase %></td>
         <td>$<%= '%.2f' % holding.stock.current_price %></td>
@@ -35,15 +38,26 @@
           <td class="black">0.00%</td>
         <% end %>
         <% if holding.type_of_holding == 'buy' %>
-         <td>$<%= '%.2f' % (holding.quantity * holding.stock.current_price) %> </td>
+          <% value = (holding.quantity * holding.stock.current_price) %>
+          <% total_value = total_value + value %>
+          <td>$<%= '%.2f' % value %> </td>
           <td><%= link_to 'Buy More', new_holding_path({:stock_symbol => holding.stock.symbol, :type => 'buy'}), class: "btn btn-success"%></td>
           <td><%= link_to 'Sell', new_holding_path({:stock_symbol => holding.stock.symbol, :type => 'sell'}), class: "btn btn-danger"%></td>
         <% else %>
-          <td>$<%= '%.2f' % ((holding.quantity * holding.price_at_purchase) - (holding.quantity * (holding.stock.current_price - holding.price_at_purchase))) %> </td>
+          <% value = ((holding.quantity * holding.price_at_purchase) - (holding.quantity * (holding.stock.current_price - holding.price_at_purchase))) %>
+          <% total_value = total_value + value %>
+          <td>$<%= '%.2f' % value %> </td>
           <td><%= link_to 'Short More', new_holding_path({:stock_symbol => holding.stock.symbol, :type => 'short'}), class: "btn btn-success"%></td>
           <td><%= link_to 'Cover', new_holding_path({:stock_symbol => holding.stock.symbol, :type => 'cover'}), class: "btn btn-danger"%></td>
         <% end %>
      </tr <% end %> >
+     <tr>
+       <td><b>Total</b></td>
+       <td></td><td></td><td></td><td></td><td></td><td></td>
+       <td><b>$<%= total_value %></b></td>
+     </tr>
     </tbody>
   </table>
 <% end %>
+
+
