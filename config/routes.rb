@@ -16,7 +16,13 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
-  resources :users
+  
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+
 
   resources :tournaments
 
@@ -24,6 +30,8 @@ Rails.application.routes.draw do
     resources :tournaments
   end
  
+  resources :relationships, only: [:create, :destroy]
+
   resources :holdings
  
   get "application/show_stock_modal"
@@ -31,6 +39,8 @@ Rails.application.routes.draw do
   get "application/show_news_modal"
   get "application/show_post_modal"
 
+  post "users/follow_user"
+  post "users/unfollow_user"
 
   resources :home
 

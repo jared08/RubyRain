@@ -22,6 +22,19 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @following = current_user.following
+  end
+
+  def follow_user
+    user_to_follow = User.find_by(id: params[:user_to_follow].to_i)
+    current_user.relationships.create(followed_id: params[:user_to_follow].to_i)
+    redirect_to users_path
+  end
+
+  def unfollow_user
+    r = Relationship.find_by(follower_id: current_user.id, followed_id: params[:user_to_unfollow].to_i)
+    r.delete
+    redirect_to users_path
   end
 
   private

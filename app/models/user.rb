@@ -5,6 +5,15 @@ class User < ApplicationRecord
 
   has_many :posts
 
+  has_many :relationships,  class_name:  "Relationship",
+                                   foreign_key: "follower_id",
+                                   dependent:   :destroy
+  has_many :passive_relationships, class_name:  "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent:   :destroy
+  has_many :following, through: :relationships,  source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
+
   before_save { email.downcase! }
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -32,7 +41,9 @@ class User < ApplicationRecord
             (holding[:quantity] * (holding.stock[:current_price] - holding[:price_at_purchase])))
       end
     end
-    current_user.update_column :account_value, (holdings_value + current_user.cash)
+    #current_user.update_column :account_value, (holdings_value + current_user.cash)
+    current_user.account_value = holdings_value + current_user.cash
+    current_user.save(validate: false)
   end 
   
 end

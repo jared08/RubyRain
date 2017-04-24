@@ -1,9 +1,7 @@
 <% provide(:title, 'My holdings') %>
-<h1>My Portfolio</h1>
-
+<h2>Balances and Holdings</h2>
+<h3>Total Assets: $<%= '%.2f' % (current_user.account_value) %></h3>
 <div id="holdings_table">
   <%= render partial: 'holdings_table', locals: { holdings: @holdings} %>
 </div>
 
-<h2>Cash: $<%= '%.2f' % current_user.cash %></h2>
-<h2>Account value: $<%= '%.2f' % (current_user.account_value) %></h2>

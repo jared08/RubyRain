@@ -8,6 +8,6 @@ Bundler.require(*Rails.groups)
 
 module RubyRain
   class Application < Rails::Application
-    config.current_tournament_index = 26 # go down by 1 each week
+    config.current_tournament_index = 25 # go down by 1 each week
   end
 end

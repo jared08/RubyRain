@@ -2,10 +2,15 @@
   <div class="panel-heading"><h4>Stock Info</h4></div>
   <div class="panel-body">
     <div id="refreshable_info">
-      <p><%= stock.name + " (" + stock.symbol + ")" %></p>
+      <p><%= link_to stock.name, application_show_stock_modal_path(stock_id: stock.id), remote: true %> (<%= stock.symbol %>)</p>
       <p><%= "$" + '%.2f' % stock.current_price.to_s + " $" + '%.2f' % (stock.current_price - stock.open_price).to_s + " " + '%.2f' % (((stock.current_price - stock.open_price) / stock.open_price) * 100) + "%" %></p>
 
       <%= link_to "Refresh", refresh_path(:stock_symbol => stock.symbol), :remote => true %>
     </div>
   </div>
+</div>
+
+<!-- rendering partials for modals-->
+<div id="stockModal">
+ <%= render 'shared/stock_modal' %>
 </div>

@@ -13,7 +13,11 @@
       <td><%= user.created_at %></td>
       <td>$<%= user.account_value %></td>
       <% if user != current_user %>
-        <td><%= link_to 'Follow', user, class: "btn btn-primary"%></td>
+        <% if @following.include? user %>
+          <td><%= link_to 'Unfollow', users_unfollow_user_path({:user_to_unfollow => user}), method: :post, class: "btn btn-primary"%></td>
+        <% else %>
+          <td><%= link_to 'Follow', users_follow_user_path({:user_to_follow => user}), method: :post, class: "btn btn-primary"%></td>
+        <% end %>
       <% else %>
         <td>you can't follow yourself..</td>
       <% end %>

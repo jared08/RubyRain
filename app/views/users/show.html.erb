@@ -1,5 +1,12 @@
 <% provide(:title, @accounts_user.name) %>
-<h1><%= @accounts_user.name %></h1>
+<h1 class="inline"><%= @accounts_user.name %></h1>
+<% if @accounts_user.id != current_user.id %>
+  <% if current_user.following.include? @accounts_user %>
+    <%= link_to 'Unfollow', users_unfollow_user_path({:user_to_unfollow => @accounts_user}), method: :post %>
+  <% else %>
+    <%= link_to 'Follow', users_follow_user_path({:user_to_follow => @accounts_user}), method: :post %> 
+  <% end %>
+<% end %>
 <div class="row">
   <div class="col-sm-6">
     <div id="portfolio_snippet">
