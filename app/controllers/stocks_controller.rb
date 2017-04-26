@@ -43,6 +43,13 @@ class StocksController < ApplicationController
       @golfer = Golfer.find_by(stock_id: @stock.id)
       show_golfer
     end
+
+  end
+
+  def display_tab
+    respond_to do |format|
+      format.js
+    end
   end
 
   def index
