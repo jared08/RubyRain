@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   resources :stocks do
     resources :tournaments
+    resources :watchlists
   end
  
   resources :relationships, only: [:create, :destroy]
@@ -47,4 +48,7 @@ Rails.application.routes.draw do
   get "/refresh" => 'holdings#refresh', as: 'refresh'
 
   resources :posts
+
+  resources :watchlists
+  post "watchlists/new"
 end

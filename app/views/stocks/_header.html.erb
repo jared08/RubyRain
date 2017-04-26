@@ -1,0 +1,44 @@
+<div class="header">
+  <div class="col-sm-2">
+    <div id="picture">
+      <img src="<%= @stock[:PhotoUrl] %>" alt="@stock.name" />
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div id="header_info">
+      <h2><%= stock.name %> (<%= stock.symbol %>)</h2>
+      <h3>$<%= '%.2f' % stock.current_price %> </h3>
+      <% if stock.daily_change > 0 %>
+        <h4 class="green">+<%= '%.2f' % (stock.current_price - stock.open_price) %> (+<%= '%.2f' % (stock.daily_change * 100) %>%) </h4>
+      <% elsif stock.daily_change < 0 %>
+        <h4 class="red"> <%= '%.2f' % (stock.current_price - stock.open_price) %> (<%= '%.2f' % (stock.daily_change * 100) %>%) </h4>
+      <% else %>
+        <h4 class="black">0.00 (0.00%)</h4>
+      <% end %>
+      <h4> as of <%= time.strftime("%I:%M %p") %> </h4> <br><br>
+ 
+      <% if holding %>
+        <% if holding.type_of_holding == 'buy' %>
+          <%= link_to 'Buy More', new_holding_path({:stock_symbol => stock.symbol, :type => 'buy'}), class: "btn btn-success"%>
+          <%= link_to 'Sell', new_holding_path({:stock_symbol => stock.symbol, :type => 'sell'}), class: "btn btn-danger"%>
+        <% elsif holding.type_of_holding == 'short' %>
+          <%= link_to 'Short More', new_holding_path({:stock_symbol => stock.symbol, :type => 'short'}), class: "btn btn-success"%>
+          <%= link_to 'Cover', new_holding_path({:stock_symbol => stock.symbol, :type => 'cover'}), class: "btn btn-danger"%>
+        <% end %>
+      <% elsif watchlist %>
+        <%= link_to 'Buy', new_holding_path({:stock_symbol => stock.symbol, :type => 'buy'}), class: "btn btn-success"%>
+        <%= link_to 'Short', new_holding_path({:stock_symbol => stock.symbol, :type => 'short'}), class: "btn btn-danger"%>
+        <%= link_to 'Unwatch', watchlist, method: :delete, data: { confirm: "Are you sure" }, class: "btn btn-primary"%>
+      <% else %>
+        <%= link_to 'Buy', new_holding_path({:stock_symbol => stock.symbol, :type => 'buy'}), class: "btn btn-success"%>
+        <%= link_to 'Short', new_holding_path({:stock_symbol => stock.symbol, :type => 'short'}), class: "btn btn-danger"%>
+        <%= link_to 'Watch', new_watchlist_path({:id => stock.id}), method: :post, class: "btn btn-primary"%>
+      <% end %>    
+ 
+      <% if current_user.admin? %>
+        <%= link_to 'Edit', edit_stock_path(stock), class: "btn btn-primary"%>
+        <%= link_to 'Delete', stock,  method: :delete, data: { confirm: "You sure?" },  class: "btn btn-primary"%>
+      <% end %>
+    </div>
+  </div>
+</div>

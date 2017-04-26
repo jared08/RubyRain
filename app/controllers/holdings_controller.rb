@@ -219,6 +219,20 @@ class HoldingsController < ApplicationController
   
   def index
     @holdings = Holding.where(:user => current_user)
+  end 
+
+  def watch
+    @holding = Holding.new
+    @holding.user_id = current_user.id
+    @holding.stock_id = params[:id]
+    @holding.type_of_holding = 'watch'
+    
+    @holding.save
+    debugger
+  end
+
+  def unwatch
+    debugger
   end
 
   private

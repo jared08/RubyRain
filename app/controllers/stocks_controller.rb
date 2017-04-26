@@ -31,6 +31,8 @@ class StocksController < ApplicationController
 
   def show
     @stock = Stock.find(params[:id])
+    @holding = Holding.find_by(stock_id: @stock.id, user_id: current_user.id)
+    @watchlist = Watchlist.find_by(stock_id: @stock.id, user_id: current_user.id)
     @news = News.limit(4).where(stock_id: params[:id]).order("Updated DESC")
     @posts = Post.joins(:posts_stocks).where(:posts_stocks => {:stock_id => @stock.id}).limit(4).order("created_at DESC") 
    

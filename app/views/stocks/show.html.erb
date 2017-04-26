@@ -1,7 +1,7 @@
 <% provide(:title, @stock.name) %>
 <div class="row">
   <div id="stock_header">
-    <%= render partial: 'stock_header', locals: { stock: @stock, time: @time, current_user: @current_user } %>
+    <%= render partial: 'header', locals: { stock: @stock, holding: @holding, watchlist: @watchlist, time: @time, current_user: @current_user } %>
   </div>
 </div>
 
@@ -10,26 +10,26 @@
 <div class="row">
   <div class="col-sm-3">
     <div id="stock_earnings">
-      <%= render partial: 'stock_earnings', locals: { golfer: @golfer, stock: @stock } %>
+      <%= render partial: 'earnings', locals: { golfer: @golfer, stock: @stock } %>
     </div>
   </div>
   <div class="col-sm-6">
     <div id="stock_earnings">
-      <%= render partial: 'stock_summary', locals: { stock: @stock } %>
+      <%= render partial: 'summary', locals: { stock: @stock } %>
     </div>
     <div id="stock_graph">
-      <%= render partial: 'stock_graph', locals: { stock: @stock } %>
+      <%= render partial: 'graph', locals: { stock: @stock } %>
     </div>
   </div>
   <div class="col-sm-3">
     <div id="stock_events">
-      <%= render partial: 'stock_events', locals: { events: @events, sport: @stock.sport, stock: @stock } %>
+      <%= render partial: 'events', locals: { events: @events, sport: @stock.sport, stock: @stock } %>
     </div>
     <div id="stock_news">
-      <%= render partial: 'stock_news', locals: { news: @news } %>
+      <%= render partial: 'news', locals: { news: @news } %>
     </div>
     <div id="stock_posts">
-      <%= render partial: 'stock_posts', locals: { posts: @posts } %>
+      <%= render partial: 'posts', locals: { posts: @posts } %>
     </div>
   </div>
 </div>

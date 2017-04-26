@@ -7,4 +7,6 @@ class Stock < ApplicationRecord
 
   serialize :daily_prices
 
+  has_many :watchlists, :dependent => :delete_all
+  has_many :users, through: :watchlists
 end

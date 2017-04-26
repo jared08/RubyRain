@@ -23,7 +23,7 @@ class HomeController < ApplicationController
 
 
     @holdings = Holding.where(user_id: current_user[:id]).order('quantity DESC').limit(5)
-    @watchlist = { }
+    @watchlist = Watchlist.where(user_id: current_user.id).limit(5)
     @top_users = User.order('account_value DESC').limit(5)
     @trending_users = User.order('((account_value - start_value) / (start_value)) DESC').limit(5)
     @following = current_user.following.limit(5)
