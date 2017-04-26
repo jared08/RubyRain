@@ -18,6 +18,8 @@ class UsersController < ApplicationController
     @accounts_user = User.find(params[:id])
     @current_user = current_user
     @holdings = @accounts_user.holdings.all
+    
+    @posts = Post.where(user_id: current_user.id).order('created_at DESC')
   end
 
   def index

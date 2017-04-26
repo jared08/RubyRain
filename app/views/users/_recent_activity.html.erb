@@ -1,6 +1,31 @@
 <div class="panel panel-default">
   <div class="panel-heading"><h4>Recent Activity</h4></div>
   <div class="panel-body">
-
+    <% if posts %>
+      <% posts.each do |post| %>
+        <p><%= link_to post[:title], application_show_post_modal_path(post_id: post.id), remote: true %></p>
+        <p><%= post.content %>
+        <p class='inline'>tags: </p>
+        <% if post.stocks %>
+          <% post.stocks.each do |stock| %>
+            <p class='inline'><%= link_to stock.name, application_show_stock_modal_path(stock_id: stock.id), remote: true %></p>
+          <% end %>
+        <% end %>
+        <% if post.custom_tags %>
+          <% post.custom_tags.each do |tag| %>
+            <p class='inline'><%= tag %> </p>
+          <% end %>
+        <% end %>
+        <p class='pull-right'><%= post.created_at %></p>
+        <p></p>
+      <% end %>
+    <% else %>
+      <p>you don't have any posts yet..</p>
+    <% end %>
   </div>
+</div>
+
+<!-- rendering partials for modals-->
+<div id="postModal">
+ <%= render 'shared/post_modal' %>
 </div>

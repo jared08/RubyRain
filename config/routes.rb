@@ -28,7 +28,6 @@ Rails.application.routes.draw do
 
   resources :stocks do
     resources :tournaments
-    resources :watchlists
   end
  
   resources :relationships, only: [:create, :destroy]
