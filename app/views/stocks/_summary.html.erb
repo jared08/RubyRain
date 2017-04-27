@@ -1,16 +1,61 @@
-<div class="panel panel-default">
-  <div class="panel-heading"><h4>Summary</h4></div>
-  <div class="panel-body">
-    <div class="col-sm-6">
-      <p>Open: $<%= '%.2f' % stock.open_price %></p>
-      <p>High: $<%= '%.2f' % stock.high %></p>
-      <p>Low: $<%= '%.2f' % stock.low %></p>
-      <p>Volume: <%= stock.volume %></p>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>Financials</h4></div>
+      <div class="panel-body">
+        <div class="col-sm-6">
+          <p class="inline">Open:</p><strong class="pull-right">$<%= '%.2f' % stock.open_price %></strong><br>
+          <p class="inline">High:</p><strong class="pull-right">$<%= '%.2f' % stock.high %></strong><br>
+          <p class="inline">Low:</p><strong class="pull-right">$<%= '%.2f' % stock.low %></strong><br>
+          <p class="inline">Season High:</p><strong class="pull-right">$<%= '%.2f' % stock.season_high %></strong><br>
+          <p class="inline">Season Low:</p><strong class="pull-right">$<%= '%.2f' % stock.season_low %></strong><br>
+          <p class="inline">Volume:</p><strong class="pull-right"><%= stock.volume %></strong><br>
+        </div>
+        <div class="col-sm-6">
+          <p class="inline">1st Place Finishes:</p><strong class="pull-right"><%= golfer.first %></strong><br>
+	  <p class="inline">2nd Place Finishes:</p><strong class="pull-right"><%= golfer.second %></strong><br>
+	  <p class="inline">3rd Place Finishes:</p><strong class="pull-right"><%= golfer.third %></strong><br>
+	  <p class="inline">Top 10 Finishes:</p><strong class="pull-right"><%= golfer.top_ten %></strong><br>
+	  <p class="inline">Top 25 Finishes:</p><strong class="pull-right"><%= golfer.top_twenty_five %></strong><br>
+	  <p class="inline">Made Cut:</p><strong class="pull-right"><%= golfer.made_cut %></strong><br>
+          <p class="inline">Total Earnings:</p><strong class="pull-right">$<%= stock.earnings %></strong>
+          <%= link_to '?', "#", data: {toggle: "modal", target: "#earnings_modal"} %>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-6">
-      <p>Earnings to Date: $<%= stock.earnings %></p>
-      <p>Season High: $<%= '%.2f' % stock.season_high %></p>
-      <p>Season Low: $<%= '%.2f' % stock.season_low %></p>
+  </div>
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>Graph</h4></div>
+      <div class="panel-body">
+        <% min = stock.daily_prices.min { |a, b| a[:price] <=> b[:price] }[:price] - (stock.current_price / 20) %>
+        <% max = stock.daily_prices.max { |a, b| a[:price] <=> b[:price] }[:price] + (stock.current_price / 20) %>
+        <% prices = stock.daily_prices.collect{|i| [i[:time],i[:price]]} %>
+        <%= line_chart prices, curve: false, min: min, max: max %>
+      </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade in" id="earnings_modal" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        <h4>Earnings Explanation</h4>
+      </div>
+      <div class="modal-body">
+        <p>1st place finish -- $15</p>
+        <p>2nd place finish -- $8</p>
+        <p>3rd place finish -- $4</p>
+        <p>Top 10 Finish ----- $5</p>
+        <p>Top 25 Finish ----- $3</p>
+        <p>Made Cut ---------- $2</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+

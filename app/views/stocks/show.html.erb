@@ -7,24 +7,22 @@
 
 <br>
 
-<div class="tab-content">
-  <div class="tab-pane active" id="summary_tab">
-    <%= render partial: 'summary', locals: { stock: @stock } %>
-  </div>
-  <div class="tab-pane" id="earnings_tab">
-    <%= render partial: 'earnings', locals: { golfer: @golfer, stock: @stock } %>
-  </div>
-  <div class="tab-pane" id="events_tab">
-    <%= render partial: 'events', locals: { events: @events, sport: @stock.sport, stock: @stock } %>
-  </div>
-  <div class="tab-pane" id="news_tab">
-    <%= render partial: 'news', locals: { news: @news } %>
-  </div>
-  <div class="tab-pane" id="posts_tab">
-    <%= render partial: 'posts', locals: { posts: @posts } %>
-  </div>
-  <div class="tab-pane" id="graphs_tab">
-    <%= render partial: 'graph', locals: { stock: @stock } %>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="tab-content">
+      <div class="tab-pane active" id="summary_tab">
+        <%= render partial: 'summary', locals: { stock: @stock, golfer: @golfer } %>
+      </div>
+      <div class="tab-pane" id="events_tab">
+        <%= render partial: 'events', locals: { events: @events, sport: @stock.sport, stock: @stock } %>
+      </div>
+      <div class="tab-pane" id="news_tab">
+        <%= render partial: 'news', locals: { news: @news } %>
+      </div>
+      <div class="tab-pane" id="posts_tab">
+        <%= render partial: 'posts', locals: { posts: @posts } %>
+      </div>
+    </div>
   </div>
 </div>
 

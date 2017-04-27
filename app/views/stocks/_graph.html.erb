@@ -1,7 +1,0 @@
-<div class="panel panel-default">
-  <div class="panel-heading"><h4>Graph</h4></div>
-  <div class="panel-body">
-    <% prices = stock.daily_prices.collect{|i| [i[:time],i[:price]]} %>
-    <%= line_chart prices, library: {curveType: "none"} %>
-  </div>
-</div>
