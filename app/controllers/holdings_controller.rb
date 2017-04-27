@@ -83,6 +83,9 @@ class HoldingsController < ApplicationController
 
       if @holding.save
         current_user.update_attribute :cash, (current_user.cash - (stock_price * new_quantity))
+
+        Watchlist.find_by(stock_id: stock.id, user_id: current_user.id).delete
+
         redirect_to holdings_url
       else
         render 'new'
@@ -201,6 +204,12 @@ class HoldingsController < ApplicationController
           else
 	    current_user.update_attribute :cash, (current_user.cash + (total_quantity * (price_at_purchase - stock_price)))
           end
+
+          watchlist = Watchlist.new
+          watchlist.stock_id = stock.id
+          watchlist.user_id = current_user.id
+          watchlist.save  
+ 
           redirect_to holdings_url
         else
           if (final_params[:type_of_holding] == 'sell')
